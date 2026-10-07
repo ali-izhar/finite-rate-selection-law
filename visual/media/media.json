@@ -1,0 +1,178 @@
+{
+ "film": {
+  "src": "media/film-720p.mp4",
+  "vtt": "media/film-720p.vtt.txt",
+  "poster": "media/film-poster.jpg",
+  "duration": 852.117,
+  "chapters": [
+   {
+    "scene": "hook",
+    "chapter": "overview",
+    "title": "The wrong proportions",
+    "start": 0
+   },
+   {
+    "scene": "commit",
+    "chapter": "commit",
+    "title": "Where the choice is made",
+    "start": 65.733
+   },
+   {
+    "scene": "odds",
+    "chapter": "odds",
+    "title": "How much preference survives",
+    "start": 157.767
+   },
+   {
+    "scene": "race",
+    "chapter": "race",
+    "title": "Field against fluctuations",
+    "start": 277.6
+   },
+   {
+    "scene": "scaling",
+    "chapter": "scaling",
+    "title": "Why slower barely helps",
+    "start": 405.3
+   },
+   {
+    "scene": "modes",
+    "chapter": "modes",
+    "title": "Competing patterns",
+    "start": 486.5
+   },
+   {
+    "scene": "reheat",
+    "chapter": "reheat",
+    "title": "Where the runs start",
+    "start": 610.467
+   },
+   {
+    "scene": "test",
+    "chapter": "test",
+    "title": "The test",
+    "start": 687.1
+   },
+   {
+    "scene": "limits",
+    "chapter": "limits",
+    "title": "What the law does and does not say",
+    "start": 788.467
+   }
+  ],
+  "play": {
+   "x": 86.72,
+   "y": 23.61
+  }
+ },
+ "clips": {
+  "overview": {
+   "scene": "hook",
+   "title": "The wrong proportions",
+   "src": "media/hook.mp4",
+   "vtt": "media/hook.vtt.txt",
+   "poster": "media/hook.jpg",
+   "duration": 65.733,
+   "play": {
+    "x": 50,
+    "y": 86.11
+   }
+  },
+  "commit": {
+   "scene": "commit",
+   "title": "Where the choice is made",
+   "src": "media/commit.mp4",
+   "vtt": "media/commit.vtt.txt",
+   "poster": "media/commit.jpg",
+   "duration": 92.033,
+   "play": {
+    "x": 86.72,
+    "y": 86.11
+   }
+  },
+  "odds": {
+   "scene": "odds",
+   "title": "How much preference survives",
+   "src": "media/odds.mp4",
+   "vtt": "media/odds.vtt.txt",
+   "poster": "media/odds.jpg",
+   "duration": 119.833,
+   "play": {
+    "x": 82.03,
+    "y": 86.11
+   }
+  },
+  "race": {
+   "scene": "race",
+   "title": "Field against fluctuations",
+   "src": "media/race.mp4",
+   "vtt": "media/race.vtt.txt",
+   "poster": "media/race.jpg",
+   "duration": 127.7,
+   "play": {
+    "x": 86.72,
+    "y": 31.94
+   }
+  },
+  "scaling": {
+   "scene": "scaling",
+   "title": "Why slower barely helps",
+   "src": "media/scaling.mp4",
+   "vtt": "media/scaling.vtt.txt",
+   "poster": "media/scaling.jpg",
+   "duration": 81.2,
+   "play": {
+    "x": 50,
+    "y": 15.97
+   }
+  },
+  "modes": {
+   "scene": "modes",
+   "title": "Competing patterns",
+   "src": "media/modes.mp4",
+   "vtt": "media/modes.vtt.txt",
+   "poster": "media/modes.jpg",
+   "duration": 123.967,
+   "play": {
+    "x": 78.13,
+    "y": 77.78
+   }
+  },
+  "reheat": {
+   "scene": "reheat",
+   "title": "Where the runs start",
+   "src": "media/reheat.mp4",
+   "vtt": "media/reheat.vtt.txt",
+   "poster": "media/reheat.jpg",
+   "duration": 76.633,
+   "play": {
+    "x": 89.84,
+    "y": 52.78
+   }
+  },
+  "test": {
+   "scene": "test",
+   "title": "The test",
+   "src": "media/test.mp4",
+   "vtt": "media/test.vtt.txt",
+   "poster": "media/test.jpg",
+   "duration": 101.367,
+   "play": {
+    "x": 89.06,
+    "y": 62.5
+   }
+  },
+  "limits": {
+   "scene": "limits",
+   "title": "What the law does and does not say",
+   "src": "media/limits.mp4",
+   "vtt": "media/limits.vtt.txt",
+   "poster": "media/limits.jpg",
+   "duration": 63.633,
+   "play": {
+    "x": 50,
+    "y": 15.28
+   }
+  }
+ }
+}

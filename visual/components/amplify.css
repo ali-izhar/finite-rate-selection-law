@@ -1,0 +1,324 @@
+/* components/amplify.css — scoped under .ve-amplify */
+.ve-amplify { container-type: inline-size; }
+.ve-amplify .ve-figure__stage { display: grid; gap: var(--s5); }
+
+.ve-amplify__pctl { display: grid; gap: var(--s1); max-width: 520px; }
+.ve-amplify__phint { margin: 0; font-size: var(--fs-s); color: var(--ink-2); line-height: 1.5; }
+
+.ve-amplify__steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s6) var(--s6);
+}
+.ve-amplify__step { display: grid; align-content: start; gap: var(--s3); min-width: 0; }
+.ve-amplify__step--wide { grid-column: 1 / -1; padding-top: var(--s5); border-top: 1px solid var(--rule); }
+.ve-amplify__step:nth-child(3), .ve-amplify__step:nth-child(4) { padding-top: var(--s5); border-top: 1px solid var(--rule); }
+.ve-amplify__body { display: grid; gap: var(--s3); min-width: 0; }
+
+.ve-amplify__h {
+  margin: 0; display: flex; align-items: baseline; gap: var(--s3);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-l); line-height: 1.1; color: var(--ink);
+  text-wrap: balance;
+}
+.ve-amplify__h i { font-family: var(--font-text); font-weight: 500; font-size: 0.92em; }
+.ve-amplify__h sub { font-family: var(--font-text); font-weight: 500; font-size: 0.55em; }
+.ve-amplify__n {
+  flex: none; display: inline-grid; place-items: center;
+  width: 24px; height: 24px; border: 1px solid var(--ink); border-radius: 50%;
+  font: 600 var(--fs-xs)/1 var(--font-mono); transform: translateY(-2px);
+}
+.ve-amplify__text { margin: 0; font-size: var(--fs-s); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+.ve-amplify__text b, .ve-amplify__status b { font-weight: 650; }
+.ve-amplify .ve-c-noise-text { color: var(--ink); text-decoration: underline 3px var(--noise); text-underline-offset: 3px; }
+
+.ve-amplify__status {
+  margin: 0; min-height: 3.1em;
+  font-size: var(--fs-s); line-height: 1.5; color: var(--ink-2);
+}
+.ve-amplify__count { display: block; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--ink-3); margin-top: 2px; }
+.ve-amplify__btns { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.ve-amplify__fine { margin: 0; font-size: var(--fs-s); line-height: 1.5; color: var(--ink-3); font-family: var(--font-text); word-spacing: 0.06em; }
+.ve-amplify__worked { margin: 0; max-width: var(--measure); font-size: var(--fs-s); line-height: 1.5; color: var(--ink-2); word-spacing: 0.04em; }
+.ve-amplify__worked b { color: var(--data); font-weight: 650; }
+.ve-amplify__more { font-size: var(--fs-s); line-height: 1.5; color: var(--ink-2); word-spacing: 0.04em; }
+.ve-amplify__more > summary { cursor: pointer; color: var(--ink); font-weight: 600; padding: 4px 0; min-height: 32px; display: list-item; }
+.ve-amplify__more > summary:focus-visible { outline: 2px solid var(--highlight-ink); outline-offset: 2px; }
+.ve-amplify__more p { margin: var(--s2) 0 0; text-wrap: pretty; }
+.ve-amplify__reads { gap: var(--s3) var(--s6); }
+.ve-amplify__reads .ve-readout__label { text-transform: none; letter-spacing: 0.02em; font-size: var(--fs-s); color: var(--ink-2); font-family: var(--font-text); }
+
+/* step 5 */
+.ve-amplify__pred { display: grid; gap: var(--s4); min-width: 0; }
+.ve-amplify__eq {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s2) var(--s3);
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-l); color: var(--ink);
+}
+.ve-amplify__eqterm { display: grid; gap: 2px; white-space: nowrap; }
+.ve-amplify__eqterm i { font-family: var(--font-text); }
+.ve-amplify__eqlab { font: 500 var(--fs-xs)/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.ve-amplify__op { color: var(--ink-3); padding-bottom: 1px; }
+.ve-amplify__eqres { font-weight: 600; padding: 2px 8px; margin: -2px 0; background: var(--theory-wash); border-radius: var(--r2); }
+.ve-amplify__eqmeas { margin-left: var(--s3); padding-left: var(--s4); border-left: 1px solid var(--rule-strong); }
+.ve-amplify__ci { color: var(--ink-3); font-size: 0.8em; }
+.ve-amplify__na { color: var(--ink-3); font-size: var(--fs-s); font-style: italic; font-family: var(--font-text); }
+
+.ve-amplify__tablewrap { min-width: 0; overflow-x: auto; }
+.ve-amplify__table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: var(--fs-s); }
+.ve-amplify__table th { text-align: right; font: 500 var(--fs-xs)/1.3 var(--font-mono); color: var(--ink-3); padding: 4px 8px; border-bottom: 1px solid var(--rule-strong); white-space: nowrap; }
+.ve-amplify__table th i { font-family: var(--font-text); font-size: 1.15em; }
+.ve-amplify__table td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--rule); white-space: nowrap; color: var(--ink); }
+.ve-amplify__table th:first-child, .ve-amplify__table td:first-child { text-align: left; }
+.ve-amplify__table tr.is-cur td { background: var(--highlight-wash); font-weight: 600; }
+
+.ve-amplify__p2 {
+  display: grid; gap: var(--s3); min-width: 0;
+  padding: var(--s4); border: 1px solid var(--rule); border-radius: var(--r1);
+  background: var(--bg);
+  font-size: var(--fs-s); line-height: 1.55; color: var(--ink-2);
+}
+.ve-amplify__p2.is-cur { border-color: var(--highlight-ink); box-shadow: inset 0 0 0 1px var(--highlight-ink); }
+.ve-amplify__p2 p { margin: 0; text-wrap: pretty; }
+.ve-amplify__h5 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-m); color: var(--ink); line-height: 1.2; letter-spacing: 0.01em; }
+.ve-amplify__h5 i { font-family: var(--font-text); font-weight: 500; }
+.ve-amplify__grid2 {
+  display: grid; grid-template-columns: auto 1fr 1fr; gap: 4px; max-width: 340px;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+}
+.ve-amplify__gh { color: var(--ink-3); align-self: center; padding: 2px 6px; text-align: center; }
+.ve-amplify__cell { padding: 7px 6px; text-align: center; border: 1px solid var(--rule); border-radius: var(--r2); color: var(--ink-3); background: var(--surface); }
+.ve-amplify__cell.is-kept { font-weight: 600; }
+.ve-amplify__cell.is-fav { color: var(--mode-a); background: var(--mode-a-wash); border-color: var(--mode-a); }
+.ve-amplify__cell.is-oth { color: var(--mode-b); background: var(--mode-b-wash); border-color: var(--mode-b); }
+
+@container (max-width: 760px) {
+  .ve-amplify__steps { grid-template-columns: minmax(0, 1fr); gap: var(--s5); }
+  .ve-amplify__step + .ve-amplify__step { padding-top: var(--s5); border-top: 1px solid var(--rule); }
+}
+@container (max-width: 420px) {
+  .ve-amplify__eq { font-size: var(--fs-m); }
+  .ve-amplify__eqmeas { margin-left: 0; padding-left: 0; border-left: 0; flex-basis: 100%; }
+  .ve-amplify__table th, .ve-amplify__table td { padding: 4px 5px; }
+  .ve-amplify__table { font-size: var(--fs-xs); }
+}
+.ve-amplify__lead { margin: 0; max-width: var(--measure); font-size: var(--fs-m); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+.ve-amplify__reads { flex-wrap: nowrap; }
+@container (max-width: 420px) {
+  .ve-amplify__eq { font-size: var(--fs-s); gap: var(--s2) var(--s2); }
+  .ve-amplify__eqlab { font-size: 11px; letter-spacing: 0.02em; }
+  .ve-amplify__eqres { padding: 2px 5px; }
+}
+.ve-amplify__nw { white-space: nowrap; }
+@container (max-width: 420px) {
+  .ve-amplify__btns { gap: 6px; }
+  .ve-amplify__btns .ve-btn:not(.ve-btn--icon) { padding-inline: 10px; }
+}
+@container (max-width: 520px) {
+  .ve-amplify .ve-figure__takeaway { flex-direction: column; align-items: stretch; }
+  .ve-amplify .ve-figure__takeaway > span:last-child { flex: 1 1 auto; }
+}
+
+/* panels lettered a–e; panel e and the p = 2 box fold away under the prediction */
+.ve-amplify__step:nth-child(3), .ve-amplify__step:nth-child(4) { padding-top: var(--s5); border-top: 1px solid var(--rule); }
+.ve-amplify__step--wide > .ve-amplify__text { max-width: var(--measure); }
+.ve-amplify__more > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ve-amplify__table tr.is-cur td { background: var(--surface-2); }
+.ve-amplify__p2.is-cur { border-color: var(--rule-strong); box-shadow: none; }
+.ve-amplify__pred { max-width: 46rem; }
+
+/* panel c: why a larger overlap is a stronger vote, as three bars */
+.ve-amplify__votes { display: grid; gap: 6px; margin: 0 0 var(--s3); padding: var(--s2) var(--s3); border-left: 3px solid var(--bias); background: var(--surface-2); border-radius: var(--r1); }
+.ve-amplify__votes-h, .ve-amplify__votes-f { margin: 0; font-size: var(--fs-xs); line-height: 1.45; color: var(--ink-2); }
+.ve-amplify__vrow { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 3rem; gap: var(--s2); align-items: center; }
+.ve-amplify__vlab, .ve-amplify__vval { font: 500 var(--fs-xs)/1.2 var(--font-mono); color: var(--ink-2); white-space: nowrap; }
+.ve-amplify__vval { color: var(--bias); font-weight: 600; text-align: right; }
+.ve-amplify__vbar { position: relative; height: 12px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.ve-amplify__vfav { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bias); }
+.ve-amplify__vmid { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; margin-left: -1px; background: var(--ink); }
+.ve-amplify__votes { max-width: 44rem; }
+
+/* panel d: the three-line argument */
+.ve-amplify__list { padding-left: 1.4em; display: grid; gap: var(--s1); max-width: var(--measure); }
+.ve-amplify__list li::marker { font: 600 var(--fs-xs) var(--font-mono); color: var(--ink-3); }
+
+/* subscripts such as c_CW stay small next to their base */
+.ve-amplify sub { font-size: .7em; line-height: 0; }
+.ve-amplify__ci { font-size: max(11px, .8em); }
+.ve-amplify__eqlab { font-size: max(11px, var(--fs-xs)); }
+/* the capital subscript CW reads as full size at heading size: shrink it to match A_p */
+.ve-amplify .ve-amplify__h sub { font-size: .58em; }
+.ve-amplify .ve-figure__takeaway sub { font-size: max(11px, .62em); }
+
+/* =====================================================================
+   The figure leads, the words wait behind ⓘ.
+   Panels: hairline above, small-caps letter, serif title, info chip.
+   Readouts: Inter label over a light serif numeral; c in gilt, the
+   predicted c in the reticle. Cards hold each panel's explanation.
+   ===================================================================== */
+.ve-amplify .ve-figure__stage { gap: 36px; }
+.ve-amplify__pctl { max-width: 30rem; gap: 2px; }
+.ve-amplify__phint { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+.ve-amplify__phint i { font-family: var(--font-text); font-size: 1.05em; }
+
+.ve-amplify__steps { gap: 44px 48px; }
+.ve-amplify__step,
+.ve-amplify__step:nth-child(3), .ve-amplify__step:nth-child(4),
+.ve-amplify__step--wide { padding-top: 14px; border-top: 1px solid var(--rule); gap: 16px; }
+
+.ve-amplify__h {
+  align-items: baseline; gap: 12px;
+  font: 400 1.1875rem/1.25 var(--font-display); font-variation-settings: "opsz" 40; letter-spacing: -0.004em; color: var(--ink);
+}
+.ve-amplify__n {
+  width: auto; height: auto; border: 0; border-radius: 0; transform: none; display: inline;
+  font: 600 1.0625rem/1 var(--font-text); font-variant-caps: normal; letter-spacing: 0; color: var(--ink-3);
+}
+.ve-amplify__ht { flex: 0 1 auto; }
+.ve-amplify__h .ve-amplify__i { align-self: center; margin: -4px 0 -4px -4px; }
+.ve-amplify__h .ve-amplify__i svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
+.ve-amplify__h i, .ve-amplify__h sub { font-weight: 400; }
+
+/* the explanation: inside the card at rest; inline under the title with "All details" */
+.ve-amplify__xin[hidden] { display: none; }
+.ve-amplify__xin { max-width: 40rem; padding-left: 14px; border-left: 1px solid var(--rule-strong); }
+.ve-amplify__x { display: grid; gap: 12px; }
+.ve-amplify__x .ve-amplify__text, .ve-amplify__xin .ve-amplify__text {
+  font: 400 0.9375rem/1.55 var(--font-text); color: var(--ink-2); font-variant-numeric: oldstyle-nums proportional-nums; hyphens: auto;
+}
+.ve-amplify__x .ve-amplify__list { margin: 0; padding-left: 1.3em; gap: 6px; }
+.ve-amplify__x .ve-amplify__list li::marker { font: 450 0.8125rem var(--font-ui); color: var(--ink-3); }
+.ve-amplify__x .ve-amplify__worked { font: 400 0.9375rem/1.55 var(--font-text); color: var(--ink-2); padding-top: 10px; border-top: 1px solid var(--rule); }
+.ve-amplify__x .ve-amplify__fine, .ve-amplify__x .ve-amplify__more { font: 400 0.875rem/1.5 var(--font-text); color: var(--ink-3); }
+.ve-amplify__x .ve-amplify__more { display: grid; gap: 8px; }
+.ve-amplify__more[hidden], .ve-amplify__x .ve-amplify__more[hidden] { display: none; }
+.ve-amplify__x .ve-amplify__more p { margin: 0; color: var(--ink-2); }
+.ve-amplify__h6 { margin: 6px 0 0; font: 560 0.8125rem/1.3 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .08em; color: var(--ink-3); }
+.ve-amplify__x .ve-amplify__table { font: 450 0.8125rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; }
+.ve-amplify__x .ve-amplify__table th { font: 450 0.75rem/1.3 var(--font-ui); }
+.ve-amplify__x .ve-amplify__table td { padding: 4px 8px; }
+.ve-amplify__x .ve-amplify__table tr.is-cur td { background: var(--surface-2); font-weight: 600; }
+
+/* the vote bars, in panel c's card: hairline-quiet, bias ink only on the bars */
+.ve-amplify__votes { border-left: 0; padding: 10px 0 0; background: none; border-radius: 0; border-top: 1px solid var(--rule); }
+.ve-amplify__votes-h, .ve-amplify__votes-f { font: 400 0.8125rem/1.45 var(--font-text); color: var(--ink-3); }
+.ve-amplify__vlab, .ve-amplify__vval { font: 450 0.75rem/1.2 var(--font-ui); font-variant-numeric: tabular-nums; }
+.ve-amplify__vlab i { font-family: var(--font-text); }
+.ve-amplify__vbar { height: 6px; background: var(--surface-2); border-radius: 0; }
+.ve-amplify__vmid { width: 1px; margin-left: 0; background: var(--ink-3); }
+
+/* live state lines and counters */
+.ve-amplify__status { min-height: 2.6em; font: 450 0.8125rem/1.5 var(--font-ui); color: var(--ink-2); }
+.ve-amplify__status b { font-weight: 600; }
+.ve-amplify__count { font: 450 0.75rem/1.5 var(--font-num); font-variant-numeric: tabular-nums slashed-zero; color: var(--ink-3); }
+
+/* readouts without boxes */
+.ve-amplify__reads { gap: 12px 40px; padding: 10px 0 12px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.ve-amplify__reads .ve-readout__label { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); letter-spacing: 0; }
+.ve-amplify__reads .ve-readout__label i { font-family: var(--font-text); font-size: 1.05em; }
+.ve-amplify__reads .ve-readout__value { font: 300 2.25rem/1 var(--font-display); font-variation-settings: "opsz" 60; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; }
+.ve-amplify__reads .ve-readout__sub { font: 450 0.75rem/1.3 var(--font-num); color: var(--ink-3); min-height: 1.3em; }
+
+/* panel d: the prediction as three instruments on one hairline */
+.ve-amplify__pred { max-width: none; }
+.ve-amplify__eq {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 22px;
+  padding: 10px 0 16px; border-bottom: 1px solid var(--rule);
+  font: inherit; color: var(--ink);
+}
+.ve-amplify__eqterm { position: relative; display: grid; gap: 6px; white-space: nowrap; }
+.ve-amplify__eqlab { font: 450 0.8125rem/1.3 var(--font-ui) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--ink-3); }
+.ve-amplify__eqlab i { font-family: var(--font-text); font-size: 1.05em; }
+.ve-amplify__eqv { font: 300 2.25rem/1 var(--font-display); font-variation-settings: "opsz" 60; font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; color: var(--ink); }
+.ve-amplify__eqterm.is-c .ve-amplify__eqv { color: var(--highlight-ink); }
+.ve-amplify__op { font: 200 1.75rem/1 var(--font-ui); color: var(--ink-3); padding-bottom: 4px; }
+.ve-amplify__eqres { padding: 0; margin: 0 0 0 12px; background: none; border-radius: 0; font-weight: inherit; }
+.ve-amplify__eqres::after {
+  content: ""; position: absolute; inset: -8px -12px -6px -12px; pointer-events: none;
+  background:
+    linear-gradient(var(--highlight), var(--highlight)) left top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) left bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left bottom / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right bottom / 1px 8px no-repeat;
+}
+.ve-amplify__eqmeas { margin-left: 24px; padding-left: 24px; border-left: 1px solid var(--rule); }
+.ve-amplify__eqmeas .ve-amplify__ci { font: 450 0.8125rem var(--font-ui); color: var(--ink-3); }
+
+/* the p = 2 cross-check, inside its fold */
+.ve-amplify__p2 { padding: 0; border: 0; background: none; font: 400 0.9375rem/1.55 var(--font-text); }
+.ve-amplify__h5 { font: 400 1.0625rem/1.35 var(--font-display); }
+.ve-amplify__grid2 { font: 450 0.75rem/1.2 var(--font-ui); }
+.ve-amplify__cell { border-radius: 0; background: none; }
+.ve-amplify__text, .ve-amplify__fine { font-family: var(--font-text); }
+
+@container (max-width: 760px) {
+  .ve-amplify__steps { gap: 36px; }
+  .ve-amplify__step + .ve-amplify__step { padding-top: 14px; }
+}
+@container (max-width: 520px) {
+  .ve-amplify__eq { gap: 12px 14px; }
+  .ve-amplify__eqv, .ve-amplify__reads .ve-readout__value { font-size: 1.9rem; }
+  .ve-amplify__op { font-size: 1.4rem; }
+  .ve-amplify__eqres { margin-left: 14px; }
+  .ve-amplify__eqmeas { margin-left: 0; padding-left: 0; border-left: 0; flex-basis: 100%; }
+}
+@container (max-width: 420px) {
+  .ve-amplify__eqv, .ve-amplify__reads .ve-readout__value { font-size: 1.65rem; }
+  .ve-amplify__eqlab { font-size: 0.75rem !important; }
+  .ve-amplify__eq { gap: 10px 10px; }
+  .ve-amplify__eqres { margin-left: 8px; }
+  .ve-amplify__eqres::after { inset: -8px -8px -6px -8px; }
+}
+
+/* =====================================================================
+   The folds are chapter drawers; hidden blocks stay hidden.
+   ===================================================================== */
+/* a class rule that sets display must not defeat [hidden] (measured:false hides the misses) */
+.ve-amplify__more[hidden], .ve-amplify__x .ve-amplify__more[hidden] { display: none; }
+
+/* the readout under "A_p from the draws": the ratio of the two means, in the label face */
+.ve-amplify__reads .ve-readout__sub { font: 450 0.75rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+/* drawers built by the component (panel e as a Plot drawer, the p = 2 cross-check) */
+.ve-amplify__drawers { margin-top: 0; }
+.ve-amplify--drawer { container-type: inline-size; }
+.ve-amplify--drawer .ve-amplify__step { padding: 0; border: 0; gap: 14px; }
+.ve-amplify--drawer .ve-amplify__h,
+.ve-amplify--drawer .ve-amplify__p2 > .ve-amplify__h5:first-child { display: none; }
+.ve-amplify--drawer .ve-amplify__xin { max-width: none; padding: 0; border: 0; }
+.ve-amplify--drawer .ve-amplify__text,
+.ve-amplify--drawer .ve-amplify__xin .ve-amplify__text,
+.ve-amplify--drawer.ve-amplify__p2, .ve-amplify--drawer .ve-amplify__p2 {
+  font: inherit; font-size: inherit; line-height: inherit; color: inherit; margin: 0; max-width: none;
+}
+.ve-amplify--drawer .ve-amplify__p2 { display: grid; gap: 12px; }
+.ve-amplify--drawer .ve-amplify__p2.is-cur { border: 0; box-shadow: none; }
+.ve-amplify--drawer .ve-amplify__h6 { margin: 4px 0 0; }
+.ve-amplify--drawer .ve-amplify__fine { margin: 0; font: 400 0.875rem/1.5 var(--font-text); color: var(--ink-3); }
+/* the Plot drawer: its figure spans the plate; its prose and slider keep the drawer measure */
+.v2-drawer--plot .ve-amplify--drawer .ve-amplify__xin,
+.v2-drawer--plot .ve-amplify--drawer .ve-amplify__fine,
+.v2-drawer--plot .ve-amplify--drawer .ve-slider { margin-left: calc(7.2rem + 12px); max-width: calc(40rem - 7.2rem - 12px); }
+.v2-drawer--plot .ve-amplify--drawer.v2-plate { min-height: 0; }
+@media (max-width: 899px) {
+  .v2-drawer--plot .ve-amplify--drawer .ve-amplify__xin,
+  .v2-drawer--plot .ve-amplify--drawer .ve-amplify__fine,
+  .v2-drawer--plot .ve-amplify--drawer .ve-slider { margin-left: 0; max-width: none; }
+}
+
+/* the A_p table in "The math": a real five-column table at every width, equal numeric columns.
+   (lib/shell.css stacks every .v2-table below 900 px; that rule is meant for the ledger.) */
+#ch-modes .v2-table { table-layout: fixed; }
+#ch-modes .v2-table thead th { font: italic 400 0.9375rem/1.2 var(--font-text); font-variant-caps: normal; letter-spacing: 0; color: var(--ink-3); }
+#ch-modes .v2-table th:first-child, #ch-modes .v2-table td:first-child { width: 3rem; }
+#ch-modes .v2-table th:nth-child(3), #ch-modes .v2-table td:nth-child(3) { width: 7.5rem; }
+@media (max-width: 899px) {
+  #ch-modes .v2-table { display: table; }
+  #ch-modes .v2-table thead { display: table-header-group; }
+  #ch-modes .v2-table tbody { display: table-row-group; }
+  #ch-modes .v2-table tr { display: table-row; border: 0; padding: 0; }
+  #ch-modes .v2-table th, #ch-modes .v2-table td { display: table-cell; padding: 7px 8px 7px 0; border-top: 1px solid var(--rule); }
+  #ch-modes .v2-table thead th { border-top: 0; }
+  #ch-modes .v2-table th:nth-child(3), #ch-modes .v2-table td:nth-child(3) { width: 6.5rem; }
+}
+/* an open Plot drawer widens the whole group (lib/shell.css); the prose drawers keep their measure */
+#ch-modes .v2-drawer:not(.v2-drawer--plot) > .v2-drawer__body,
+.ve-amplify__drawers .v2-drawer:not(.v2-drawer--plot) > .v2-drawer__body { max-width: 40rem; box-sizing: border-box; }

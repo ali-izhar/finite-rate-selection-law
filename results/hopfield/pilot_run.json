@@ -1,0 +1,9 @@
+{
+  "seed_index": 0,
+  "n_chains": 2000,
+  "f_miscommit": 0.833,
+  "c_retained": 0.3115246098439376,
+  "fc": 0.2595,
+  "b_chosen": 2000,
+  "n_predicted_per_seed": 519.0
+}

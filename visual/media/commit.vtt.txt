@@ -1,0 +1,103 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.924
+The model is a row of N spins,
+each +1 or −1.
+
+2
+00:00:05.457 --> 00:00:08.512
+One setting of all of them
+is a configuration.
+
+3
+00:00:08.916 --> 00:00:13.992
+In the Curie–Weiss model, every spin
+favours agreeing with every other,
+
+4
+00:00:14.118 --> 00:00:17.579
+so mostly-agreeing
+configurations are more probable.
+
+5
+00:00:17.670 --> 00:00:22.571
+The inverse temperature, β,
+sets how strongly agreement is favoured,
+
+6
+00:00:22.616 --> 00:00:24.568
+like softmax sharpness:
+
+7
+00:00:24.671 --> 00:00:30.571
+small β gives a broad distribution,
+large β a concentrated one.
+
+8
+00:00:30.848 --> 00:00:32.927
+Cooling is raising β.
+
+9
+00:00:33.413 --> 00:00:36.596
+The average spin is the magnetization m:
+
+10
+00:00:36.687 --> 00:00:40.962
+positive for mostly +1s,
+negative for mostly minus.
+
+11
+00:00:41.308 --> 00:00:46.082
+Plot minus the log-probability of m,
+so likely values sit in valleys.
+
+12
+00:00:46.428 --> 00:00:53.907
+At small β there is one valley, at zero;
+past β = 1 it splits into the two modes.
+
+13
+00:00:54.184 --> 00:00:56.008
+Annealed Gibbs sampling
+
+14
+00:00:56.111 --> 00:01:00.571
+redraws one spin at a time
+from its probability given all the others.
+
+15
+00:01:00.941 --> 00:01:05.215
+N such updates make one sweep,
+the unit of sampling time.
+
+16
+00:01:05.399 --> 00:01:08.233
+Step by step, β rises.
+
+17
+00:01:08.603 --> 00:01:10.381
+Here are several runs.
+
+18
+00:01:10.484 --> 00:01:14.897
+Each wanders near zero; near β = 1,
+
+19
+00:01:14.954 --> 00:01:19.994
+a small random imbalance grows,
+and the run falls into one mode.
+
+20
+00:01:20.376 --> 00:01:22.212
+Once the modes form,
+
+21
+00:01:22.268 --> 00:01:26.171
+switching between them can take
+far longer than settling in one.
+
+22
+00:01:26.471 --> 00:01:31.558
+So the sign chosen near β = 1
+can decide the final mode.

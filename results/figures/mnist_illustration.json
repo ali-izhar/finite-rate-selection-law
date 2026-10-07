@@ -1,0 +1,26 @@
+{
+ "what": "panel layout of docs/figures/mnist-illustration.png",
+ "chains_shown": [
+  0,
+  16
+ ],
+ "cols_sweep": [
+  75,
+  225,
+  310,
+  325,
+  340,
+  360,
+  375,
+  390,
+  405,
+  415,
+  425,
+  440,
+  450,
+  495,
+  575,
+  660
+ ],
+ "sweep_beta_star": 454
+}

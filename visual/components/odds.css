@@ -1,0 +1,160 @@
+/* components/odds.css — scoped under .ve-odds (theme tokens, type and figure chrome) */
+.ve-odds sub { font-size: 0.72em; line-height: 0; }
+.ve-odds .ve-figure__stage { display: grid; gap: 44px; }
+.ve-odds .odds-panel { display: grid; gap: 14px; min-width: 0; }
+
+/* step row: serif small caps, a hairline, then the info chip and a short key */
+.ve-odds .odds-step { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; min-height: 28px; }
+.ve-odds .odds-step__t {
+  font: 560 0.875rem/1.2 var(--font-text); font-variant-caps: all-small-caps; font-variant-numeric: oldstyle-nums;
+  letter-spacing: .09em; color: var(--ink-2);
+}
+.ve-odds .odds-step .odds-i { order: 1; margin-left: -6px; }
+.ve-odds .odds-step::after { content: ""; order: 2; flex: 1 1 24px; height: 1px; background: var(--rule); }
+.ve-odds .odds-key { order: 3; font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+
+/* inline copies of the info cards: only with "All details" on */
+.ve-odds .odds-more { display: none; }
+.v2-all .ve-odds .odds-more {
+  display: block; max-width: 40rem; padding: 10px 0 2px 14px; border-left: 1px solid var(--rule);
+  font: 400 0.9375rem/1.55 var(--font-text); color: var(--ink-2);
+}
+.ve-odds .odds-more__k { margin: 0 0 4px; font: 560 0.8125rem/1.2 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .08em; color: var(--ink-3); }
+.ve-odds .odds-more p { margin: 0 0 6px; }
+.ve-odds .odds-more__b:empty, .ve-odds .odds-more:has(.odds-more__b:empty) { display: none; }
+
+/* ---- panel 1: two icon arrays ---- */
+.ve-odds .odds-p1 { display: block; }
+.ve-odds .odds-arrays { display: grid; grid-template-columns: repeat(2, minmax(0, 312px)); gap: 20px 64px; }
+/* no container query here: a size container made every canvas size read force a multi-second layout on the assembled page */
+.ve-odds .odds-arr { display: grid; gap: 10px; min-width: 0; }
+.ve-odds .odds-arr__head { display: grid; gap: 4px; }
+.ve-odds .odds-arr__title { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+.ve-odds .odds-arr__title i { font-family: var(--font-text); font-size: 1.08em; color: var(--ink-2); }
+.ve-odds .odds-arr__sym {
+  font: 300 2.25rem/1 var(--font-display); font-variation-settings: "opsz" 60; letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.ve-odds .odds-k-model { color: var(--bias); }
+.ve-odds .odds-k-chain { color: var(--ink); }
+.ve-odds .odds-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; }
+.ve-odds .odds-cell {
+  aspect-ratio: 1; display: grid; place-items: center; border-radius: 1px;
+  font: 500 14px/1 var(--font-ui); font-variant-numeric: lining-nums;
+  transition: background-color 240ms cubic-bezier(.22,.8,.24,1), color 240ms cubic-bezier(.22,.8,.24,1);
+}
+.ve-odds .odds-cell.is-a { background: color-mix(in srgb, var(--mode-a) 46%, transparent); color: var(--mode-a); }
+.ve-odds .odds-cell.is-b { background: color-mix(in srgb, var(--mode-b) 30%, transparent); color: var(--mode-b); }
+.ve-odds .odds-arr__foot {
+  display: flex; align-items: baseline; gap: 4px; padding-top: 8px; border-top: 1px solid var(--rule);
+  font: 450 0.8125rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-3);
+}
+.ve-odds .odds-foot__sep { color: var(--ink-3); }
+.ve-odds .odds-odds { margin-left: auto; color: var(--ink-2); }
+
+/* ---- panel 2: bars + readout ---- */
+.ve-odds .odds-p2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(200px, 236px); gap: 20px 36px; align-items: start; }
+.ve-odds .odds-cv canvas { cursor: pointer; }
+.ve-odds .odds-side { display: grid; gap: 14px; align-content: start; padding-top: 18px; }
+.ve-odds .odds-formula { display: grid; gap: 8px; justify-items: start; }
+.ve-odds .odds-f__lab { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+.ve-odds .odds-f__row { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; font: 300 1.125rem/1.2 var(--font-display); font-variant-numeric: lining-nums tabular-nums; color: var(--ink-2); }
+.ve-odds .odds-f__lhs { font: italic 400 1.5rem/1 var(--font-text); color: var(--ink); }
+.ve-odds .odds-f__eq { color: var(--ink-3); }
+.ve-odds .odds-f__frac { display: inline-grid; text-align: center; line-height: 1.25; }
+.ve-odds .odds-f__num { color: var(--ink); padding: 0 2px 2px; border-bottom: 1px solid var(--ink-3); }
+.ve-odds .odds-f__den { color: var(--bias); padding: 2px 2px 0; }
+.ve-odds .odds-f__val {
+  position: relative; margin-left: 4px;
+  font: 300 2.25rem/1 var(--font-display); font-variation-settings: "opsz" 60; letter-spacing: -0.01em; color: var(--highlight-ink);
+}
+.ve-odds .odds-sentence { margin: 0; display: flex; align-items: baseline; gap: 8px; font: 450 0.875rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; }
+.ve-odds .odds-sentence b { font-weight: 600; color: var(--ink); }
+.ve-odds .odds-sentence b.ve-c-bias { color: var(--bias); }
+.ve-odds .odds-arrowto { color: var(--ink-3); }
+.ve-odds .odds-statusrow { display: flex; align-items: flex-start; gap: 2px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.ve-odds .odds-status { margin: 0; flex: 1; font: italic 400 0.9375rem/1.45 var(--font-text); color: var(--ink-2); text-wrap: pretty; }
+.ve-odds .odds-status b { font-style: normal; font-weight: 600; color: var(--ink); }
+.ve-odds .odds-reset {
+  display: inline; padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--rule-strong);
+}
+.ve-odds .odds-statusrow .odds-i { margin-top: -2px; }
+
+/* ---- controls ---- */
+.ve-odds .odds-ctls { display: grid; gap: 18px; width: 100%; margin-top: 6px; }
+.ve-odds .odds-ctl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 40px; align-items: end; min-width: 0; padding-top: 14px; border-top: 1px solid var(--rule); position: relative; }
+.ve-odds .odds-ctl .ve-toggle__group { flex-wrap: wrap; }
+.ve-odds .odds-ctl--chain .ve-slider__scale { display: none; }
+.ve-odds .odds-nw { white-space: nowrap; }
+.ve-odds .ve-sym sub { font-size: 0.75em; }
+
+/* keep the canvas from widening its grid track on narrow screens */
+.ve-odds .odds-cv3, .ve-odds .ve-canvas { min-width: 0; width: 100%; }
+.ve-odds .odds-cv3 canvas { display: block; max-width: 100%; }
+
+@media (max-width: 760px) {
+  .ve-odds .odds-p2 { grid-template-columns: minmax(0, 1fr); }
+  .ve-odds .odds-side { padding-top: 0; grid-template-columns: auto 1fr; align-items: end; gap: 10px 24px; }
+  .ve-odds .odds-statusrow { grid-column: 1 / -1; }
+  .ve-odds .odds-ctl { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .ve-odds .ve-figure__stage { gap: 36px; }
+  .ve-odds .odds-arrays { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ve-odds .odds-arr__sym { font-size: 1.9rem; }
+  .ve-odds .odds-cell { font-size: 10px; }
+  .ve-odds .odds-grid { gap: 2px; }
+  .ve-odds .odds-arr__foot { flex-wrap: wrap; }
+  .ve-odds .odds-f__val { font-size: 1.9rem; }
+  .ve-odds .odds-side { grid-template-columns: minmax(0, 1fr); }
+}
+/* phone: each segmented control fills the row in equal columns, so it never breaks into a ragged second row */
+@media (max-width: 560px) {
+  .ve-odds .odds-ctl .ve-toggle { justify-items: stretch; width: 100%; }
+  .ve-odds .odds-ctl .ve-toggle__group { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); width: 100%; }
+  .ve-odds .odds-ctl .ve-toggle__opt { white-space: normal; text-align: center; line-height: 1.2; padding: 4px 6px; font-size: 0.75rem; }
+  .ve-odds .odds-ctl { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ve-odds .odds-cell { transition: none; }
+}
+/* The arrays are quiet colour fields; the digit each square stands for lives in the key (.odds-sw) */
+.ve-odds .odds-sw { display: inline-block; width: 9px; height: 9px; border-radius: 1px; margin: 0 6px 0 0; vertical-align: 0; }
+.ve-odds .odds-sw--a { background: color-mix(in srgb, var(--mode-a) 46%, transparent); }
+.ve-odds .odds-sw--b { background: color-mix(in srgb, var(--mode-b) 30%, transparent); margin-left: 14px; }
+/* display lede of this chapter: no automatic hyphenation */
+#ch-odds .v2-lede { hyphens: manual; -webkit-hyphens: manual; }
+
+/* this chapter's cards: when a card still has to scroll, a soft shadow at the cut edge says that
+   more text follows (background-attachment: local covers the shadow once the end is reached) */
+.v2-card#odds-spec, .v2-card#odds-read, .v2-card[id^="odds-"] {
+  background:
+    linear-gradient(var(--card) 30%, transparent) top / 100% 36px no-repeat local,
+    linear-gradient(transparent, var(--card) 70%) bottom / 100% 36px no-repeat local,
+    radial-gradient(farthest-side at 50% 0, rgb(0 0 0 / .16), transparent) top / 100% 14px no-repeat scroll,
+    radial-gradient(farthest-side at 50% 100%, rgb(0 0 0 / .16), transparent) bottom / 100% 14px no-repeat scroll,
+    var(--card);
+}
+
+/* Data drawer: the two rows that enter the test carry a gilt rule and a faint wash */
+#ch-odds .v2-table--ledger td:first-child, #ch-odds .v2-table--ledger th:first-child { padding-left: 10px; }
+#ch-odds .v2-table--ledger tr.ref td { background: var(--highlight-wash); }
+#ch-odds .v2-table--ledger tr.ref td:first-child { box-shadow: inset 2px 0 0 var(--highlight-ink); }
+/* below 900 px the table stacks into blocks (lib/shell.css); shade and rule the whole row block instead */
+@media (max-width: 899px) {
+  #ch-odds .v2-table--ledger td:first-child { padding-left: 0; }
+  #ch-odds .v2-table--ledger tr { padding-left: 10px; padding-right: 8px; }
+  #ch-odds .v2-table--ledger tr.ref { background: var(--highlight-wash); box-shadow: inset 2px 0 0 var(--highlight-ink); }
+  #ch-odds .v2-table--ledger tr.ref td, #ch-odds .v2-table--ledger tr.ref td:first-child { background: none; box-shadow: none; }
+}
+#ch-odds .v2-table--ledger sup.odds-fn { font: 500 0.6875rem/0 var(--font-ui); color: var(--ink-3); margin-left: 2px; }
+#ch-odds .v2-drawer .v2-fn { margin-top: 6px; hyphens: manual; -webkit-hyphens: manual; font: 400 0.8125rem/1.5 var(--font-text); color: var(--ink-3); }
+#ch-odds .v2-drawer .v2-fn sup { font: 500 0.6875rem/0 var(--font-ui); margin-right: 3px; }
+/* the fade: a sticky veil over the last lines, with a small "more" chevron, only while text is hidden below */
+.v2-card.odds-card--more::after {
+  content: "more below \2193"; position: sticky; bottom: -18px; display: block; height: 58px; margin: -58px -18px -18px;
+  padding: 36px 18px 0; box-sizing: border-box; text-align: right; pointer-events: none;
+  font: 500 0.75rem/1 var(--font-ui); letter-spacing: .02em; color: var(--ink-3);
+  background: linear-gradient(transparent, var(--card) 55%);
+}

@@ -1,0 +1,7 @@
+# GPU reruns: python -m src.hopfield and python -m src.experiments.hopfield_runs.
+# The published runs used the NGC container nvcr.io/nvidia/pytorch:26.04-py3
+# (torch 2.12, CUDA 13.2, Python 3.12) on one NVIDIA GPU. A PyPI build of torch
+# from https://pytorch.org is expected to work. Counts reproduce statistically,
+# not bit for bit, across GPUs and torch builds.
+-r requirements.txt
+torch>=2.12

@@ -1,0 +1,145 @@
+/* components/reheat.css — scoped under .ve-reheat */
+.ve-reheat { display: grid; gap: var(--s6); min-width: 0; }
+.ve-reheat__intro p { margin: 0; }
+.ve-reheat__two { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--s5) var(--s6); align-items: start; }
+.ve-reheat__two--c { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); margin-top: var(--s5); }
+.ve-reheat__cell { min-width: 0; }
+.ve-reheat__waitcol { display: grid; gap: var(--s4); align-content: start; padding-top: var(--s2); }
+.ve-reheat__waitcol .ve-readout__value sup { font-size: 0.6em; line-height: 0; }
+.ve-reheat__rb .ve-readout__value sup { font-size: 0.6em; line-height: 0; }
+.ve-reheat__seq { margin: 0; font-size: var(--fs-s); color: var(--ink-2); line-height: 1.5; }
+.ve-reheat__seq sup { font-size: 0.72em; }
+.ve-reheat__wall { margin-top: var(--s5); display: grid; gap: var(--s3); }
+.ve-reheat__wallhead { margin: 0; font-size: var(--fs-s); color: var(--ink-2); }
+.ve-reheat__walllegend .ve-key { white-space: normal; }
+.ve-reheat__btns { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; }
+.ve-reheat__rbwrap { min-width: 0; }
+.ve-reheat__rb { margin-top: var(--s2); }
+.ve-reheat__status { margin: var(--s3) 0 0; min-height: 0; line-height: 1.45; font-size: var(--fs-m); color: var(--ink); max-width: var(--measure); }
+.ve-reheat__player { margin-top: var(--s4); }
+.ve-reheat__sub { margin: 0 0 var(--s2); font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.ve-reheat__count { margin: var(--s2) 0 0; font-family: var(--font-mono); font-size: var(--fs-s); color: var(--ink-2); }
+.ve-reheat__seeds { margin-top: var(--s5); }
+@media (max-width: 760px) {
+  .ve-reheat__two, .ve-reheat__two--c { grid-template-columns: minmax(0, 1fr); }
+}
+/* fixed readout widths, so the row does not jump while beta is dragged */
+.ve-reheat__rb .ve-readout { min-width: 16rem; }
+@media (max-width: 480px) { .ve-reheat__rb .ve-readout { min-width: 0; flex: 1 1 100%; } }
+
+/* plate B is the main plate; plates A and C fold away beneath it */
+.ve-reheat__slot { min-width: 0; }
+.ve-reheat__more { border-top: 1px solid var(--rule); padding-top: var(--s4); min-width: 0; }
+.ve-reheat__more > summary {
+  cursor: pointer; list-style: none; display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s1) var(--s3);
+  min-height: 32px; font-size: var(--fs-m); line-height: 1.45; color: var(--ink-2);
+}
+.ve-reheat__more > summary::-webkit-details-marker { display: none; }
+.ve-reheat__more > summary::before { content: "+"; font: 600 var(--fs-s)/1 var(--font-mono); color: var(--ink-3); border: 1px solid var(--rule-strong); border-radius: var(--r1); padding: 2px 6px; flex: none; align-self: center; }
+.ve-reheat__more[open] > summary::before { content: "−"; }
+.ve-reheat__more > summary > span { font-weight: 650; color: var(--ink); }
+.ve-reheat__more > summary > em { font-style: normal; }
+.ve-reheat__more > summary sup { font-size: max(11px, .7em); line-height: 0; }
+.ve-reheat__more > summary:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.ve-reheat__more > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ve-reheat__more > .ve-figure { margin-top: var(--s4); }
+@media (max-width: 560px) {
+  .ve-reheat__btns, .ve-reheat__btns .ve-btn { width: 100%; }
+  .ve-reheat__btns .ve-btn { justify-content: center; min-width: 0 !important; white-space: normal; }
+}
+
+.ve-reheat .ve-reheat__how { margin-top: var(--s2); font-size: var(--fs-s); color: var(--ink-2); }
+.ve-reheat .ve-reheat__how > summary { cursor: pointer; width: max-content; max-width: 100%; font: 500 var(--fs-xs)/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding-block: 4px; }
+.ve-reheat .ve-reheat__how > summary:hover { color: var(--ink); }
+.ve-reheat .ve-reheat__how > summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ve-reheat .ve-reheat__how[open] > summary { margin-bottom: var(--s1); }
+
+/* ======================================================================
+   v2: inside the shell's .v2-plate. The main plate (part
+   "reheat") shows the figure, its controls, two readouts and one live line;
+   its caption and note are hidden by lib/shell.css and reappear in the
+   chapter's cards. Plates 8a ("wait") and 8b ("dbm") mount alone inside
+   Plot drawers (.v2-plate--nested): there, one interaction deep, their
+   caption, takeaway and sources are shown as quiet reading text.
+   ====================================================================== */
+.v2-plate .ve-reheat { gap: 28px; }
+.v2-plate .ve-reheat__sub {
+  font: 450 0.8125rem/1.3 var(--font-ui); letter-spacing: 0; text-transform: none; color: var(--ink-3); margin-bottom: 8px;
+}
+.v2-plate .ve-reheat__count { font: 450 0.75rem/1.5 var(--font-num); font-variant-numeric: tabular-nums slashed-zero; color: var(--ink-2); }
+.v2-plate .ve-reheat__seq { font: 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); }
+.v2-plate .ve-reheat__wallhead { font: 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); }
+.v2-plate .ve-reheat__wallhead b { font-weight: 600; color: var(--ink); }
+
+/* main plate: readouts and the live line share one hairline row */
+.v2-plate .ve-reheat__rbwrap {
+  display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 8px 40px; align-items: end;
+  padding-top: 14px; border-top: 1px solid var(--rule);
+}
+.v2-plate .ve-reheat__rb { margin: 0; gap: 8px 32px; flex-wrap: nowrap; align-items: flex-start; }
+.v2-plate .ve-reheat__rb .ve-readout { min-width: 12.5rem; }
+.v2-plate .ve-reheat__status {
+  margin: 0; max-width: 26rem; min-height: 4.5em; align-self: end;
+  font: italic 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); text-wrap: pretty;
+}
+@media (max-width: 760px) {
+  .v2-plate .ve-reheat__rbwrap { grid-template-columns: minmax(0, 1fr); }
+  .v2-plate .ve-reheat__rb { flex-wrap: wrap; }
+  .v2-plate .ve-reheat__status { min-height: 4.5em; max-width: none; }
+}
+@media (max-width: 480px) {
+  .v2-plate .ve-reheat__rb { flex-wrap: nowrap; gap: 8px 20px; }
+  .v2-plate .ve-reheat__rb .ve-readout { flex: 1 1 0; min-width: 0; }
+}
+
+/* the caption's second paragraph (the protocol) when the plate sits in a drawer */
+.ve-reheat__howb { display: block; margin-top: 10px; }
+
+/* a plate alone in a Plot drawer: its own label, then the reading text under the figure */
+.v2-plate--nested .ve-reheat--part .ve-figure__head { display: flex !important; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.v2-plate--nested .ve-reheat--part .ve-figure__head > .ve-figure__plate {
+  display: block; font: 560 0.875rem/1.2 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink);
+}
+.v2-plate--nested .ve-reheat--part .ve-figure__head > .ve-figure__title {
+  display: block; margin: 0; font: italic 400 1.0625rem/1.4 var(--font-text); color: var(--ink-2);
+}
+.v2-plate--nested .ve-reheat--part .ve-figure__caption {
+  display: block; max-width: 40rem; font: 400 0.9375rem/1.6 var(--font-text); font-variant-numeric: oldstyle-nums proportional-nums;
+  color: var(--ink-2); hyphens: auto; text-wrap: pretty;
+}
+.v2-plate--nested .ve-reheat--part .ve-figure__takeaway {
+  display: block; max-width: 40rem; margin: 0; padding-left: 14px; border-left: 1px solid var(--rule-strong);
+  font: italic 400 1rem/1.5 var(--font-text); color: var(--ink);
+}
+.v2-plate--nested .ve-reheat--part .ve-figure__takeaway .ve-label { display: none; }
+.v2-plate--nested .ve-reheat--part .ve-figure__note {
+  display: block; max-width: 40rem; margin: 0; font: 450 0.75rem/1.5 var(--font-ui); color: var(--ink-3);
+}
+.v2-plate--nested .ve-reheat--part .ve-figure__note::before { content: "Sources · "; color: var(--ink-2); font-weight: 600; }
+
+/* plate 8a alone in its drawer: no landscape (Fig. 8 shows it), so N, the readouts and the
+   sequence sit in one row above the digit wall */
+.ve-reheat__two--solo { grid-template-columns: minmax(0, 1fr); }
+.ve-reheat__two--solo .ve-reheat__waitcol { padding-top: 0; }
+
+/* the chapter's two cards (index.html #reheat-read, and the spec card the shell builds as
+   #reheat-spec): one body colour, and a soft fade at the bottom edge while more text is below.
+   The fade is a sticky veil driven by the card's own scroll timeline, so it shows only when the
+   card scrolls and clears at the end; browsers without scroll timelines show no veil. */
+#reheat-read > p:not(.v2-card__k) { color: var(--ink-2); }
+#reheat-read::after, #reheat-spec::after {
+  content: ""; display: block; position: sticky; bottom: -18px; height: 36px; margin: -36px -18px 0;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--card) 0%, transparent), var(--card) 85%);
+  pointer-events: none; opacity: 0;
+}
+@supports (animation-timeline: scroll()) {
+  #reheat-read::after, #reheat-spec::after { animation: ve-reheat-veil linear both; animation-timeline: scroll(nearest block); }
+}
+@keyframes ve-reheat-veil { 0%, 88% { opacity: 1; } 100% { opacity: 0; } }
+
+/* the chapter's symmetry-control readouts under Fig. M (shell markup, index.html #ch-reheat):
+   the overview's readout look, at a smaller size, since these are controls, not the headline */
+#ch-reheat .v2-headline--rh { margin: 22px 0 0; padding: 12px 0 12px; gap: 10px 48px; }
+#ch-reheat .v2-headline--rh .v2-rd__v { font-size: 1.9rem; }
+#ch-reheat .v2-headline--rh .v2-rd__l i { font-family: var(--font-text); font-size: 1rem; color: var(--ink-2); }
+@media (max-width: 760px) { #ch-reheat .v2-headline--rh .v2-rd__v { font-size: 1.6rem; } }

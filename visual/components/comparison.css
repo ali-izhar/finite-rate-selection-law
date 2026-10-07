@@ -1,0 +1,151 @@
+/* components/comparison.css — scoped under .ve-comparison; tokens from lib/theme.css only.
+   Inter for labels and table, JetBrains Mono (--font-num) for live values,
+   no tracked capitals; the .ve-comparison--v2 block at the end styles the disclosure layout. */
+.ve-comparison { min-width: 0; }
+.ve-comparison .ve-figure__stage { display: grid; gap: var(--s5); }
+.ve-comparison__loading { margin: 0; font: 400 var(--fs-s)/1.5 var(--font-ui); color: var(--ink-3); min-height: 12rem; }
+
+/* ---- panels ---- */
+.ve-comparison__panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: var(--s6) var(--s6); min-width: 0; }
+.ve-comparison__panel { display: grid; gap: var(--s3); align-content: start; min-width: 0; container-type: inline-size; }
+.ve-comparison__ph { margin: 0; display: flex; align-items: baseline; gap: var(--s2); font-family: var(--font-display); font-weight: 700; font-size: var(--fs-l); line-height: 1.1; letter-spacing: 0.01em; color: var(--ink); }
+.ve-comparison__ph span { font: 600 var(--fs-xs)/1 var(--font-ui); color: var(--surface); background: var(--ink); border-radius: var(--r1); padding: 3px 6px; transform: translateY(-2px); }
+.ve-comparison__pt { margin: 0; font-size: var(--fs-s); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+.ve-comparison__ctl { display: grid; gap: var(--s3); min-width: 0; }
+.ve-comparison__ctl--row { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5); }
+
+/* ---- panel 1 key (under the chart) ---- */
+.ve-comparison__key { display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--s4); font: 500 var(--fs-xs)/1.4 var(--font-ui); color: var(--ink-2); }
+.ve-comparison__keyItem { display: inline-flex; align-items: center; gap: 6px; }
+.ve-comparison__keyNote { color: var(--ink-3); font-weight: 400; }
+.ve-comparison__sw { display: inline-block; width: 22px; height: 10px; position: relative; flex: none; }
+.ve-comparison__sw--pred { border-top: 2.5px dashed var(--theory); height: 0; }
+.ve-comparison__sw--fit { background: color-mix(in srgb, var(--data) 18%, transparent); }
+.ve-comparison__sw--fit::after { content: ""; position: absolute; left: 0; right: 0; top: 2px; height: 6px; background: color-mix(in srgb, var(--data) 35%, transparent); }
+/* the bias slider steps through the 8 measured dots only: hide the generic fine scale */
+.ve-comparison .ve-slider__scale { display: none; }
+
+/* ---- linked probability bars ---- */
+.ve-comparison__bars { display: grid; gap: var(--s3); min-width: 0; }
+.ve-comparison__barRow { display: grid; gap: 4px; min-width: 0; }
+.ve-comparison__barHead { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s3); flex-wrap: wrap; font-size: var(--fs-xs); color: var(--ink-2); }
+.ve-comparison__barLab { font-family: var(--font-text); min-width: 0; }
+.ve-comparison__who { font-weight: 650; }
+.ve-comparison__who[data-who="model"] { color: var(--bias); }
+.ve-comparison__who[data-who="sampler"] { color: var(--data); }
+.ve-comparison__barVal { font: 600 var(--fs-s)/1.2 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.ve-comparison__barVal i { font-style: normal; font-weight: 400; color: var(--ink-3); font-size: var(--fs-xs); margin-left: 0.4em; }
+.ve-comparison__bar { position: relative; display: flex; height: 14px; border-radius: var(--r1); overflow: hidden; background: var(--mode-b-wash); box-shadow: inset 0 0 0 1px var(--rule); }
+.ve-comparison__barA { display: block; height: 100%; background: var(--mode-a); transition: width 320ms var(--ease); }
+.ve-comparison__barB { flex: 1; }
+.ve-comparison__barRow[data-who="model"] .ve-comparison__barA { background: var(--bias); }
+.ve-comparison__barHalf { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--ink); opacity: 0.55; }
+.ve-comparison__ratio { margin: 0; font-size: var(--fs-s); line-height: 1.5; color: var(--ink-2); }
+.ve-comparison__ratio b { font-family: var(--font-ui); font-weight: 600; color: var(--ink); }
+
+/* ---- table ---- */
+.ve-comparison__tablewrap { min-width: 0; max-width: 100%; overflow-x: auto; }
+.ve-comparison__table { width: 100%; border-collapse: collapse; font-size: var(--fs-s); }
+.ve-comparison__table th, .ve-comparison__table td { padding: 6px 6px; text-align: right; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+.ve-comparison__table thead th { font: 450 0.75rem/1.3 var(--font-ui); color: var(--ink-3); border-bottom-color: var(--rule-strong); }
+.ve-comparison__table th:first-child, .ve-comparison__table td:first-child { text-align: left; padding-left: 0; }
+.ve-comparison__table th:last-child, .ve-comparison__table td:last-child { padding-right: 0; }
+.ve-comparison__table tbody th { font: 600 var(--fs-s)/1.3 var(--font-ui); color: var(--ink); white-space: nowrap; }
+.ve-comparison__table .ve-num { font-family: var(--font-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ve-comparison__predv { color: var(--theory); font-weight: 600; }
+.ve-comparison__subv { color: var(--ink-3); font-size: var(--fs-xs); margin-left: 0.35em; }
+.ve-comparison__gap { color: var(--ink-2); }
+.ve-comparison__gap[data-ok="true"] { color: var(--ink); font-weight: 600; }
+.ve-comparison__table tbody tr[data-hl="true"] { background: var(--surface-2); }
+.ve-comparison__explain { margin: 0; font-size: var(--fs-s); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; min-height: 6.2em; }
+.ve-comparison__explain b { color: var(--ink); font-weight: 650; }
+
+/* table compaction follows the panel width, not the viewport (two-column panels are ~400-520 px) */
+@container (max-width: 600px) {
+  .ve-comparison__table th, .ve-comparison__table td { padding: 6px 4px; }
+  .ve-comparison__subv { display: block; margin-left: 0; }
+  .ve-comparison__table td:nth-child(2) { padding-right: 10px; white-space: normal; }
+  .ve-comparison__rule { white-space: normal; max-width: 9.5em; margin-left: auto; }
+}
+@container (max-width: 420px) {
+  .ve-comparison__table { font-size: var(--fs-xs); }
+  .ve-comparison__table th, .ve-comparison__table td { padding: 6px 3px; }
+  .ve-comparison__table tbody th { font-size: var(--fs-xs); }
+  .ve-comparison__table td:nth-child(2) { padding-right: 6px; }
+  .ve-comparison__table td:last-child { padding-left: 8px; }
+}
+.ve-comparison__star { color: var(--ink-3); font-weight: 500; margin-left: 1px; font-size: 11px; }
+.ve-comparison__table thead sub { font-size: 11px; }
+.ve-comparison__rowNote { margin: var(--s2) 0 0; font-size: var(--fs-xs); line-height: 1.45; color: var(--ink-3); text-wrap: pretty; }
+.ve-comparison__table td:nth-child(2) { padding-right: 12px; }
+
+
+/* the formula inside the table header stays on one line */
+.ve-comparison__thf { text-transform: none; letter-spacing: 0; white-space: nowrap; }
+
+/* ======================================================================
+   Layout: one short line per panel, explanations behind info buttons
+   ====================================================================== */
+.ve-comparison--v2 .ve-figure__stage { gap: 28px; }
+.ve-comparison__top { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; padding: 0 0 10px; border-bottom: 1px solid var(--rule); }
+.ve-comparison__topk { font: 560 0.875rem/1 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink); }
+.ve-comparison__tops { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); margin-right: auto; }
+.ve-comparison--v2 .ve-comparison__panels { gap: 40px 48px; }
+.ve-comparison--v2 .ve-comparison__panel { gap: 14px; }
+.ve-comparison__ph--v2 { display: grid; gap: 4px; }
+.ve-comparison__ph--v2 .ve-comparison__pk { font: 560 0.875rem/1 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink-3); }
+.ve-comparison__pq { margin: 0; font: 400 1.1875rem/1.3 var(--font-display); font-variation-settings: "opsz" 32; letter-spacing: -0.005em; color: var(--ink); text-wrap: balance; }
+.ve-comparison__pq .v2-info { margin: -3px 0 0 4px; }
+.ve-comparison--v2 .ve-comparison__pt { font: italic 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); max-width: 30rem; }
+.ve-comparison--v2 .ve-comparison__key { font: 450 0.8125rem/1.4 var(--font-ui); color: var(--ink-2); }
+.ve-comparison--v2 .ve-comparison__keyNote { font-style: italic; font-family: var(--font-text); }
+.ve-comparison--v2 .ve-comparison__barHead { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-2); }
+.ve-comparison--v2 .ve-comparison__barLab { font-family: var(--font-ui); }
+.ve-comparison--v2 .ve-comparison__who { font-weight: 600; }
+.ve-comparison--v2 .ve-comparison__barVal { font: 450 0.8125rem/1.2 var(--font-num); font-variant-numeric: tabular-nums slashed-zero; }
+.ve-comparison--v2 .ve-comparison__barVal i { font-size: 0.75rem; }
+.ve-comparison--v2 .ve-comparison__bar { height: 6px; border-radius: 3px; box-shadow: none; background: var(--mode-b-wash); }
+.ve-comparison--v2 .ve-comparison__barHalf { top: -4px; bottom: -4px; opacity: 0.4; }
+.ve-comparison--v2 .ve-comparison__bars { gap: 12px; padding-top: 4px; }
+.ve-comparison--v2 .ve-comparison__ratio { font: 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); }
+.ve-comparison--v2 .ve-comparison__ratio b { font-family: var(--font-text); font-weight: 600; font-variant-numeric: lining-nums tabular-nums; color: var(--ink); }
+.ve-comparison--v2 .ve-comparison__table { font: 450 0.8125rem/1.35 var(--font-ui); font-variant-numeric: tabular-nums; }
+.ve-comparison--v2 .ve-comparison__table th, .ve-comparison--v2 .ve-comparison__table td { padding-top: 8px; padding-bottom: 8px; }
+.ve-comparison--v2 .ve-comparison__table tbody th { font: 600 0.8125rem/1.3 var(--font-ui); }
+.ve-comparison--v2 .ve-comparison__table thead th { border-bottom-color: var(--rule-strong); }
+.ve-comparison--v2 .ve-comparison__predv { color: var(--ink-2); font-weight: 450; }
+.ve-comparison--v2 .ve-comparison__subv { font-size: 0.75rem; }
+.ve-comparison--v2 .ve-comparison__gap[data-ok="true"] { font-weight: 600; }
+.ve-comparison--v2 .ve-comparison__rowNote { display: block; margin: 0; font: 450 0.75rem/1.4 var(--font-ui); color: var(--ink-3); text-wrap: pretty; }
+.ve-comparison--v2 .ve-comparison__rowNote .v2-info { width: 24px; height: 24px; display: inline-grid; vertical-align: middle; margin: -4px 0 -1px 1px; }
+.ve-comparison--v2 .ve-comparison__explain { min-height: 3.1em; font: 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); hyphens: manual; -webkit-hyphens: manual; }
+.ve-comparison--v2 .ve-comparison__explain b { font-weight: 600; color: var(--ink); }
+.ve-comparison--v2 .ve-comparison__explain .v2-info { width: 24px; height: 24px; margin: -3px 0 -1px; }
+.ve-comparison--v2 .ve-comparison__ctl--row { gap: 12px 24px; }
+.ve-comparison__ph--v2 .ve-comparison__pk { background: none; padding: 0; border-radius: 0; transform: none; color: var(--ink-3); }
+
+/* deep links into this chapter's drawers (#test-plot, #test-why, #test-cav) land clear of the
+   52 px phone bar; on desktop they keep 24 px of air above the summary */
+#ch-test .v2-drawer { scroll-margin-top: 24px; }
+@media (max-width: 899px) { #ch-test .v2-drawer { scroll-margin-top: 72px; } }
+
+/* Fig. 7 vernier guard (comparison.js guardVernier): a prediction past the axis end is held at the
+   end of the track; the value prints beside it in the prediction colour with a small chevron */
+.v2-vern .vd-off { opacity: 0; transition: opacity 400ms var(--v2-ease, ease) 250ms; }
+.v2-vern .vd-off.is-on { opacity: 1; }
+.v2-vern .vd-off text { fill: var(--theory); font: 600 11px var(--font-ui); font-variant-numeric: lining-nums tabular-nums; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.v2-vrow.is-main .vd-off text { stroke: var(--surface-2); }
+.v2-vern .vd-off path { stroke: var(--theory); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: reduce) { .v2-vern .vd-off { transition: none; } }
+
+/* drawer: the view line spans both columns under the two panels */
+.ve-comparison--v2 .ve-comparison__tail { grid-column: 1 / -1; min-width: 0; }
+.ve-comparison--v2 .ve-comparison__tail .ve-comparison__explain { min-height: 0; max-width: 46rem; }
+.ve-comparison--v2 .ve-comparison__panels:has(> .ve-comparison__tail) { row-gap: 24px; }
+
+/* chapter 7 chain: shorter labels on a phone so each fits one line and the (i) stays beside its words */
+#ch-test .vd-narrow { display: none; }
+@media (max-width: 520px) {
+  #ch-test .vd-wide { display: none; }
+  #ch-test .vd-narrow { display: inline; white-space: nowrap; }
+}

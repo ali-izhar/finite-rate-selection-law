@@ -1,0 +1,118 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:06.132
+Now give the model a preference:
+a small bias toward +1 on every spin,
+
+2
+00:00:06.258 --> 00:00:08.326
+a field of strength G.
+
+3
+00:00:08.452 --> 00:00:11.797
+It tilts the landscape
+toward the positive valley.
+
+4
+00:00:12.202 --> 00:00:15.529
+The paper's schedule cools in 10 steps,
+
+5
+00:00:15.569 --> 00:00:21.608
+with the most sweeps at β = 1, where
+the distribution takes longest to settle.
+
+6
+00:00:22.012 --> 00:00:23.384
+In this model,
+
+7
+00:00:23.510 --> 00:00:28.787
+every arrangement with the same number
+k of positive spins is equally likely,
+
+8
+00:00:28.827 --> 00:00:31.070
+and the sampler treats them alike.
+
+9
+00:00:31.277 --> 00:00:38.315
+So we can track N + 1 probabilities,
+one for each k, instead of 2^N.
+
+10
+00:00:38.835 --> 00:00:45.060
+Watch the positive share: it moves while
+the bump splits in two, then it freezes.
+
+11
+00:00:45.360 --> 00:00:52.681
+The model's own distribution is 97.3%
+positive; the sampler ends at 60.5%,
+
+12
+00:00:52.721 --> 00:00:54.522
+with no counting noise.
+
+13
+00:00:54.625 --> 00:00:56.740
+Call q the positive share.
+
+14
+00:00:57.237 --> 00:01:02.638
+Measure each share in log-odds:
+the log of q / (1 − q).
+
+15
+00:01:02.915 --> 00:01:08.698
+The model has 3.57; the sampler, 0.43.
+
+16
+00:01:09.056 --> 00:01:14.259
+A share cannot double
+past 100%; log-odds can.
+
+17
+00:01:14.548 --> 00:01:17.429
+The field sits
+in the exponent of the model,
+
+18
+00:01:17.485 --> 00:01:21.225
+so for a weak field the log-odds
+grow in proportion to G.
+
+19
+00:01:21.607 --> 00:01:26.253
+Doubling G roughly doubles both,
+so their ratio stays the same.
+
+20
+00:01:26.646 --> 00:01:34.914
+That ratio, 0.120, is called c: the
+fraction of the log-odds that survives.
+
+21
+00:01:35.399 --> 00:01:38.250
+Equivalently, the sampler's odds are
+
+22
+00:01:38.290 --> 00:01:44.991
+the model's odds to the power c:
+about 36:1 becomes about 1.5:1.
+
+23
+00:01:45.059 --> 00:01:48.985
+And c barely changes across
+the paper's eight fields.
+
+24
+00:01:49.390 --> 00:01:53.629
+So at these weak fields,
+c does not depend on the field:
+
+25
+00:01:53.941 --> 00:01:59.422
+on this schedule, about an eighth
+of the model's log-odds survives.

@@ -1,0 +1,195 @@
+/* components/hero.css — scoped under .ve-hero
+   Readouts carry no boxes: an Inter label over light serif numerals. The only "look here" mark
+   is the gilt reticle on c. Bars and meters are hairlines; chroma is data only. */
+.ve-hero { display: grid; gap: 24px; min-width: 0; container: ve-hero / inline-size; }
+.ve-hero .ve-figure { margin: 0; }
+
+.ve-hero__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 272px;
+  gap: 44px;
+  align-items: start;
+}
+.ve-hero__plot { min-width: 0; display: grid; gap: 14px; }
+
+/* ---------------------------------------------------------------- tally */
+.ve-hero__tally {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; min-width: 0;
+  padding-top: 6px;
+}
+.ve-hero__row { display: grid; gap: 7px; min-width: 0; align-content: start; }
+.ve-hero__row--c { grid-column: 1 / -1; padding-top: 22px; border-top: 1px solid var(--rule); gap: 9px; }
+
+.ve-hero .ve-label { font: 450 0.8125rem/1.3 var(--font-ui); letter-spacing: 0; text-transform: none; font-variant-caps: normal; color: var(--ink-3); }
+.ve-hero__clab { display: flex; align-items: center; gap: 2px; }
+.ve-hero__clab i { font-family: var(--font-text); font-size: 1.05em; }
+.ve-hero__i { width: 22px; height: 22px; margin: -4px 0; }
+
+.ve-hero__odds {
+  font: 300 2.125rem/1 var(--font-display);
+  font-variation-settings: "opsz" 60;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.ve-hero__odds i { font: italic 400 0.5em/1 var(--font-text); color: var(--ink-3); letter-spacing: 0; margin: 0 0.1em; vertical-align: 0.15em; }
+.ve-hero__odds.is-wait { font: italic 400 1.0625rem/2.125rem var(--font-text); color: var(--ink-3); }
+.ve-hero__sub { font: 450 0.75rem/1.35 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.ve-hero__sub[hidden] { display: none; }
+
+/* a split bar is a 3 px hairline in the two mode inks, with a 1 px gap at the split */
+.ve-hero__split { display: flex; gap: 2px; height: 3px; margin: 4px 0 1px; }
+.ve-hero__seg { display: block; height: 100%; transition: width 600ms var(--v2-ease, cubic-bezier(.22,.8,.24,1)); }
+.ve-hero__seg--a { background: var(--mode-a); }
+.ve-hero__seg--b { background: var(--mode-b); }
+.ve-hero__split.is-empty .ve-hero__seg { background: var(--rule); }
+
+/* c readout: italic serif c, light gilt numerals inside the reticle, the law beside it */
+.ve-hero__cline { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 10px 0 2px; }
+.ve-hero__cbox { position: relative; display: inline-flex; align-items: baseline; gap: 10px; margin-left: 12px; padding: 2px 0; }
+.ve-hero__cbox::after {
+  content: ""; position: absolute; inset: -8px -12px -6px -12px; pointer-events: none;
+  background:
+    linear-gradient(var(--highlight), var(--highlight)) left top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) left bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left bottom / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right bottom / 1px 8px no-repeat;
+}
+.ve-hero__ceq { font: italic 400 1.5rem/1 var(--font-text); color: var(--highlight-ink); }
+.ve-hero__cval {
+  font: 300 2.75rem/1 var(--font-display);
+  font-variation-settings: "opsz" 60;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--highlight-ink);
+  min-width: 2.2ch;
+}
+.ve-hero__cval.is-wait { color: var(--ink-3); }
+.ve-hero__clawlab { display: inline-flex; align-items: center; gap: 7px; font: 450 0.8125rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-2); padding-bottom: 4px; white-space: nowrap; }
+.ve-hero__dash { display: inline-block; width: 1px; height: 14px; background: repeating-linear-gradient(var(--theory) 0 3px, transparent 3px 5px); }
+
+.ve-hero__codds { font: 450 0.75rem/1.4 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.ve-hero__codds sup { font-size: 0.75em; line-height: 0; }
+.ve-hero__codds i { font-family: var(--font-text); }
+
+/* meter: a hairline from 0 to 1, a gilt stroke up to c, a gilt ring at c, the 95% whisker under
+   the line, and the law as a dashed tick through it */
+.ve-hero__cmeter { display: grid; gap: 6px; margin-top: 6px; }
+.ve-hero__ctrack {
+  position: relative; height: 22px;
+  background:
+    linear-gradient(var(--rule-strong), var(--rule-strong)) 0 10px / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, var(--rule-strong) 0 1px, transparent 1px 10%) 0 6px / 100% 4px no-repeat;
+}
+.ve-hero__ctrack::after { content: ""; position: absolute; right: 0; top: 6px; width: 1px; height: 4px; background: var(--rule-strong); }
+.ve-hero__cfill {
+  position: absolute; left: 0; top: 9px; height: 3px; width: 0;
+  background: var(--highlight);
+  transition: width 600ms var(--v2-ease, cubic-bezier(.22,.8,.24,1));
+}
+.ve-hero__cdot {
+  position: absolute; top: 10.5px; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%;
+  background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--highlight);
+  transition: left 600ms var(--v2-ease, cubic-bezier(.22,.8,.24,1));
+}
+.ve-hero__cci {
+  position: absolute; top: 18px; height: 1px;
+  background: var(--ink-2);
+  transition: left 600ms var(--v2-ease, cubic-bezier(.22,.8,.24,1)), width 600ms var(--v2-ease, cubic-bezier(.22,.8,.24,1));
+}
+.ve-hero__cci::before, .ve-hero__cci::after { content: ""; position: absolute; top: -3px; width: 1px; height: 7px; background: var(--ink-2); }
+.ve-hero__cci::before { left: 0; }
+.ve-hero__cci::after { right: 0; }
+.ve-hero__claw {
+  position: absolute; top: 0; bottom: 4px; width: 1px; margin-left: -0.5px;
+  background: repeating-linear-gradient(var(--theory) 0 3px, transparent 3px 5px);
+  transition: left 400ms var(--v2-ease, cubic-bezier(.22,.8,.24,1));
+}
+.ve-hero__cscale { display: flex; justify-content: space-between; font: 450 0.75rem/1.3 var(--font-ui); color: var(--ink-3); }
+
+/* the guess-first table */
+.ve-hero__tbl { border-collapse: collapse; width: 100%; margin-top: 10px; font: 450 0.75rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.ve-hero__tbl th, .ve-hero__tbl td { padding: 5px 0 5px 8px; text-align: right; font-weight: 450; border-top: 1px solid var(--grid); }
+.ve-hero__tbl tr:first-child th, .ve-hero__tbl tr:first-child td { border-top: 0; padding-top: 0; }
+.ve-hero__tbl th:first-child { padding-left: 0; text-align: left; }
+.ve-hero__tbl td.is-on { color: var(--ink); font-weight: 600; }
+.ve-hero__tblhint { font: 450 0.75rem/1.35 var(--font-ui); color: var(--ink-3); }
+.ve-hero__tblhint[hidden] { display: none; }
+
+/* ---------------------------------------------------------------- legend and controls */
+.ve-hero__legend { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); gap: 4px 18px; }
+.ve-hero__legend .ve-key__mark[data-mark="outline"]::before { left: 3px; right: 3px; height: 10px; background: transparent; border: 1.5px dotted currentColor; border-radius: 0; }
+
+.ve-hero__controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 28px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.ve-hero__tlab { display: inline-flex; align-items: center; gap: 2px; }
+.ve-hero .ve-toggle__label { color: var(--ink-3); }
+/* hairline pills: the chosen option is ink on a hairline ring, not a filled block */
+.ve-hero .ve-toggle__group { background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 2px; gap: 2px; box-shadow: none; }
+.ve-hero .ve-toggle__opt { border-radius: 999px; min-height: 28px; padding: 0 12px; font: 450 0.8125rem/1 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-3); background: transparent; }
+.ve-hero .ve-toggle__opt:hover { color: var(--ink); background: transparent; }
+.ve-hero .ve-toggle__opt[aria-checked="true"] { background: var(--surface-2); color: var(--ink); font-weight: 600; box-shadow: inset 0 0 0 1px var(--rule-strong); }
+.ve-hero__play { display: flex; align-items: center; gap: 10px; min-height: 34px; }
+.ve-hero .ve-hero__pbtn { width: 32px; height: 32px; min-height: 32px; padding: 0; border-radius: 50%; background: transparent; color: var(--ink); border: 1px solid var(--rule-strong); }
+.ve-hero .ve-hero__pbtn:hover { border-color: var(--ink); background: transparent; }
+.ve-hero .ve-hero__pbtn svg { width: 10px; height: 10px; }
+.ve-hero__status { font: 450 0.75rem/1.3 var(--font-num); font-variant-numeric: tabular-nums slashed-zero; color: var(--ink-3); }
+@media (pointer: coarse) {
+  .ve-hero .ve-toggle__opt { min-height: 36px; }
+  .ve-hero .ve-hero__pbtn { width: 40px; height: 40px; }
+}
+
+/* standalone text (hidden inside the plate; the chapter's cards mirror it) */
+.ve-hero__captions { display: grid; gap: 8px; }
+.ve-hero__caption { margin: 0; max-width: 40rem; font: 400 0.9375rem/1.55 var(--font-text); color: var(--ink-2); text-wrap: pretty; }
+
+@container ve-hero (max-width: 760px) {
+  .ve-hero__stage { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .ve-hero__tally { grid-template-columns: 1fr 1fr 1.3fr; gap: 22px 28px; align-items: start; }
+  .ve-hero__row--c { grid-column: auto; grid-row: 1 / span 1; border-top: 0; padding-top: 0; padding-left: 28px; border-left: 1px solid var(--rule); }
+}
+@container ve-hero (max-width: 560px) {
+  .ve-hero__tally { grid-template-columns: 1fr 1fr; }
+  .ve-hero__row--c { grid-column: 1 / -1; grid-row: auto; padding-left: 0; border-left: 0; padding-top: 22px; border-top: 1px solid var(--rule); }
+}
+@container ve-hero (max-width: 480px) {
+  .ve-hero__odds { font-size: 1.75rem; }
+  .ve-hero__cval { font-size: 2.25rem; }
+  .ve-hero .ve-toggle, .ve-hero .ve-toggle__group { width: 100%; }
+  .ve-hero .ve-toggle__opt { flex: 1 1 0; padding-inline: 4px; }
+  .ve-hero__controls { gap: 12px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ve-hero__seg, .ve-hero__cfill, .ve-hero__cdot, .ve-hero__cci, .ve-hero__claw { transition: none; }
+}
+
+/* On a phone the "Reading the figure" card is a bottom sheet. For this figure-reading card
+   the sheet stops at 45vh, so the plot (scrolled above it by hero.js) stays in view while the
+   reader reads how to read it. The id keeps the rule above lib/shell.css's 70vh sheet rule. */
+@media (max-width: 899px) {
+  #ch-overview .v2-card[id$="-read"] { max-height: 45vh; }
+}
+
+/* Cards opened from this chapter. hero.js scrolls the page so a card shows whole;
+   when the page cannot scroll far enough, a bottom scroll shadow says "more below" and the
+   card's title stays pinned. The shadow uses the two-layer local/scroll background, so it shows
+   only while content remains below and needs no script. */
+#overview-spec, #overview-read, #overview-howto, #ch-overview .ve-hero .v2-card {
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--card) 0%, transparent), var(--card) 65%) 0 100% / 100% 34px no-repeat local,
+    linear-gradient(to top, color-mix(in srgb, var(--ink) 13%, transparent), transparent) 0 100% / 100% 14px no-repeat scroll,
+    var(--card);
+}
+#overview-spec .v2-card__k, #overview-read .v2-card__k, #ch-overview .ve-hero .v2-card__k {
+  position: sticky; top: -16px; z-index: 1;
+  margin: -16px 0 10px !important; padding: 16px 36px 6px 0;
+  background: var(--card);
+}
+#overview-spec .v2-card__x, #overview-read .v2-card__x, #ch-overview .ve-hero .v2-card__x { z-index: 2; }
+
+/* the overview's first viewport: one rule above Fig. 0 (the plate bar's), and a shorter
+   frontispiece on desktop so the plate bar starts above the fold at 1280 x 900 */
+#ch-overview .v2-clockline--over { border-bottom: 0; }
+@media (min-width: 900px) {
+  #ch-overview .v2-front canvas { height: 240px; }
+}

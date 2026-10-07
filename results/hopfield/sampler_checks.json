@@ -1,0 +1,64 @@
+[
+  {
+    "name": "G2 exact null at G = 0",
+    "passed": true,
+    "detail": "pooled k/n = 5560/11220, q_model = 0.49554 [0.48630, 0.50480], covers 1/2 = True",
+    "values": {
+      "q_model": 0.49554367201426025,
+      "lower": 0.48629527535842443,
+      "upper": 0.5047951192173508,
+      "n": 11220
+    }
+  },
+  {
+    "name": "G3 odd symmetry q(k) + q(7-k) = 1",
+    "passed": true,
+    "detail": "k=0+7: 0.99840 [0.98620, 1.01058] covers 1; k=1+6: 1.00881 [0.99624, 1.02136] covers 1; k=2+5: 0.99912 [0.98614, 1.01209] covers 1; k=3+4: 0.99536 [0.98221, 1.00852] covers 1  [0/4 pairs miss.  NOTE: the gate as specified reads four nominally-95% intervals, so even a perfect implementation misses at least one with probability 1 - 0.95^4 = 0.19; a single marginal miss is weak evidence of a defect, and the miss size in sigma is the number to read.]",
+    "values": {
+      "sums": [
+        [
+          0,
+          0.9983965182342559,
+          0.98620333900499,
+          1.0105827872185198,
+          true
+        ],
+        [
+          1,
+          1.0088053772230106,
+          0.9962386001509097,
+          1.0213643273381212,
+          true
+        ],
+        [
+          2,
+          0.9991155808073461,
+          0.9861421838346375,
+          1.012088835821004,
+          true
+        ],
+        [
+          3,
+          0.995364194583954,
+          0.9822056429904636,
+          1.0085249340151503,
+          true
+        ]
+      ],
+      "n_miss": 0
+    }
+  },
+  {
+    "name": "G4 q_eq routes agree + per-seed bar m within 5 alpha",
+    "passed": false,
+    "detail": "max |route(a) - route(b)| over the grid = 2.108e-08 (literal tol 1e-10: FAIL; theory-consistent tol 1e-7: PASS); max_s |bar m_seed - 0.8905367| = 2.261e-03 at s=11, tol 6.522e-03: PASS",
+    "values": {
+      "route_gap": 2.107523489058849e-08,
+      "route_literal_pass": false,
+      "route_theory_pass": true,
+      "mbar_max_dev": 0.0022608287231444812,
+      "mbar_pass": true,
+      "mbar_cw_computed": 0.890536667553067
+    }
+  }
+]

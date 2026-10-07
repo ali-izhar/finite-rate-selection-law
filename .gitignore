@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+.venv/
+.ruff_cache/
+
+# LaTeX (the build goes to paper/build/; paper/main.pdf is a tracked copy)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+paper/build/
+paper/figures/*.png
+
+# visual edition: dependencies, site builds, film renders and narration audio
+visual/node_modules/
+visual/_site/
+visual/dist/
+visual/film/build/
+visual/film/media/
+
+# local secrets and settings
+.env
+.claude/
+
+# GPU reruns (HOPFIELD_OUT=rerun)
+rerun/

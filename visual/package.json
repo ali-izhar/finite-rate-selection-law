@@ -1,0 +1,14 @@
+{
+  "name": "finite-rate-selection-law-visual",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive visual edition of the paper: static files, no dependencies",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node lib/sim.test.mjs",
+    "serve": "node tools/serve.mjs",
+    "media": "node tools/media.mjs",
+    "build": "sh tools/build-site.sh"
+  }
+}
