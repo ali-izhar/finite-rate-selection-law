@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="453.60pt" height="313.20pt" viewBox="0 0 453.60 313.20" role="img" aria-label="Sampled against model log-odds at eight fields: the measured fit has slope 0.199 with 95% band 0.1908 to 0.2095; the predicted line of slope 0.199 lies inside it; the model itself has slope 1." class="fig" id="fig-V5">
+<clipPath id="c5"><rect x="112" y="8" width="335.59999999999997" height="265.2"/></clipPath>
+<line x1="150.72" y1="8.00" x2="150.72" y2="273.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="150.72" y="303.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >−3</text>
+<line x1="279.80" y1="8.00" x2="279.80" y2="273.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="408.88" y1="8.00" x2="408.88" y2="273.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="408.88" y="303.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >3</text>
+<text x="279.80" y="303.20" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums proportional-nums;" >model’s log-odds</text>
+<line x1="112.00" y1="210.39" x2="447.60" y2="210.39" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="102.00" y="218.39" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >−0.5</text>
+<line x1="112.00" y1="140.60" x2="447.60" y2="140.60" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="102.00" y="148.60" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0</text>
+<line x1="112.00" y1="70.81" x2="447.60" y2="70.81" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="102.00" y="78.81" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.5</text>
+<line x1="112.00" y1="273.20" x2="447.60" y2="273.20" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<line x1="112.00" y1="8.00" x2="112.00" y2="273.20" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<g clip-path="url(#c5)"><line x1="236.77" y1="280.18" x2="322.83" y2="1.02" stroke="#6A6C72" stroke-width="2.4" stroke-dasharray="3 6" stroke-linecap="butt" /></g>
+<polygon points="112.00,244.46 447.60,36.74 447.60,26.56 112.00,254.64" fill="rgba(176,138,46,0.45)" />
+<line x1="112.00" y1="244.46" x2="447.60" y2="36.74" stroke="#B08A2E" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="112.00" y1="254.64" x2="447.60" y2="26.56" stroke="#B08A2E" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="112.00" y1="249.16" x2="447.60" y2="32.04" stroke="#7A5C0E" stroke-width="2.4" stroke-linecap="butt" />
+<line x1="433.37" y1="47.84" x2="433.37" y2="36.80" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="433.37" cy="42.32" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="389.49" y1="70.32" x2="389.49" y2="59.56" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="389.49" cy="64.94" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="345.61" y1="105.36" x2="345.61" y2="94.87" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="345.61" cy="100.12" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="301.74" y1="132.32" x2="301.74" y2="121.89" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="301.74" cy="127.10" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="257.86" y1="161.90" x2="257.86" y2="151.49" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="257.86" cy="156.69" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="213.99" y1="186.81" x2="213.99" y2="176.37" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="213.99" cy="181.59" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="170.11" y1="216.24" x2="170.11" y2="205.76" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="170.11" cy="211.00" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="126.23" y1="245.25" x2="126.23" y2="234.54" stroke="#141518" stroke-width="2.6" stroke-linecap="butt" />
+<circle cx="126.23" cy="239.89" r="7.00" fill="#141518" stroke="#FBF6E9" stroke-width="2.5"/>
+<line x1="112.00" y1="249.17" x2="447.60" y2="32.03" stroke="#141518" stroke-width="1.6" stroke-dasharray="6 6" stroke-linecap="butt" />
+<text x="289.31" y="42.89" font-family="Inter, sans-serif" font-size="22" font-weight="600" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" >slope 1</text>
+<text x="289.31" y="70.89" font-family="Inter, sans-serif" font-size="22" font-weight="600" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" >= the model</text>
+<line x1="274.64" y1="203.20" x2="310.64" y2="203.20" stroke="#7A5C0E" stroke-width="2.4" stroke-linecap="butt" />
+<text x="320.64" y="211.20" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" >measured</text>
+<rect x="274.64" y="221.20" width="36.00" height="16.00" fill="rgba(176,138,46,0.45)" stroke="#B08A2E" stroke-width="1.2"/>
+<text x="320.64" y="237.20" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" >95% band</text>
+<line x1="274.64" y1="255.20" x2="310.64" y2="255.20" stroke="#141518" stroke-width="1.6" stroke-dasharray="6 6" stroke-linecap="butt" />
+<text x="320.64" y="263.20" font-family="Inter, sans-serif" font-size="22" font-weight="600" fill="#141518" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" >predicted</text>
+<text x="24.00" y="140.60" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums proportional-nums;" transform="rotate(-90 24 140.6)">samples’ log-odds</text>
+</svg>

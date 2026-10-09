@@ -29,3 +29,9 @@ visual/film/media/
 
 # GPU reruns (HOPFIELD_OUT=rerun)
 rerun/
+
+# poster: dependencies and build intermediates
+poster/node_modules/
+poster/poster.render.html
+poster/poster-detail.png
+poster/poster.qr.json

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finite-Rate Selection Poster</title>
+<!-- Source page. build.mjs inlines figures/V*.svg at the figure marks, renders the TeX math with
+     KaTeX into poster.render.html, then prints that file. Layout: poster.css. Numbers: checked against paper/main.tex by make_figures.py.
+     Structure: header (with the repository QR code) | dark hero band (the phenomenon) | I. Curie-Weiss (three panels) |
+     II. Hopfield (three panels) | footer (references). Every panel: number + headline, figure, rule, line, caption. -->
+<link rel="stylesheet" href="fonts/katex/katex.min.css">
+<link rel="stylesheet" href="poster.css">
+</head>
+<body>
+
+<!-- ============================================================ HEADER -->
+<header id="header" class="band">
+  <h1>A Finite-Rate Selection Law<br>for Annealed Gibbs Sampling</h1>
+  <div class="people">
+    <div class="authors">Izhar Ali<sup>1</sup><span class="sep">·</span>Muhammad Haris Khan<sup>2</sup><span class="sep">·</span>Saeed Ahmad<sup>3</sup></div>
+    <div class="affil"><sup>1</sup>Rowan University<span class="sep">·</span><sup>2</sup>University of Copenhagen<span class="sep">·</span><sup>3</sup>IKLAB Inc.</div>
+  </div>
+  <div class="hright">
+    <div class="venue">
+      <img class="dfmark" src="assets/logos/dynafront-mark.png" alt="DynaFront workshop logo">
+      <div class="vtext"><div class="v1">DynaFront Workshop</div><div class="v2">NeurIPS 2026</div></div>
+    </div>
+    <div class="logos">
+      <img class="logo rowan" src="assets/logos/rowan.svg" alt="Rowan University">
+      <img class="logo ucph" src="assets/logos/ucph.svg" alt="University of Copenhagen">
+      <img class="logo iklab" src="assets/logos/iklab.png" alt="IKLAB">
+    </div>
+    <div class="qr">
+      <div class="qtext"><div class="t">Paper · code · interactive edition · film</div><div class="u">github.com/ali-izhar/finite-rate-selection-law</div></div>
+      <img src="assets/qr-repo.svg" alt="QR code: github.com/ali-izhar/finite-rate-selection-law">
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================ HERO (dark band) -->
+<section id="hero">
+  <div class="inner">
+    <div class="kick">Plausible samples, wrong proportions</div>
+    <p class="claim">In Curie–Weiss and Hopfield models, annealed Gibbs samples<br>keep only a fraction&nbsp;<i class="c">c</i> of the model’s log-odds between&nbsp;modes.</p>
+    <div class="frame"><!--#VH--></div>
+    <p class="cap capL">Fig.&nbsp;1a · 14 paths of the drift-plus-noise approximation · <i>N</i>&nbsp;=&nbsp;1,024 · <i>G</i>&nbsp;=&nbsp;0</p>
+    <p class="cap capR">Table&nbsp;4 · strongest field · after reheating</p>
+  </div>
+</section>
+
+<!-- ============================================================ I. CURIE-WEISS -->
+<div class="sec" id="sec1"><span class="n">I</span><span class="t">Curie–Weiss: the exact chain tests the law</span><span class="r"></span></div>
+
+<section id="p1" class="card r1 col1">
+  <div class="hd"><span class="k">1</span><h2>A weak field races noise.</h2></div>
+  <div class="frame"><!--#V1--></div>
+  <div class="txt">
+    <p class="line eq">\(q_{\mathrm{sel}}\simeq\Phi(\textcolor{#2350B4}{a}),\quad \textcolor{#2350B4}{a}=G\sqrt N\,(\pi/\gamma)^{1/4}\)</p>
+    <p class="cap attr">classical result (Kondepudi &amp; Nelson 1983)</p>
+    <p class="cap"><i>q</i>: share of runs in favored mode · <i>G</i>: field<br>Fig.&nbsp;1b · <i>N</i>&nbsp;=&nbsp;2,048 · cooling rate <i>γ</i>&nbsp;=&nbsp;0.001</p>
+  </div>
+</section>
+
+<section id="p2" class="card r1 col2">
+  <div class="hd"><span class="k">2</span><h2>Slower cooling helps little.</h2></div>
+  <div class="frame"><!--#V2--></div>
+  <div class="txt">
+    <p class="line eq">\(\textcolor{#7A5C0E}{c}=\dfrac{\operatorname{logit}q_{\mathrm{chain}}}{\operatorname{logit}q_{\mathrm{eq}}}\;\propto\;(N^2\gamma)^{-1/4}\)</p>
+    <p class="cap">chain: sampler · eq: model · Table&nbsp;2<br>linear ramps, <i>NG</i> fixed · law within 2%</p>
+  </div>
+</section>
+
+<section id="p3" class="card r1 col3">
+  <div class="hd"><span class="k">3</span><h2>Reheated runs reselect.</h2></div>
+  <div class="frame"><!--#V3--></div>
+  <div class="txt">
+    <p class="line">A second choice still keeps<br>only <i class="c">c</i><sub class="c">CW</sub>&nbsp;=&nbsp;0.120.</p>
+    <p class="cap">Table&nbsp;3 · exact chain, reheated · <i>N</i>&nbsp;=&nbsp;2,048</p>
+  </div>
+</section>
+
+<!-- ============================================================ II. HOPFIELD -->
+<div class="sec" id="sec2"><span class="n">II</span><span class="t">Hopfield: competing patterns, predicted without Hopfield samples</span><span class="r"></span></div>
+
+<section id="p4" class="card r2 col1">
+  <div class="hd"><span class="k">4</span><h2>Competition raises <i class="c">c</i>.</h2></div>
+  <div class="frame"><!--#V4--></div>
+  <div class="txt">
+    <p class="line eq">\(\textcolor{#7A5C0E}{c_{\mathrm{pred}}}=A_p\,c_{\mathrm{CW}},\;\; A_p=\dfrac{\mathbb E\max_\mu|Z_\mu|}{\mathbb E|Z|}\)</p>
+    <p class="line">Bigger overlap, stronger&nbsp;bias.</p>
+    <p class="cap">Eq.&nbsp;6 · Gaussian approximation</p>
+  </div>
+</section>
+
+<section id="p5" class="card r2 col2 climax">
+  <div class="hd"><span class="k">5</span><h2><i>p</i>&nbsp;=&nbsp;3: 0.199, as predicted.</h2></div>
+  <div class="frame"><!--#V5--></div>
+  <div class="txt">
+    <div class="strip">
+      <span class="l"><b>0.120</b><span class="op">×</span><b>1.662</b><span class="op">=</span></span><b>0.199</b><span class="lb">predicted</span>
+      <span class="l lb meas">measured</span><b class="meas">0.199</b><span class="lb meas">[0.1908,&nbsp;0.2095]</span>
+    </div>
+    <p class="cap">may partly reflect cancelling errors<br>Fig.&nbsp;2b · 8 fields · <i>p</i>&nbsp;=&nbsp;3 · <i>N</i>&nbsp;=&nbsp;2,048</p>
+  </div>
+</section>
+
+<section id="p6" class="card r2 col3">
+  <div class="hd"><span class="k">6</span><h2>The prediction misses<br>by up to 11%.</h2></div>
+  <div class="frame"><!--#V6--></div>
+  <div class="txt">
+    <p class="line">Largest miss: <i>p</i>&nbsp;=&nbsp;2, predicted 0.169,<br>measured 0.188.</p>
+    <p class="cap">At <i>p</i>&nbsp;=&nbsp;3, errors may partly cancel (Sec.&nbsp;5).</p>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER -->
+<footer id="footer" class="band">
+  <div class="refs">Kondepudi &amp; Nelson 1983 · Kondepudi &amp; Gao 1987 · Amit et al. 1985 · Berglund &amp; Gentz 2002 · Levin et al. 2010</div>
+</footer>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
 
 Izhar Ali, Muhammad Haris Khan, Saeed Ahmad · DynaFront Workshop at NeurIPS 2026 (poster)
 
-[**Paper**](paper/main.pdf) · [**Visual edition**](https://ali-izhar.github.io/finite-rate-selection-law/) · [**Film**](https://ali-izhar.github.io/finite-rate-selection-law/#watch) (14 min) · [**Docs**](docs/README.md)
+[**Paper**](paper/main.pdf) · [**Poster**](poster/poster.pdf) · [**Visual edition**](https://ali-izhar.github.io/finite-rate-selection-law/) · [**Film**](https://ali-izhar.github.io/finite-rate-selection-law/#watch) (14 min) · [**Docs**](docs/README.md)
 
 <a href="https://ali-izhar.github.io/finite-rate-selection-law/"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/visual-edition-dark.jpg">
@@ -84,6 +84,7 @@ interactive simulations and a narrated film.
 | [`docs/`](docs/README.md) | details the paper points to: protocol (schedules, estimators, seeds), derivations, full reproduction steps |
 | [`models/`](models/README.md) | the Boltzmann machine and classifier of the MNIST illustration |
 | [`visual/`](visual/README.md) | the visual edition and the [film](visual/film/README.md) |
+| [`poster/`](poster/README.md) | the workshop poster (24 × 36 in) and its build |
 
 ## Citation
 
@@ -104,3 +105,4 @@ Fonts: SIL Open Font License ([visual/fonts/LICENSES.md](visual/fonts/LICENSES.m
 `paper/jmlr.cls` and `paper/jmlrutils.sty`: LaTeX Project Public License 1.3;
 `paper/dynafront2026.cls`: the DynaFront 2026 template, unmodified.
 The digit images derive from MNIST (LeCun, Cortes and Burges).
+The logos in `poster/assets/logos/` are trademarks of their owners and are used with permission.
