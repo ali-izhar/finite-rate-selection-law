@@ -5,7 +5,7 @@ A row passes when the recomputed value rounds to the printed one; no tolerance i
 printed precision unless the row says why. Locations refer to [paper/main.pdf](../paper/main.pdf);
 a `docs/` location is a repository page the paper points to.
 
-Current result: **75 PASS, 0 FAIL, 4 UNVERIFIED** (the UNVERIFIED rows need a GPU or MNIST).
+Current result: **78 PASS, 0 FAIL, 4 UNVERIFIED** (the UNVERIFIED rows need a GPU or MNIST).
 
 Categories: **a** recomputed live from the exact chain in `src/`; **b** recomputed from saved results
 in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external data.
@@ -27,11 +27,13 @@ in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external d
 | A11 | Table 1 | 0.169 | c_CW x A_2 |
 | A12 | Sec. 4, Table 1 | 0.199 | c_CW x A_3 |
 | A13 | Table 1 | 0.220 | c_CW x A_4 |
-| A14 | Sec. 3, Table 2 | exceeds the prediction in all nine cases, by 0.23-1.81% | nine linear ramps of the exact chain vs logit Phi(G sqrt N (pi/gamma)^1/4) / logit q_eq |
+| A14 | Sec. 3, Table 2 | exact c exceeds the law by 0.23-1.81% on all nine ramps | nine linear ramps of the exact chain vs logit Phi(G sqrt N (pi/gamma)^1/4) / logit q_eq |
 | A15 | Sec. 3 | 0.256 | smallest N gamma over the nine ramps |
 | A16a | Table 2 | 0.09370 | exact chain, N=1024, gamma=0.004 |
 | A16b | Table 2 | 0.09372 | exact chain, N=2048, gamma=0.001 |
 | A16c | Table 2 | 0.09361 | exact chain, N=4096, gamma=0.00025 |
+| A16d | Abstract, Sec. 3 | sixteen times slower cooling only doubles the fraction | exact chain: c(gamma=0.00025) / c(gamma=0.004) at N = 1024, 2048, 4096; each ratio rounds to 2 |
+| A16e | Sec. 3 | 58% of runs end in the favored mode | q_sel = Phi(a) at N=2048, gamma=0.001, G=0.0006125 (Fig. 1b), percent |
 | A17 | Sec. 4, Table 3 | dwell ceil(6 tau) sweeps, 834 in total | tau = 1/gap_full for beta <= 1, 1/gap_well above (N = 2048, G = 0) |
 | A18 | Table 4 caption | 1.2e-4 | exp(-30/tau), tau = 1/gap_full(2048, 0.7); tau = 3.327 sweeps |
 | A19 | Sec. 4, Table 4 | eight nonzero fields, four on each side of q_eq = 1/2 | src.hopfield.equilibrium.qeq_route_a(2048, 1.6, G) over src.hopfield.protocol.G_GRID |
@@ -41,11 +43,11 @@ in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external d
 
 | id | Location | Printed | How it is checked |
 |---|---|---|---|
-| B01 | Abstract, Sec. 4, App. B | 0.1994 | src/hopfield/seed_bootstrap.py on results/hopfield/field_grid_analysis.json; sample-weighted mean of per-set slopes |
+| B01 | Sec. 4, App. B | 0.1994 | src/hopfield/seed_bootstrap.py on results/hopfield/field_grid_analysis.json; sample-weighted mean of per-set slopes |
 | B02 | Sec. 4 | 0.2101 | src/hopfield/seed_bootstrap.py on results/hopfield/field_grid_analysis.json; equal-weight mean of per-set slopes |
 | B03 | Sec. 4, App. B | [0.1908, 0.2095] | src/hopfield/seed_bootstrap.py on results/hopfield/field_grid_analysis.json; 20,000 pattern-set resamples, seed 20260825 |
-| B31 | Sec. 4 | 66.9% sampled, 97.26% reference at G = 0.0006125 | results/hopfield/field_grid_analysis.json, strongest positive field |
-| B32 | Sec. 4 | c = 0.70/3.57 | logits of B31 |
+| B31 | record (no longer printed) | 66.9% sampled, 97.26% reference at G = 0.0006125 | results/hopfield/field_grid_analysis.json, strongest positive field |
+| B32 | record (no longer printed) | c = 0.70/3.57 | logits of B31 |
 | B33 | Sec. 4, App. B | [0.1994, 0.1997] | checks/reanalysis.py: three alternative estimators |
 | B34 | App. B | 0.000944 | checks/reanalysis.py: intercept of the pooled logistic fit |
 | B35 | App. B | 2.108e-8 | results/hopfield/sampler_checks.json G4: max \|exact - weak-field q_eq\| over the eight fields |
@@ -60,7 +62,8 @@ in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external d
 | B07 | Table 1, p=4 | 0.211 | pattern_count_p4.json: pooled c = logit(q)/logit(q_eq); bootstrap over the 12 pattern sets (20,000 resamples, seed 2026) |
 | B07i | Table 1, p=4 | [0.191, 0.239] | pattern_count_p4.json: pooled c = logit(q)/logit(q_eq); bootstrap over the 12 pattern sets (20,000 resamples, seed 2026) |
 | B08 | Sec. 1, Sec. 5 | 11 | largest \|c_meas / (c_CW x A_p) - 1\| over p = 1..4, percent |
-| B09 | Sec. 1 | closely matches three-pattern simulations | c_meas(p=3) / (c_CW x A_3) - 1 |
+| B08a | Abstract | within 11% | largest \|c_meas / c_pred - 1\| over all Table 1 rows (pattern counts and sizes), percent |
+| B09 | Sec. 1 | closely matches three-pattern runs | c_meas(p=3) / (c_CW x A_3) - 1 |
 | B10m1024 | Table 1 | 0.263 | size_scan_p3.json N=1024: logit q / logit q_eq(N) |
 | B10p1024 | Table 1 | 0.284 | exact_protocol_sizes.json: c_CW(1024) x A_3 |
 | B10m4096 | Table 1 | 0.160 | size_scan_p3.json N=4096: logit q / logit q_eq(N) |
@@ -76,8 +79,8 @@ in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external d
 | B13_2048 | Sec. 5, App. B | 1.063 | sampler_clock.json: c_meas(p=1, N=2048) / c_CW(N) |
 | B13_4096 | Sec. 5, App. B | 1.020 | sampler_clock.json: c_meas(p=1, N=4096) / c_CW(N) |
 | B14 | Sec. 5 | 0.212 | c_CW x A_3 x r(2048) |
-| B15_1024 | Sec. 5 | 0.319 | c_pred(1024) x r(1024) |
-| B15_4096 | Sec. 5 | 0.153 | c_pred(4096) x r(4096) |
+| B15_1024 | App. B | 0.319 | c_pred(1024) x r(1024) |
+| B15_4096 | App. B | 0.153 | c_pred(4096) x r(4096) |
 | B16_1024 | Sec. 5 | 18 | sampler_clock.json: \|c_meas / (c_pred x r) - 1\| at N=1024, percent |
 | B16_4096 | Sec. 5 | 4 | sampler_clock.json: \|c_meas / (c_pred x r) - 1\| at N=4096, percent |
 | B17 | App. C | 0.343384 | size_scan_p1.json['1024'].logit: pooled one-pattern logit at N=1024 |
@@ -100,7 +103,7 @@ in `results/` or `models/`, with no rerun; **c** needs a GPU rerun or external d
 | id | Location | Printed | How it is checked |
 |---|---|---|---|
 | C01 | Table 1 | measured c for p = 1..4 at N = 2048, and p = 3 at N = 1024, 4096 | rerun: `python -m src.experiments.hopfield_runs draws P (P = 1..4; 10-21 min GPU each); ... draws 3 1024,4096 (about 48 min GPU)`. needs a GPU; the saved counts reproduce Table 1 in B04-B07i and B10 |
-| C02 | Abstract, Sec. 4, Fig. 2b, Table 4 | the field grid (eight fields, twenty pattern sets) | rerun: `python -m src.hopfield static \| pre \| grid \| analyse (about 37 min GPU for grid)`. needs a GPU; the saved per-set counts reproduce B01-B03 and Table 4 |
+| C02 | Sec. 4, Fig. 2b, Table 4 | the field grid (eight fields, twenty pattern sets) | rerun: `python -m src.hopfield static \| pre \| grid \| analyse (about 37 min GPU for grid)`. needs a GPU; the saved per-set counts reproduce B01-B03 and Table 4 |
 | C03 | Sec. 5, App. B, App. C | one-pattern runs at N = 512..4096 | rerun: `python -m src.experiments.hopfield_runs size-p1 N (about 24 min GPU at N = 1024)`. needs a GPU; the saved counts reproduce B13 and B17 |
 | C04 | docs/mnist-illustration.md | the 24-run MNIST ensemble of the figure | rerun: `python -m src.experiments.dbm_reheat (needs raw MNIST)`. src.dbm re-implements the original sampler, so a rerun reproduces the ensemble statistically, not byte for byte; the saved run is checked in B30 |
 

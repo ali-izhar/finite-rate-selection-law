@@ -6,7 +6,7 @@
 
 \optauthor{%
   \Name{Izhar Ali} \Email{aliz@rowan.edu}\\
-  \addr Rowan University
+  \addr Department of Computer Science, Rowan University
   \AND
   \Name{Muhammad Haris Khan} \Email{XXXX@di.ku.dk}\\
   \addr Department of Computer Science, University of Copenhagen
@@ -23,307 +23,304 @@
 \maketitle
 
 \begin{abstract}
-A sampling algorithm can generate plausible examples from a probability model
-but in the wrong proportions. We study this error in annealed Gibbs sampling,
-which updates individual variables while lowering the temperature. In the
-Curie--Weiss (CW) model, binary variables tend to share one sign. A weak field
-favors $+1$ but competes with random fluctuations as cooling chooses the sign.
-Classical theory predicts this choice; comparing it with the equilibrium
-probabilities gives a law for how much of the field's preference
-survives. Much slower cooling raises the surviving preference only modestly.
-The law agrees closely with numerical evolution of the exact CW chain. In a
-Hopfield model with several stored patterns, we remove runs in one mode after
-brief cooling and reheat the rest so that they choose again. Competition
-amplifies the preference between a pattern and its negative. A Gaussian
-approximation captures this effect, with discrepancies across pattern counts,
-sizes, and update rules. The results relate the sign chosen during cooling to
-final mode probabilities; the CW calculation is a reference for comparing
-cooling schedules.
+A sampler can generate plausible examples in the wrong proportions. We show
+how this happens in annealed Gibbs sampling, which updates one variable at a
+time while lowering the temperature. In the Curie--Weiss model, binary
+variables tend to share one sign, giving two modes, and a weak field makes one
+mode more probable. Each run commits to a mode near the critical temperature,
+while the field still competes with random fluctuations, and rarely switches
+afterwards. The samples therefore keep only a fraction of the model's log-odds
+between the modes. We turn the classical probability of this commitment, due
+to Kondepudi and Nelson, into a law for the fraction that agrees closely with
+an exact calculation of the sampler. The law also explains why slower cooling
+helps little: on a linear ramp, cooling sixteen times more slowly only doubles
+the fraction. Reheating runs that settled away from the favored mode gives them a
+second choice, and the exact calculation shows that it again keeps only a fraction. In
+a Hopfield model, competition among stored patterns raises this fraction; a
+Gaussian approximation of the competition predicts the result to within
+11\% across pattern counts and sizes.\footnote{Code and details:
+\url{https://github.com/ali-izhar/finite-rate-selection-law}}
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
 
 Suppose a model of handwritten digits assigns twice as much probability to
-``3'' as to ``8''. A sampling algorithm should then produce
-about twice as many ``3''s as ``8''s over many runs. It can produce
-recognizable examples of both digits and still get this proportion wrong.
-Probabilities and averages estimated from these samples can then be biased. How
-does the sampling algorithm change these proportions?
+``3'' as to ``8''. A sampler should then produce about twice as many ``3''s as
+``8''s over many runs. It can produce recognizable examples of both digits and
+still get this proportion wrong, and Monte Carlo estimates from its samples are
+then biased. How does the sampler change these proportions?
 
-We study annealed Gibbs sampling. A Gibbs update redraws one variable from its
-conditional distribution given the other variables. High temperature gives a
-broad distribution; lower temperature concentrates probability around likely
-outcomes. Cooling, or annealing, lowers the temperature to its target value.
-During cooling, moving between groups of likely outcomes becomes difficult.
-Further updates within one group need not correct how often each group was
-chosen \citep{neal2001}.
+We study annealed Gibbs sampling, which redraws one variable at a time from its
+conditional distribution. At high temperature the
+distribution is broad; at low temperature its probability concentrates in
+modes, regions of likely outcomes separated by unlikely ones. As annealing
+lowers the temperature, the barriers between modes grow and the sampler stops mixing between them: later updates mostly sharpen the
+mode each run selected and rarely undo the selection \citep{neal2001}.
 
-To isolate this error from inaccuracies in a learned model, we use the
-Curie--Weiss (CW) model. Its binary variables tend to align, so cooling makes
-most of them share one sign. A weak field favors the positive sign but
-competes with random fluctuations while cooling selects the sign. Both the
-model's probabilities and the evolution of the sampling algorithm can be
-computed from the number of positive variables alone.
+The sampler can therefore get the mode proportions wrong even when the model
+is right. To measure this error alone, we use the Curie--Weiss (CW) model, whose
+probabilities, and those of its Gibbs sampler, can be computed exactly. Its binary 
+variables tend to align, giving two modes at low temperature: most variables positive, 
+or most negative. A weak field favors the positive mode, but near the critical 
+temperature it competes with random fluctuations as each run commits to a mode.
 
-We connect a classical prediction of this sign choice
-\citep{kondepudinelson1983,kondepudigao1987,nene2018} to the error in final
-proportions. The resulting law quantifies how much of the field's preference
-survives cooling and shows why much slower cooling improves it only modestly.
-Extending the argument to a Hopfield model with several stored binary patterns
-predicts that competition among patterns strengthens this preference. We test
-the prediction on runs reheated to choose a mode again.\footnote{Code, saved runs,
-the full protocol, and material omitted here (relaxation times, the full $p=2$
-calculation, an MNIST illustration):
-\url{https://github.com/ali-izhar/finite-rate-selection-law}.} It closely matches
-three-pattern simulations but misses by up to $11\%$ of the prediction at
-other pattern counts or sizes.
+We connect a classical prediction of the mode selection
+\citep{kondepudinelson1983,kondepudigao1987,nene2018} to this error in mode
+proportions. The resulting law gives the fraction of the model's log-odds between the modes
+that the samples keep, and shows why slower cooling helps little.
+Extended to a Hopfield model, whose modes are stored patterns
+and their negatives, the argument predicts that competition among patterns raises this fraction. 
+Tested after
+reheating, which lets runs that settled away from the favored mode select
+again, the prediction closely matches three-pattern runs but misses by up to
+$11\%$ at other pattern counts or sizes.
 
 \section{An exact model of mode selection}
 \label{sec:model}
 
-A configuration is a vector $x=(x_1,\ldots,x_N)$ of binary variables
-$x_i\in\{-1,+1\}$, called spins. The CW model assigns higher probability
-to configurations in which spins agree:
+The model's state, or \emph{configuration}, is a vector $x=(x_1,\ldots,x_N)$
+of $N$ binary variables $x_i\in\{-1,+1\}$, called spins. The CW model gives
+higher probability to configurations whose spins agree:
 \begin{equation}
  \pi_{\beta,G}(x)\propto
  \exp\!\left[\frac{\beta}{2(N-1)}\sum_{i\ne j}x_i x_j
               +\beta G\sum_i x_i\right].
  \label{eq:model}
 \end{equation}
-At $\beta=0$, all configurations are equally probable. Increasing $\beta$
-strengthens the preference for alignment and corresponds to cooling;
-$\beta$ is therefore the \emph{inverse temperature}. The \emph{field} $G$
-favors spins of its sign and stays fixed during each cooling run.
-At fixed temperature, Gibbs updates eventually reproduce $\pi_{\beta,G}$,
-the \emph{equilibrium distribution}.
+The \emph{inverse temperature} $\beta$ sets how strongly spins prefer to
+agree: at $\beta=0$ all configurations are equally likely, and increasing
+$\beta$, which is cooling, concentrates probability on aligned
+configurations. The \emph{field} $G$, fixed during a run, adds a preference for one sign. 
+At fixed $\beta$, the Gibbs sampler converges to the \emph{equilibrium distribution} $\pi_{\beta,G}$.
+The \emph{magnetization} $m=N^{-1}\sum_i x_i$ summarizes a configuration:
+$m>0$ means mostly positive spins, $m<0$ mostly negative. Without a field, as
+$N\to\infty$, the equilibrium $m$ concentrates at $0$ for $\beta<1$ and at two
+opposite nonzero values for $\beta>1$. These two groups of configurations are
+the two \emph{modes}, and $\beta=1$ marks the \emph{transition}, at the
+critical temperature. A positive field makes the positive mode more probable.
 
-The average spin, $m=N^{-1}\sum_i x_i$, is the \emph{magnetization}.
-Its sign separates mostly positive from mostly negative configurations.
-Without a field, in the limit $N\to\infty$, the equilibrium magnetization
-concentrates at zero for $\beta<1$ and at two opposite nonzero values for
-$\beta>1$, with the \emph{transition} at $\beta=1$. The configurations around these
-two values form two \emph{modes}, or groups of likely outcomes.
+A run starts at some $\beta<1$. Each Gibbs update redraws one uniformly chosen
+spin; updates occur at random times, $N$ per unit time on average, and this
+unit is an \emph{expected sweep}. A cooling schedule raises $\beta$ past the
+transition to a final value, by which the run has settled into one mode. Configurations with 
+the same number $k$ of positive spins are equally probable and change $k$ at the same 
+rates, which lets $k$ alone describe the run: we track $N+1$ probabilities, one for each 
+$k=0,\ldots,N$, instead of $2^N$, one for each configuration
+\citep{levinluczak2010}. We compute them exactly, without sampling noise, by numerically
+solving the linear equations that govern their change (Appendix~\ref{app:exact}).
 
-For CW, each Gibbs update chooses a spin uniformly. Updates occur at random
-times at rate $N$; one unit of time, $N$ updates on average, is an
-\emph{expected sweep}.
-All configurations with the same number $k$ of positive spins have the same
-rates of changing $k$. We can therefore track $N+1$ probabilities, one for
-each $k=0,\ldots,N$, instead of $2^N$ configurations \citep{levinluczak2010}, and evolve them
-numerically (Appendix~\ref{app:exact}).
-
-Let $\qchain$ be the probability that the algorithm ends with $m>0$, and
-$\qeq$ the probability of $m>0$ under the final equilibrium distribution,
-both conditioned on $m\ne0$. For a weak field, sampled and equilibrium
-log-odds are both approximately proportional to $G$ (Section~\ref{sec:law}). Their ratio
-measures the surviving preference:
+Let $\qchain$ be the probability that the run ends with $m>0$, and $\qeq$ the
+probability of $m>0$ under the equilibrium distribution at the final $\beta$, both
+conditioned on $m\ne0$. The fraction of the model's log-odds that the samples
+keep is
 \begin{equation}
  c=\frac{\logit\qchain}{\logit\qeq},
  \qquad \logit q=\log\frac{q}{1-q},
  \label{eq:c}
 \end{equation}
-for $\qeq\ne1/2$. $c=1$ reproduces the equilibrium preference,
-whereas $c=0$ gives equal mode probabilities. If equilibrium odds are
-$4{:}1$, then $c=0.2$ gives sampled odds of
-$4^{0.2}{:}1\approx1.32{:}1$.
+for $\qeq\ne1/2$: $c=1$ reproduces the equilibrium proportions, and $c=0$
+gives equal mode probabilities. If equilibrium odds are $4{:}1$, $c=0.2$
+gives sampled odds of $4^{0.2}{:}1\approx1.32{:}1$.
 
-\section{How much of the preference survives?}
+\section{The selection law}
 \label{sec:law}
 
-The sign chosen near $\beta=1$ can determine the final mode probabilities.
-There, a small random imbalance between positive and negative spins
-can grow into either mode (Figure~\ref{fig:mechanism}a).
-The field biases this early choice.
-After the modes form, switching between them can take much longer
-than settling within either one \citep{levinluczak2010,dlpcmp2009}.
+Each run selects its mode in a short window near $\beta=1$. There, a small random imbalance
+between positive and negative spins grows into one mode
+(Figure~\ref{fig:mechanism}a); afterwards, switching between modes takes far
+longer than settling within one
+\citep{levinluczak2010,dlpcmp2009}. The final proportions are therefore
+decided in this window, the only time the field can bias them.
 
-Near $m=0$ and $\beta=1$, the mean rate of change of $m$, or
-\emph{drift}, is approximately \mbox{$(\beta-1)m+G$}. The first term reduces
-an imbalance below $\beta=1$ and amplifies it above.
-Random Gibbs updates add \emph{noise}, with variance
-approximately $2/N$ per expected sweep (Appendix~\ref{app:exact}).
-Let $\beta(t)=1+\gamma t$ increase at a constant rate $\gamma>0$ and
-cross the transition at $t=0$. The growth exponent of $m$,
-$\int_0^t\gamma u\,du=\gamma t^2/2$, reaches order one
-after a time $T$ of order $\gamma^{-1/2}$. In this time, the field
-contributes an imbalance of order $GT$, while the noise accumulates
-as $\sqrt{T/N}$ \citep{berglundgentz2002}. Their ratio is of order
-$G\sqrt N\,\gamma^{-1/4}$. Slower cooling therefore favors the field.
+Near the transition, two effects move $m$; Appendix~\ref{app:exact} derives
+both. The \emph{drift}, the mean rate of change of $m$, is
+$-m+\tanh(\beta m+\beta G)$, approximately \mbox{$(\beta-1)m+G$} near $m=0$
+and $\beta=1$. Below $\beta=1$ its first term points against $m$ and pulls an
+imbalance back toward zero; above $\beta=1$ it points along $m$ and amplifies
+the imbalance. The \emph{noise} comes from the randomness of the Gibbs updates
+and adds a variance of about $2/N$ per expected sweep. On a linear ramp at cooling rate $\gamma>0$,
+$\beta(t)=1+\gamma t$ crosses $\beta=1$ at $t=0$. The growth rate $\gamma t$
+then itself rises with time, and the drift multiplies the imbalance by
+$e^{\gamma t^2/2}$, a factor that becomes large after a time $T$ of order
+$\gamma^{-1/2}$: this is the window. Within it, the field adds an imbalance of
+order $GT$ and the noise adds an imbalance of order $\sqrt{T/N}$ \citep{berglundgentz2002}.
+Their ratio, of order $G\sqrt N\,\gamma^{-1/4}$, decides the race: slower
+cooling widens the window and favors the field, but only as the fourth root of
+the cooling time.
 
-\begin{samepage}
-Dividing $m$ by the positive growth factor $e^{\gamma t^2/2}$ of the linear
-drift preserves its sign and gives the early \emph{amplitude}: the
-accumulated field plus noise.
-In the linear approximation, the noise is a weighted sum of independent
-Gaussian increments. The amplitude is therefore Gaussian; dividing it by
-its standard deviation gives $U$, whose mean $a$ measures the field
-relative to the noise. A classical
-calculation \citep[][Appendix~\ref{app:exact}]{kondepudinelson1983,kondepudigao1987} gives the probability
-$q_{\mathrm{sel}}$ of selecting $m>0$:
+To turn the field-to-noise ratio into the probability that a run ends in the
+positive mode, we divide $m$ by its growth factor $e^{\gamma t^2/2}$.
+The result, the early \emph{amplitude}, keeps the run's final sign and stops
+changing once the window closes. It is the field's push, the same in every run,
+plus the accumulated noise, a sum of many small independent Gaussian kicks; in
+the linear approximation it is therefore Gaussian across runs, with mean set
+by the field and spread by the noise. In units of its spread, it follows $U\sim\mathcal N(a,1)$,
+where $a$ is the field-to-noise ratio of the race with its exact prefactor. A
+run ends with $m>0$ exactly when $U>0$, which happens with probability
+$\Phi(a)$ (the blue area in Figure~\ref{fig:mechanism}b), where $\Phi$ is the
+standard Gaussian distribution function. For the parameters of Figure~\ref{fig:mechanism}b,
+$a=0.208$: the noise is about five times stronger than the
+field, yet $58\%$ of runs end in the favored mode. This is the classical result
+\citep[][Appendix~\ref{app:exact}]{kondepudinelson1983,kondepudigao1987}
 \begin{equation}
  q_{\mathrm{sel}}\simeq\Phi(a),\qquad a=G\sqrt N(\pi/\gamma)^{1/4},
  \label{eq:law}
 \end{equation}
-where $\Phi$ is the standard Gaussian distribution function
-(Figure~\ref{fig:mechanism}b). Without later switching, $q_{\mathrm{sel}}$ also
-gives $\qchain$.\par
-\end{samepage}
+with $q_{\mathrm{sel}}$ the probability of selecting $m>0$. Without later switching,
+$\qchain=q_{\mathrm{sel}}$.
 
 \begin{figure}
  \centering
  \includegraphics[width=\textwidth]{figures/mechanism}
- \caption{\textbf{How cooling selects a sign.}
- (a) Fourteen zero-field paths ($N=1024$) of an approximate drift-plus-noise equation with
- the full drift $-m+\tanh(\beta m)$, not its approximation $(\beta-1)m$ (Appendix~\ref{app:exact};
- Table~\ref{tab:runs}) split into two modes, colored by final sign. Brightness
- shows the exact equilibrium probability relative to its peak at each temperature.
- (b) Analytical density, not a fit to (a)
- ($N=2048$, $\gamma=0.001$, $G=0.0006125$, the largest Hopfield field of
- Section~\ref{sec:test}; $a=0.208$): $U\sim\mathcal N(a,1)$.
- The blue area is $q_{\mathrm{sel}}=\Phi(a)$.}
+ \caption{
+ (a) Fourteen paths ($N=1024$, $G=0$) of an approximate drift-plus-noise
+ equation with drift $-m+\tanh(\beta m)$ split into two modes, colored by final
+ sign; the dashed curves mark the most probable equilibrium magnetization. (b) The analytical density of $U\sim\mathcal N(a,1)$ for
+ $N=2048$, $\gamma=0.001$ and $G=0.0006125$.}
  \label{fig:mechanism}
 \end{figure}
 
-When $|a|\ll1$, both signs are nearly equally likely,
-$\logit\Phi(a)\approx4a/\sqrt{2\pi}$, and sampled log-odds grow as
-$G\sqrt N\,\gamma^{-1/4}$. In equilibrium, reversing all $N$ spins changes
-the field term of the log-probability by order $NG$. At a fixed final
-temperature, equilibrium log-odds thus grow as $NG$. Dividing gives
+Eq.~\eqref{eq:c} turns $q_{\mathrm{sel}}$ into $c$, giving the \emph{selection
+law}. For a weak
+field ($|a|\ll1$), the sampled log-odds are $\logit\Phi(a)\approx4a/\sqrt{2\pi}$,
+proportional to $a$, hence to $G\sqrt N\,\gamma^{-1/4}$. The equilibrium
+log-odds at the final temperature grow instead as $NG$: reversing all $N$
+spins leaves the coupling term unchanged and reverses the field term, $\beta GNm$, of order $NG$ in either mode. In their
+ratio, the field cancels, and $c$ measures the sampler, not the field's
+strength (Appendix~\ref{app:exact} gives the prefactor):
 \begin{equation}
  c\propto(N^2\gamma)^{-1/4}.
  \label{eq:scaling}
 \end{equation}
-Sixteenfold longer cooling doubles $c$
-in this regime, and fourfold larger $N$ halves it.
+In this regime, cooling sixteen times more slowly doubles $c$; a fourfold
+larger $N$ halves it.
 
-The \emph{selection law}, Eq.~\eqref{eq:law} converted to $c$ by
-Eq.~\eqref{eq:c}, assumes a slow ramp ($\gamma\ll1$), a start well below
-$\beta=1$, and little switching after selection. A sufficient condition
-for the noise to stay below $|m|\sim\gamma^{1/4}$, where growth stops being linear, is $N\gamma\gg1$
-\citep{berglundgentz2002} (Appendix~\ref{app:exact}).
-At fixed $N$, the law does not extend to arbitrarily slow cooling: long
-sampling restores the equilibrium mode probabilities, but at $N=2048$ a
-zero-field switch between modes takes on average about $5\times10^{7}$
-expected sweeps at $\beta=1.1$ (Appendix~\ref{app:exact}).
+The law rests on three assumptions (Appendix~\ref{app:exact}): a slow ramp
+($\gamma\ll1$), a start well below $\beta=1$, and little switching after
+selection. The noise must also stay small enough for the linear drift to hold,
+which $N\gamma\gg1$ guarantees \citep{berglundgentz2002}. The third assumption limits
+how slow the cooling can be, since long enough sampling restores the
+equilibrium proportions, but a zero-field switch between modes takes on average about
+$5\times10^{7}$
+expected sweeps already at $N=2048$ and $\beta=1.1$ (Appendix~\ref{app:exact}).
 
 \paragraph{Exact check.}
-The selection law agrees with numerical CW evolution over the whole
-cooling run. Runs start from equilibrium at $\beta=0.7$ and cool
-to $1.6$ with $G=0.0006125\times2048/N$; fixed $NG$ keeps the equilibrium
-log-odds nearly constant across sizes. For $N=1024$--$4096$ and
-$\gamma=0.00025$--$0.004$, the numerical $c$ exceeds the prediction in all nine cases, by
-$0.23$--$1.81\%$ (Figure~\ref{fig:validation}a; Table~\ref{tab:linear}).
-Agreement holds even at the smallest tested $N\gamma=0.256$,
-where $N\gamma\gg1$ fails.
+On linear ramps ($N=1024$--$4096$, $\gamma=0.00025$--$0.004$, $NG$
+fixed), exact $c$ exceeds the law by only $0.23$--$1.81\%$ (Figure~\ref{fig:validation}a; Table~\ref{tab:linear}),
+even
+at $N\gamma=0.256$, where $N\gamma\gg1$ fails.
 
-\section{Competition among stored patterns}
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{figures/validation}
+ \caption{(a) CW ramps at fixed $NG$: $16\times$ slower cooling doubles $c$;
+ the law is within $2\%$.
+ (b) Hopfield samples keep about a fifth of the equilibrium log-odds.
+ Each point pools twenty pattern sets; error bars are smaller than the symbols.
+ The orange $95\%$ band of the fitted slope $c$
+ excludes reference-model uncertainty and contains the dotted prediction
+ $A_3c_{\mathrm{CW}}$.}
+ \label{fig:validation}
+\end{figure}
+
+\section{When several modes compete}
 \label{sec:test}
 
-\paragraph{Hopfield model.}
-A Hopfield model stores $p$
-patterns $\xi^\mu\in\{-1,+1\}^N$ with independent equiprobable entries.
-A configuration $x$ has probability proportional to
+CW has two modes. To ask how competition among several modes changes the
+fraction $c$, we use the Hopfield model: with $p\ll N$ stored patterns
+$\xi^\mu\in\{-1,+1\}^N$ of independent equiprobable entries, its
+modes at low temperature are the patterns and their negatives
+\citep{ags1985}. A configuration $x$ has probability proportional to
 $e^{-\beta E_G(x)}$, with \emph{energy}
 \begin{equation}
  E_G(x)=-\frac{1}{2N}\sum_{i\ne j}\sum_{\mu=1}^p
        \xi_i^\mu\xi_j^\mu x_i x_j-G\sum_i\xi_i^1x_i.
  \label{eq:hopfield}
 \end{equation}
-At low temperature and $p\ll N$, configurations concentrate near a stored
-pattern or its negative \citep{ags1985}. The \emph{overlap}
-$m^\mu=N^{-1}\sum_i\xi_i^\mu x_i$ measures this resemblance: it is $+1$
-at pattern $\mu$ and $-1$ at its negative. Each sample is labeled $(\mu,\pm)$ by the
-pattern with largest $|m^\mu|$ and the sign of that overlap. Here $\qchain$ and $\qeq$
-are positive-sign probabilities among samples assigned to pattern 1, not pattern
-frequencies.
+The field $G$ favors pattern~1 over its negative. The overlap $m^\mu=N^{-1}\sum_i\xi_i^\mu x_i$ measures
+how closely a configuration resembles pattern $\mu$: it is $+1$ at pattern $\mu$ and $-1$ at its negative. Each
+sample is labeled $(\mu,\pm)$ by the pattern with the largest $|m^\mu|$ and the
+sign of that overlap. Here $\qchain$ and $\qeq$ are positive-sign
+probabilities among samples assigned to pattern~1, not pattern frequencies.
 
-Competition with other patterns strengthens the field's preference for
-pattern 1 over its negative. Suppose the early overlaps are
-independent Gaussians with a common variance, the field shifts only the mean
-of $m^1$ (as in the CW model), and the largest $|m^\mu|$ determines the
-final pattern.
-For a shifted Gaussian, the sign log-odds at a given magnitude grow linearly in that magnitude. Winning selects larger magnitudes and so
-strengthens the sign preference. To first order in the field, averaging over winning magnitudes relative to one pattern (the CW case) gives
+Competition raises the fraction. Each run ends in the pattern whose early
+overlap is largest in magnitude, and the field biases only the sign of $m^1$.
+As in Section~\ref{sec:law}, the early overlap of pattern~1 is a Gaussian
+shifted by the field, and at a given magnitude its sign log-odds grow linearly
+in that magnitude, because the Gaussian falls ever more steeply away from zero. 
+The winner of $p$ competing overlaps has a larger magnitude
+than a single overlap does, and its sign is therefore more strongly biased. To
+first order in the field, the bias grows by the ratio of the two average
+magnitudes:
 \begin{equation}
  A_p=\frac{\mathbb E\max_{1\le\mu\le p}|Z_\mu|}{\mathbb E|Z|},
  \qquad c_{\mathrm{pred}}=A_p c_{\mathrm{CW}},
  \label{eq:amplification}
 \end{equation}
-where $Z$ and the $Z_\mu$ are independent standard Gaussians and
-$c_{\mathrm{CW}}$ is $c$ from exact CW evolution of the Hopfield cooling
-protocol (next paragraph), not of a linear ramp.
-The factors are $A_1=1$, $A_2=\sqrt2$, $A_3=1.662$, and $A_4=1.836$
-(Appendix~\ref{app:amplification}). The prediction also assumes equal Hopfield and CW equilibrium sign
-preferences; a small $p/N$ guarantees neither this equality nor independent overlaps.
+where $Z$ and the $Z_\mu$ are independent standard Gaussians: $|Z_\mu|$ is the
+size of pattern $\mu$'s early overlap in units of its spread. The numerator is
+the average size of the winning overlap among $p$ patterns, the denominator
+that of a single overlap, as in CW, where the one pattern always wins. Here
+$c_{\mathrm{CW}}$ is the exact CW fraction for the Hopfield reheating protocol below, not for a
+linear ramp.
+Appendix~\ref{app:amplification} derives Eq.~\eqref{eq:amplification};
+numerical integration gives $A_1=1$, $A_2=\sqrt2$,
+$A_3=1.662$, and $A_4=1.836$. The prediction assumes independent Gaussian early overlaps with
+a common variance, a field shifting
+only the mean of $m^1$, a final pattern
+decided by the largest $|m^\mu|$, and equal Hopfield and CW equilibrium sign
+preferences. Even for $p\ll N$, neither the independence nor
+this equality is guaranteed.
 
 \paragraph{Reheating after a filtered start.}
-Reheating lets a run that settled away from the favored mode choose again
-(\emph{reselection}). We test the prediction here, not on fresh
-cooling, so Eq.~\eqref{eq:scaling} does not apply directly.
-A \emph{permutation sweep} updates every spin
-once in a fresh random order ($N$ updates, like an expected sweep).
-The \emph{cooling schedule} has ten inverse temperatures from $0.6$ to $1.6$;
-each dwell is six relaxation times of the zero-field CW chain, across both
-signs for $\beta\le1$ and within one sign above (Table~\ref{tab:schedule}); in one relaxation time, the slowest deviation from equilibrium shrinks $e$-fold. Its $834$ sweeps, computed at $N=2048$, are reused
-at every size.
+We test the prediction where it matters for a sampler: on runs that
+settled away from the favored mode and are reheated to select again. Hopfield runs use \emph{permutation sweeps}, redrawing every spin once in fresh random order ($N$ updates, like an
+expected sweep), and cool through a \emph{schedule} from $\beta=0.6$ to $1.6$, set at $N=2048$ and reused at
+every size (Table~\ref{tab:schedule}).
 
-Each run has three stages. First, a brief cooling through the schedule at
-two sweeps per temperature; removing runs labeled $(1,+)$ leaves a
-\emph{filtered start}; for $G>0$, it imitates a sampler that settled away
-from the favored mode. Second, a \emph{reheat} for $30$ sweeps at $\beta=0.7$, where the drift
-reduces an imbalance. Third, the \emph{final cooling} through the
-schedule. The removal also applies at $G<0$, so fields $\pm G$ follow one
-protocol. From a sign-symmetric start, $\qchain(G)+\qchain(-G)=1$; memory
-of the removal could break this. The measured sums are consistent with $1$
-but do not establish equivalence to fresh starts
-(Table~\ref{tab:counts}).
-CW evolution of this protocol gives $c_{\mathrm{CW}}=0.120$ at $N=2048$; scaling final cooling by $0.25$ to $4$ (sixteenfold) raises it $1.48$-fold, not the twofold of Eq.~\eqref{eq:scaling} (Appendix~\ref{app:exact}).
+Each run has three stages: a brief cooling at two
+sweeps per temperature, after which we remove the runs
+that ended in the favored mode, $(1,+)$, leaving a \emph{filtered
+start}; a \emph{reheat} of $30$ sweeps at $\beta=0.7$, where the drift pulls
+imbalances back toward zero; and a \emph{final cooling} through the schedule, in which the runs select again. The same $(1,+)$ removal applies at $G<0$; a memory of it would
+break the spin-flip symmetry $\qchain(G)+\qchain(-G)=1$. The measured sums are
+consistent with $1$ (Table~\ref{tab:counts}), which detects no memory but does not show that
+reheated runs behave like freshly cooled ones. For this
+protocol, exact CW calculation gives the $c_{\mathrm{CW}}=0.120$ of
+Eq.~\eqref{eq:amplification} at $N=2048$; sixteenfold longer final
+cooling raises it only $1.48$-fold, not the twofold of Eq.~\eqref{eq:scaling}
+(Table~\ref{tab:schedule}).
 
 \paragraph{Result.}
-For three patterns and $N=2048$, the positive sign occurs in $66.9\%$ of
-samples assigned to pattern 1 at $G=0.0006125$, against $97.26\%$ in the
-equilibrium reference; their logits give $c=0.70/3.57\approx0.20$.
-Unlike CW, this reference is approximate: its log-odds $2\beta_f NG\bar m^1$
-use the zero-field mean positive-mode overlap $\bar m^1$ at the final $\beta_f$
+For three patterns at $N=2048$, Eq.~\eqref{eq:amplification} predicts
+$c_{\mathrm{pred}}=A_3c_{\mathrm{CW}}=1.662\times0.120=0.199$, without any
+Hopfield samples. Unlike
+CW's, the Hopfield equilibrium log-odds are estimated from the mean overlap
+in separate zero-field runs, by the spin-reversal argument of Section~\ref{sec:law}
 (Appendix~\ref{app:protocol}).
 
-At all eight nonzero fields of the \emph{field grid}, the sampled log-odds are approximately
-proportional to the reference log-odds (Figure~\ref{fig:validation}b).
-Slopes fitted to twenty independently drawn pattern sets, weighted by the
-number of samples assigned to pattern 1, average to
-$c=0.199$ ($95\%$ interval $[0.1908,0.2095]$ from resampling pattern
-sets). Equal pattern-set weights give $0.2101$, just above this interval; three other estimators give $0.1994$--$0.1997$ (Appendix~\ref{app:protocol}). The prediction $A_3c_{\mathrm{CW}}=0.199$ uses no
-Hopfield samples and agrees closely, but approximation errors may cancel
-(Section~\ref{sec:limits}).
-
-\begin{figure}
- \centering
- \includegraphics[width=\textwidth]{figures/validation}
- \caption{\textbf{How much of the equilibrium preference survives?}
- (a) CW ramps at fixed $NG$: $16\times$ slower cooling doubles $c$;
- the law is within $2\%$.
- (b) Hopfield samples retain about a fifth of the equilibrium log-odds.
- Each point pools twenty pattern sets; error bars are smaller than the symbols.
- The orange $95\%$ band of the fitted slope $c$
- excludes reference-model uncertainty and contains the dotted prediction
- $A_3c_{\mathrm{CW}}$;
- the dashed line $c=1$ marks equilibrium.}
- \label{fig:validation}
-\end{figure}
+If $c$ is a property of the sampler, sampled and equilibrium log-odds are
+proportional as the field varies, with slope $c$; the eight nonzero fields of the \emph{field grid}
+approximately show this (Figure~\ref{fig:validation}b). Slopes for twenty independent
+pattern sets, weighted by their pattern-1 samples, average to $c=0.199$ ($95\%$ interval $[0.1908,0.2095]$),
+matching the prediction. Equal pattern-set weights give $0.2101$, just above
+the interval (Appendix~\ref{app:protocol}). The agreement may partly reflect
+cancelling errors (Section~\ref{sec:limits}).
 
 \section{Where the prediction departs}
 \label{sec:limits}
 
-Other settings miss the prediction by up to $11\%$ (Table~\ref{tab:transfer}; for $p=2$, see Appendix~\ref{app:amplification}).
-They lack a Hopfield reference, so they use the exact CW reference and,
-assuming $\qchain(G)+\qchain(-G)=1$, pool positive outcomes at $+G$
-with negative ones at $-G$ (Appendix~\ref{app:protocol}).
-For $p=3$ this gives $0.201$; the field-grid fit gives $0.199$.
+The three-pattern match does not hold everywhere: across pattern counts and
+sizes, the prediction misses by up to $11\%$ (Table~\ref{tab:transfer};
+Appendix~\ref{app:amplification} treats $p=2$, the largest miss, by an exact
+decomposition). For $p=3$, the
+single-field estimate of Table~\ref{tab:transfer}, $0.201$, agrees with the field-grid fit, $0.199$.
 
 \begin{table}
  \centering
- \caption{Predictions $A_pc_{\mathrm{CW}}$ use $c_{\mathrm{CW}}=0.171$,
+ \caption{Measured $c$ pools $\pm G$ against the exact CW reference
+ (Appendix~\ref{app:protocol}). Predictions $A_pc_{\mathrm{CW}}$ use $c_{\mathrm{CW}}=0.171$,
  $0.120$, $0.090$ at $N=1024$, $2048$, $4096$; $95\%$ intervals
  resample pattern sets. All rows use $|G|=0.0006125$ (not rescaled with $N$).}
  \label{tab:transfer}
@@ -342,51 +339,53 @@ For $p=3$ this gives $0.201$; the field-grid fit gives $0.199$.
  \end{tabular}
 \end{table}
 
-The close three-pattern match may come partly from cancelling errors.
-One pattern removes competition, yet $c$ exceeds $c_{\mathrm{CW}}$; separate
-one-pattern runs give $c=1.063\,c_{\mathrm{CW}}$ at $N=2048$ (Appendix~\ref{app:protocol}). The models differ in update
-order (permutation versus expected sweeps) and interaction strength ($1/N$
-versus $1/(N-1)$). Multiplying
-the $p=3$ prediction by $1.063$ gives $0.212$, outside the field-grid interval.
+With one
+pattern there is no competition ($A_1=1$), and the Hopfield runs should
+reproduce $c_{\mathrm{CW}}$; instead, separate, larger one-pattern runs give
+$1.063\,c_{\mathrm{CW}}$ at $N=2048$ (Appendix~\ref{app:protocol}). The two
+samplers differ in update order (permutation versus expected sweeps) and
+interaction strength ($1/N$ versus $1/(N-1)$), and the prediction ignores both.
+Applying the same factor at $p=3$ gives $0.212$, outside the field-grid
+interval; the three-pattern match would then need an offsetting error of
+similar size.
 
-Measured $c$ also falls more slowly with size than predicted: as
-$N^{-0.36}$ versus $N^{-0.46}$ over $N=1024$--$4096$ (two-point slopes, no
-uncertainties; Eq.~\eqref{eq:scaling} gives $N^{-1/2}$ for a fixed ramp).
-These fixed-schedule comparisons do not measure the rate dependence of
-Hopfield sampling. Measured and predicted $c$ cross near $N=2048$, where the
-schedule was set. Scaled by the one-pattern ratio at
-each size ($1.126$, $1.020$), the prediction becomes $0.319$ at $N=1024$ and $0.153$ at $4096$,
-so the trend remains: measured $c$ is $18\%$ below and $4\%$ above (unrounded values).
+The size dependence also departs.
+Measured $c$ falls as $N^{-0.36}$ over $N=1024$--$4096$, the prediction as
+$N^{-0.46}$ (two-point slopes, without uncertainties; Eq.~\eqref{eq:scaling}
+gives $N^{-1/2}$ for a fixed ramp), and the two cross near $N=2048$, where the
+schedule was set. Scaling the prediction by the one-pattern
+ratio at each size does not remove this trend (Appendix~\ref{app:protocol}). These fixed-schedule comparisons do not measure how Hopfield sampling
+depends on cooling rate.
 
-Pattern correlation is one untested explanation of the size trend. Random
-patterns have correlations of order $N^{-1/2}$, which shift the inverse
-temperatures at which overlaps begin to grow by the same order as the
-\emph{critical window}, the range over which fluctuations spread the transition
-at finite $N$. The shifts need not become negligible relative to this window as $N$
-grows (Appendix~\ref{app:amplification}).
+Pattern correlations are one untested explanation of the size trend: random
+patterns have correlations of order $N^{-1/2}$, which shift the $\beta$ at which
+the overlaps begin to grow by as much as the \emph{critical window}, the range of
+$\beta$ over which fluctuations blur the transition at finite $N$
+(Appendix~\ref{app:amplification}).
 
 \section{Discussion}
 \label{sec:discussion}
 
-The selection law links errors in mode probabilities to the field and noise
-as the modes form; Ising-chain cooling studies \citep{suzuki2009} instead
-track misaligned regions and excess energy.
+The selection probability is classical
+\citep{kondepudinelson1983,kondepudigao1987}; the paper turns it into the
+fraction $c$ of the model's log-odds that the samples keep, checks it against the exact CW chain, and extends it to competing
+modes. Cooling studies of Ising chains \citep{suzuki2009} measure a different
+error, misaligned regions and excess energy, rather than mode probabilities.
 
-Annealed importance sampling weights annealed runs to estimate equilibrium averages
-\citep{neal2001}. An equal-cost comparison with reheating
+Annealed importance sampling weights annealed runs instead of reselecting
+them, to estimate equilibrium averages \citep{neal2001}; comparing it with reheating at equal cost
 would need valid weights for the filtered start and an assessment of estimator
-bias and variance.
-Diffusion models change their distribution gradually, but with an exact score
-they reverse a noising process and need not equilibrate at each step
-\citep{biroli2024}; extending the calculation needs their
-dynamics and discrete updates. A variance-preserving noise
-schedule can miss mode asymmetry; suitable ones recover mode probabilities and within-mode
-variation in Gaussian mixtures and CW \citep{aranguri2025}.
+bias and variance. Diffusion models with an exact
+score reverse a noising process without equilibrating at each step
+\citep{biroli2024}; extending the calculation here needs their reverse dynamics
+and discrete updates. In diffusion models, a variance-preserving noise schedule can miss mode asymmetry, while suitable
+schedules recover mode probabilities in Gaussian mixtures and CW
+\citep{aranguri2025}.
 
-CW is an exactly computable test case for comparing cooling schedules by their
-error in mode probabilities; applying $c$ elsewhere requires an equilibrium reference.
-Measuring Hopfield overlaps during cooling could reveal whether pattern
-correlations explain the remaining discrepancies.
+The exact CW calculation scores any cooling schedule by its error in mode
+probabilities, without sampling noise; applying $c$ to other models requires
+their equilibrium log-odds. Measuring Hopfield overlaps during cooling could
+show whether pattern correlations explain the remaining discrepancies.
 
 \label{main-text-end}
 \bibliography{references}
@@ -397,8 +396,12 @@ correlations explain the remaining discrepancies.
 \section{Selection formula and exact-chain calculations}
 \label{app:exact}
 
+This appendix derives the selection law of Section~\ref{sec:law}, states when
+it holds, and describes the exact calculation that tests it.
+
 \paragraph{From spin updates to drift and noise.}
-For a chosen spin, let $\ell_i=\beta(N-1)^{-1}\sum_{j\ne i}x_j+h$,
+Section~\ref{sec:law} describes $m$ by a drift and a noise, and both follow from
+single-spin updates. For a chosen spin, let $\ell_i=\beta(N-1)^{-1}\sum_{j\ne i}x_j+h$,
 where $h=\beta G$. Holding the other spins fixed, Eq.~\eqref{eq:model}
 assigns weights $e^{\ell_i}$ and $e^{-\ell_i}$ to its two values, so the
 redrawn spin has mean $\tanh\ell_i$. For large $N$, the neighbors' average is approximately $m$.
@@ -421,8 +424,8 @@ At $G=0$, Eq.~\eqref{eq:sde} is the swept pitchfork bifurcation analyzed by
 \citet{berglundgentz2002}: one stable value becomes two.
 
 \paragraph{Removing growth without changing the sign.}
-For the linear ramp, $\beta-1=\gamma t$. While $m$ is small, omit the cubic
-term. Without field or noise, $\dot m=\gamma t m$ has the positive growth
+On a linear ramp, $\beta-1=\gamma t$, the growth of $m$ can be divided out
+without changing its sign. While $m$ is small, omit the cubic term. Without field or noise, $\dot m=\gamma t m$ has the positive growth
 factor $e^{\gamma t^2/2}$. Set $Y_t=e^{-\gamma t^2/2}m_t$ and start at
 $t_0<0$. The product rule gives
 \[
@@ -457,7 +460,7 @@ These infinite limits approximate a finite cooling interval; the integrals must 
 substantially changes the amplitude.
 
 \paragraph{From a sign probability to retained log-odds.}
-For small $a$, $\Phi(a)=1/2+a/\sqrt{2\pi}+O(a^3)$.
+Eq.~\eqref{eq:c} then turns $\Phi(a)$ into $c$. For small $a$, $\Phi(a)=1/2+a/\sqrt{2\pi}+O(a^3)$.
 The derivative of $\logit q$ at $q=1/2$ is $4$, so
 $\logit\Phi(a)=4a/\sqrt{2\pi}+O(a^3)$.
 At the final inverse temperature $\beta_f$, a field adds $\beta_f NGm$
@@ -473,26 +476,24 @@ Dividing the two leading log-odds gives
 \]
 
 \paragraph{Regime.}
-Over the selection time $T\sim\gamma^{-1/2}$, the linear coefficient
-$\gamma T$ is of order $\sqrt\gamma$, so the cubic term matters once
-$|m|\sim\gamma^{1/4}$. Noise accumulated over $T$ has typical magnitude
-$\sqrt{T/N}\sim N^{-1/2}\gamma^{-1/4}$, a fraction $(N\gamma)^{-1/2}$ of
-this scale. The field contribution must also be small on this scale,
-$|G|T/\gamma^{1/4}\sim |G|\gamma^{-3/4}\ll1$, which follows from
-$N\gamma\gg1$ if $a$ remains bounded.
-At equilibrium, Stirling's formula for the $\binom Nk$ configurations with
-$m=2k/N-1$, plus the interaction $N\beta m^2/2$, gives to leading order in $N$
-$\log\pi(m)\simeq\mathrm{constant}+N[(\beta-1)m^2/2-m^4/12]$.
-At $\beta=1$ the quadratic terms cancel, so fluctuations reach
-$|m|\sim N^{-1/4}$; the quadratic term matters when $|\beta-1|\sim N^{-1/2}$,
-the critical window of Section~\ref{sec:limits}. Selection spans an
-inverse-temperature range $\gamma T\sim\sqrt\gamma$; requiring it to be
-wider than this window again gives $N\gamma\gg1$.
-These conditions allow linear selection before nonlinear growth fixes
-the magnitude; they do not exclude later switching.
+With $a$ bounded, the linear approximation and the separation from the critical
+window both follow from $N\gamma\gg1$. Over the selection
+time $T\sim\gamma^{-1/2}$, the linear coefficient $\gamma T$ is of order
+$\sqrt\gamma$, so the cubic term matters once $|m|\sim\gamma^{1/4}$; the noise
+accumulated over $T$, of order $\sqrt{T/N}\sim N^{-1/2}\gamma^{-1/4}$, is a
+fraction $(N\gamma)^{-1/2}$ of this scale, and the field's contribution, a fraction
+$|G|\gamma^{-3/4}=\pi^{-1/4}a(N\gamma)^{-1/2}$ of this scale, is small too when $a$ stays bounded. Selection must also
+span more than the critical window: to leading order in $N$, Stirling's
+formula and the interaction $N\beta m^2/2$ give
+$\log\pi(m)\simeq\mathrm{constant}+N[(\beta-1)m^2/2-m^4/12]$, so at $\beta=1$
+fluctuations reach $|m|\sim N^{-1/4}$ and the quadratic term matters when
+$|\beta-1|\sim N^{-1/2}$, the critical window of Section~\ref{sec:limits}. The
+selection range $\gamma T\sim\sqrt\gamma$ exceeds it when $N\gamma\gg1$. These
+conditions allow linear selection before nonlinear growth fixes the magnitude;
+they do not exclude later switching.
 
 \paragraph{Exact reduction and numerical evolution.}
-Waiting times between CW updates are independent exponentials with mean
+To test the law, we compute the sampler's distribution exactly. Waiting times between CW updates are independent exponentials with mean
 $1/N$, so the count $k$ of positive spins is a Markov chain whose rates, at
 a given temperature, depend only on $k$. Each spin updates once per expected
 sweep on average, so each rate is the number of eligible spins ($N-k$
@@ -524,7 +525,9 @@ has no sampling error.
 
 \paragraph{Linear ramps.}
 The ramps of Section~\ref{sec:law} start in the equilibrium distribution at
-their field (time steps: Table~\ref{tab:runs}). Table~\ref{tab:linear} compares the
+$\beta=0.7$ and cool to $\beta=1.6$, with $G=0.0006125\times2048/N$; a fixed $NG$
+keeps the equilibrium log-odds nearly constant across sizes (time steps:
+Table~\ref{tab:runs}). Table~\ref{tab:linear} compares the
 resulting $c_{\mathrm{num}}$ with the full-formula prediction
 $c_{\mathrm{sel}}=\logit\Phi(a)/\logit\qeq$, with $a$ from Eq.~\eqref{eq:law}.
 The excess over $c_{\mathrm{sel}}$ halves when $N$ doubles at
@@ -549,7 +552,9 @@ We did not derive the correction that causes this excess.
 \end{table}
 
 \paragraph{Fixed schedule.}
-Mirroring the Hopfield protocol, the CW evolution starts with
+The Hopfield prediction needs $c_{\mathrm{CW}}$ for the protocol of
+Section~\ref{sec:test}, computed the same way. Mirroring that protocol, the CW
+evolution starts with
 $\operatorname{Binomial}(N,1/2)$ counts, runs two sweeps at each temperature of
 Table~\ref{tab:schedule}, removes $k\ge N/2$ (including $m=0$) and renormalizes,
 reheats for $30$ sweeps at $\beta=0.7$, then applies Table~\ref{tab:schedule}.
@@ -566,13 +571,13 @@ filtered start and reheating; we did not isolate which difference makes
 sixteenfold final cooling raise $c$ less than twofold (Table~\ref{tab:schedule}).
 
 \paragraph{Schedule design.}
-The relaxation time $\tau$ is the inverse \emph{spectral gap}, the smallest
+The dwells of that schedule come from relaxation times. The relaxation time $\tau$ is the inverse \emph{spectral gap}, the smallest
 positive decay rate of the chain at fixed temperature: in time $\tau$, the
 slowest deviation from equilibrium shrinks by $e^{-1}$. The six-$\tau$ dwell of
 Table~\ref{tab:schedule} is a relaxation prescription, not a bound on the error
 in final mode probabilities. To measure relaxation within a sign, the
 \emph{reflected} chain (even $N$) keeps $k=N/2,\ldots,N$, sets $W^-_{N/2}=0$,
-and leaves the other rates unchanged. Below the transition, the schedule uses the full
+and leaves the other rates unchanged. At and below the transition, the schedule uses the full
 chain, because reflection would remove the slow relaxation of the balance between signs.
 At $\beta=1$ and $G=0$, the full-chain inverse gap is $42.2$, $59.0$, and $82.7$ sweeps
 for $N=1024$, $2048$, and $4096$; it grows as $\sqrt N$, so dwells redesigned for each $N$ would too.
@@ -600,12 +605,15 @@ for $N=1024$, $2048$, and $4096$; it grows as $\sqrt N$, so dwells redesigned fo
  \end{tabular}
 \end{table}
 
-
 \section{Simulation and statistical methods}
 \label{app:protocol}
 
+This appendix describes how the Hopfield measurements of Sections~\ref{sec:test}
+and~\ref{sec:limits} are made and how their uncertainty is estimated.
+
 \paragraph{Sampling and labels.}
-Each update redraws $x_i$ with probability
+The Hopfield runs use Gibbs updates for the energy of Eq.~\eqref{eq:hopfield}: each update
+redraws $x_i$ with probability
 $\Pr(x_i=+1\mid x_{-i})=[1+\tanh(\beta H_i)]/2$, where $x_{-i}$ denotes the other spins and
 $H_i=N^{-1}\sum_\mu\xi_i^\mu\sum_j\xi_j^\mu x_j-(p/N)x_i+G\xi_i^1$;
 the term $-(p/N)x_i$ removes self-interaction. All runs begin with
@@ -664,7 +672,8 @@ The standard error of the $256$ independent run means, which needs no correlatio
 is $0.85$--$1.05$ times the reported SE for each pattern set.
 The log-odds envelope adds the statistical term $1.96\,\mathrm{SE}$ and a
 $1\%$ systematic allowance for the reference, a design choice rather than a
-measured bound:
+measured bound (a common $1\%$ increase in the overlaps reduces $c$ by about
+$1\%$):
 \[
  \Delta L=2\beta_f N|G|\big[1.96\,\mathrm{SE}(\bar m^1)+0.01\bar m^1\big].
 \]
@@ -675,15 +684,15 @@ $\bar m^1=\sum_s \omega_s\bar m^1_s$ and
 $\mathrm{SE}(\bar m^1)^2=\sum_s \omega_s^2\mathrm{SE}(\bar m^1_s)^2$.
 In Figure~\ref{fig:validation}b, this envelope (both terms) gives the horizontal error bars, and pooled
 $95\%$ Wilson intervals give the vertical ones.
-A common $1\%$ increase in the overlaps reduces $c$ by about $1\%$.
 The bootstrap excludes the allowance and
 error in the Hopfield equilibrium approximation.
-For the CW reference at $N=2048$, $\beta=1.6$, the exact and weak-field $\qeq$
-differ by at most $2.108\times10^{-8}$ over the eight fields, negligible
-relative to the observed distortion.
+The weak-field formula itself is accurate: for CW at $N=2048$ and
+$\beta=1.6$, it differs from the exact $\qeq$ by at most $2.108\times10^{-8}$ over the
+eight fields.
 
 \paragraph{Slope estimate.}
-For field $j$ and pattern set $s$, let $x_{js}=\logit q_{\mathrm{eq},js}$,
+With this reference, each pattern set gives a slope, and the slopes are
+averaged. For field $j$ and pattern set $s$, let $x_{js}=\logit q_{\mathrm{eq},js}$,
 $y_{js}=\logit\widehat q_{js}$ with $\widehat q_{js}=n_{+,js}/n_{js}$, and
 $[L_{js},U_{js}]$ the $95\%$ Wilson interval of $\widehat q_{js}$ \citep{wilson1927}.
 Each pattern set's slope weights its measurements by the inverse squared logit half-width
@@ -703,20 +712,27 @@ all fields pooled before fitting; and a pooled binomial logistic fit
 $\logit q=\alpha+cx$ (intercept $0.000944$).
 
 \paragraph{Pattern-count and size comparisons.}
-With $n_{+,s}(G)$ and $n_s(G)$ the positive and total retained counts of
+Section~\ref{sec:limits} compares settings with fewer runs, at a single field
+$\pm G$ and without a Hopfield reference. With $n_{+,s}(G)$ and $n_s(G)$ the positive and total retained counts of
 pattern set $s$ at field $G$, let
 \[
  S_s=n_{+,s}(+G)+n_s(-G)-n_{+,s}(-G),\qquad
  R_s=n_s(+G)+n_s(-G).
 \]
-The pooled estimator
-$\widehat c_{\mathrm{scan}}=\logit(\sum_s S_s/\sum_s R_s)/\logit q_{\mathrm{eq}}^{\mathrm{CW}}(N)$
+The pooled estimator, which assumes $\qchain(G)+\qchain(-G)=1$
+(checked only for $p=3$, $N=2048$; Table~\ref{tab:counts}),
+\[
+ \widehat c_{\mathrm{scan}}=\logit\Big(\sum_s S_s\Big/\sum_s R_s\Big)\Big/\logit q_{\mathrm{eq}}^{\mathrm{CW}}(N),
+\]
 uses the CW reference in place of the Hopfield one and does not fit a slope
 per pattern set. The $p=3$, $N=2048$ row of Table~\ref{tab:transfer} comes from separate runs on
 twelve of the field grid's pattern sets ($s=3$--$14$).
 One-pattern runs ($s=0$; full protocol with the filtered start; $|G|=0.0006125$)
 give $c$ equal to $1.065$, $1.126$, $1.063$, and $1.020$ times
 $c_{\mathrm{CW}}=0.227$, $0.171$, $0.120$, $0.090$ at $N=512$, $1024$, $2048$, $4096$.
+Scaled by these ratios, the $p=3$ prediction becomes $0.319$ at $N=1024$ and
+$0.153$ at $N=4096$; measured $c$ remains $18\%$ below and $4\%$ above it
+(computed from unrounded values).
 
 \begin{table}
  \centering
@@ -751,8 +767,12 @@ $c_{\mathrm{CW}}=0.227$, $0.171$, $0.120$, $0.090$ at $N=512$, $1024$, $2048$, $
 \section{Amplification and pattern correlations}
 \label{app:amplification}
 
+This appendix derives the gain $A_p$ of Eq.~\eqref{eq:amplification} and examines two
+weak points of the prediction: two patterns and pattern correlations.
+
 \paragraph{Conditioning on the winning pattern.}
-Under the independent-Gaussian approximation, let
+Eq.~\eqref{eq:amplification} follows from conditioning on the pattern that
+wins. Under the independent-Gaussian approximation, let
 $m^1\sim\mathcal N(\delta,\sigma^2)$, where $\delta$ is the field-induced
 mean shift and the other overlaps have zero mean and variance $\sigma^2$.
 The density $f$ of $m^1$ gives $f(r)/f(-r)=\exp(2r\delta/\sigma^2)$ at
@@ -782,17 +802,21 @@ The calculation averages sign probabilities before taking log-odds.
 It gives sign odds given the winning pattern, not all pattern-pair frequencies.
 
 \paragraph{Two patterns.}
-For $p=2$, the largest miss in Table~\ref{tab:transfer}, setting $y_i=\xi_i^1x_i$
-splits the model exactly into two non-interacting CW blocks of $980$--$1068$
-spins, whose signs agree exactly when pattern 1 wins.
-Treating the blocks as independent and equal doubles the logit $0.343384$ of the
-one-pattern runs at $N=1024$; dividing by the exact CW $\logit\qeq=3.575$ at $N=2048$
-gives $c=0.19212$, against the measured $0.18783$ $[0.184,0.191]$ and the Gaussian
-prediction $0.169$.
-The block sizes and initialization remain unmatched.
+For $p=2$, the largest miss in Table~\ref{tab:transfer}, an exact decomposition
+gives a sharper estimate. With $y_i=\xi_i^1x_i$, the spins on which the two
+patterns agree and those on which they disagree form two non-interacting CW
+blocks, of $980$--$1068$ spins in our pattern sets. Pattern~1 wins exactly when
+the two blocks take the same sign, and their odds then multiply. Treating the
+blocks as independent and equal, each a CW model of about $N/2=1024$ spins,
+therefore doubles the logit $0.343384$ of the one-pattern runs at $N=1024$.
+Dividing by the exact CW $\logit\qeq=3.575$ at $N=2048$ gives $c=0.19212$,
+against the measured $0.18783$ $[0.184,0.191]$ and the Gaussian prediction
+$0.169$. The block sizes and initialization remain unmatched.
 
 \paragraph{Pattern correlations.}
-For $p$ patterns,
+Section~\ref{sec:limits} names pattern correlations as one possible cause of
+the size trend; this paragraph shows that the transition shifts they cause stay comparable to
+the critical window as $N$ grows. For $p$ patterns,
 $C_{\mu\nu}=N^{-1}\sum_i\xi_i^\mu\xi_i^\nu$ records their pairwise
 correlations. For continuous-time random-site dynamics at zero field,
 averaging the expected Gibbs redraw over sites, weighted by $\xi_i^\mu$, gives

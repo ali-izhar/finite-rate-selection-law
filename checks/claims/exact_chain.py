@@ -98,7 +98,7 @@ def checks(shared: dict) -> list[Result]:
             rows.append((N, gamma, float(logit(q) / logit(qe)), float(logit(ndtr(a)) / logit(qe))))
     excess = [100.0 * (c / ck - 1.0) for _, _, c, ck in rows]
     out.append(check_bool(
-        "A14", "Sec. 3, Table 2", "exceeds the prediction in all nine cases, by 0.23-1.81%",
+        "A14", "Sec. 3, Table 2", "exact c exceeds the law by 0.23-1.81% on all nine ramps",
         min(excess) > 0 and f"{min(excess):.2f}" == "0.23" and f"{max(excess):.2f}" == "1.81",
         f"{min(excess):.3f}% .. {max(excess):.3f}%", "all positive; ends round to 2 dp",
         "nine linear ramps of the exact chain vs logit Phi(G sqrt N (pi/gamma)^1/4) / logit q_eq",
@@ -108,6 +108,17 @@ def checks(shared: dict) -> list[Result]:
     for i, (N, g, c, _) in enumerate(r for r in rows if round(r[0] ** 2 * r[1]) == 4194):
         out.append(check_rounding(f"A16{'abc'[i]}", "Table 2", ("0.09370", "0.09372", "0.09361")[i], c,
                                   f"exact chain, N={N}, gamma={g:g}"))
+    ratios = {N: max(c for n, _, c, _ in rows if n == N) / min(c for n, _, c, _ in rows if n == N)
+              for N in sorted({r[0] for r in rows})}
+    out.append(check_bool(
+        "A16d", "Abstract, Sec. 3", "sixteen times slower cooling only doubles the fraction",
+        all(round(v) == 2 for v in ratios.values()),
+        ", ".join(f"N={N}: {v:.3f}" for N, v in ratios.items()), "each ratio rounds to 2",
+        "exact chain: c(gamma=0.00025) / c(gamma=0.004) at each N (a sixteenfold slower linear ramp)",
+    ))
+    a_fig = D.G0 * math.sqrt(D.N_SPINS) * (math.pi / 0.001) ** 0.25
+    out.append(check_rounding("A16e", "Sec. 3", "58", 100.0 * float(ndtr(a_fig)),
+                              "q_sel = Phi(a) in percent, a = G sqrt(N) (pi/gamma)^1/4 at N=2048, gamma=0.001, G=0.0006125"))
 
     # ------------------------------------------ schedule and reference (Tables 3-4)
     tau = [1.0 / (gap_full(D.N_SPINS, b) if b <= 1.0 else gap_well(D.N_SPINS, b)) for b in D.LADDER]

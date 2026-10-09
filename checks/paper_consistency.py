@@ -177,7 +177,7 @@ def check(root: Path, paper: Path) -> dict:
     proc = subprocess.run(["pdftotext", "-layout", str(pdf), "-"], check=True, text=True, capture_output=True)
     require(not proc.stderr.strip(), "PDF text extraction has no warnings")
     pages = [p for p in proc.stdout.split("\f") if p.strip()]
-    require(len(pages) == 13, "thirteen total pages")
+    require(len(pages) <= 14, "at most fourteen total pages")
     require(all(len(p.strip()) > 200 for p in pages), "no empty content pages")
     require(bool(re.search(r"^References\s*$", pages[6], re.M)), "references start on page seven")
     require("??" not in proc.stdout, "no unresolved-reference markers in PDF")

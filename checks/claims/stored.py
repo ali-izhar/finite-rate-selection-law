@@ -47,11 +47,11 @@ def checks(shared: dict) -> list[Result]:
     # ------------------------------------------ field-grid details (Sec. 4, App. B, Table 4)
     analysis = _load("results/hopfield/field_grid_analysis.json")
     top = analysis["points"][0]
-    out.append(check_bool("B31", "Sec. 4", "66.9% sampled, 97.26% reference at G = 0.0006125",
+    out.append(check_bool("B31", "record (no longer printed)", "66.9% sampled, 97.26% reference at G = 0.0006125",
                           f"{100 * top['q_model']['point']:.1f}" == "66.9" and f"{100 * top['q_eq']['point']:.2f}" == "97.26",
                           f"{100 * top['q_model']['point']:.3f}%, {100 * top['q_eq']['point']:.3f}%", "rounds as printed",
                           "results/hopfield/field_grid_analysis.json, strongest positive field"))
-    out.append(check_bool("B32", "Sec. 4", "c = 0.70/3.57", f"{logit(top['q_model']['point']):.2f}/{logit(top['q_eq']['point']):.2f}" == "0.70/3.57",
+    out.append(check_bool("B32", "record (no longer printed)", "c = 0.70/3.57", f"{logit(top['q_model']['point']):.2f}/{logit(top['q_eq']['point']):.2f}" == "0.70/3.57",
                           f"{logit(top['q_model']['point']):.4f}/{logit(top['q_eq']['point']):.4f}", "rounds as printed",
                           "logits of B31"))
     from checks.reanalysis import audit
@@ -98,7 +98,7 @@ def checks(shared: dict) -> list[Result]:
     worst = max(abs(c_meas[p] / (c_cw * amp[p]) - 1.0) for p in (1, 2, 3, 4))
     out.append(check_rounding("B08", "Sec. 1, Sec. 5", "11", 100.0 * worst,
                               "largest |c_meas / (c_CW x A_p) - 1| over p = 1..4, percent"))
-    out.append(check_bool("B09", "Sec. 1", "closely matches three-pattern simulations",
+    out.append(check_bool("B09", "Sec. 1", "closely matches three-pattern runs",
                           abs(c_meas[3] / (c_cw * amp[3]) - 1.0) < 0.02,
                           f"{100.0 * (c_meas[3] / (c_cw * amp[3]) - 1.0):+.1f} %", "|excess| < 2 %",
                           "c_meas(p=3) / (c_CW x A_3) - 1"))
@@ -125,6 +125,10 @@ def checks(shared: dict) -> list[Result]:
                               "log(c_meas(4096)/c_meas(1024)) / log 4"))
     out.append(check_rounding("B12p", "Sec. 5", "-0.46", math.log(cP[4096] / cP[1024]) / math.log(4.0),
                               "log(c_pred(4096)/c_pred(1024)) / log 4"))
+    worst_all = max([abs(c_meas[p] / (c_cw * amp[p]) - 1.0) for p in (1, 2, 3, 4)]
+                    + [abs(cN[N] / cP[N] - 1.0) for N in (1024, 4096)])
+    out.append(check_rounding("B08a", "Abstract", "11", 100.0 * worst_all,
+                              "largest |c_meas / c_pred - 1| over the Table 1 rows (pattern counts and sizes), percent"))
 
     # ------------------------------------------ one-pattern ratios (Sec. 5, App. B)
     rc = {int(k): v for k, v in _load("results/experiments/sampler_clock.json").items()}
@@ -134,7 +138,7 @@ def checks(shared: dict) -> list[Result]:
     out.append(check_rounding("B14", "Sec. 5", "0.212", c_cw * amp[3] * rc[2048]["r"],
                               "c_CW x A_3 x r(2048)"))
     for N, printed in ((1024, "0.319"), (4096, "0.153")):
-        out.append(check_rounding(f"B15_{N}", "Sec. 5", printed, cP[N] * rc[N]["r"],
+        out.append(check_rounding(f"B15_{N}", "App. B", printed, cP[N] * rc[N]["r"],
                                   f"c_pred({N}) x r({N})"))
     for N, printed in ((1024, "18"), (4096, "4")):
         dev = 100.0 * abs(rc[N]["p3_meas_over_pred_times_r"] - 1.0)

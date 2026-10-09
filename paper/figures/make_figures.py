@@ -1,6 +1,6 @@
 """Figures 1 and 2 of the paper, drawn at their final six-inch width.
 
-Reads saved results; the equilibrium background and selection Gaussian are
+Reads saved results; the equilibrium peaks and selection Gaussian are
 analytical illustrations. No simulation is run.
 Run from the repository root with:
     python paper/figures/make_figures.py [--out DIR]
@@ -16,7 +16,6 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.patheffects as pe
 import numpy as np
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
@@ -24,7 +23,6 @@ from matplotlib.legend_handler import HandlerTuple
 from matplotlib.ticker import NullLocator
 from scipy.special import logit, ndtr
 
-from colormaps import cmap
 from style import (
     ACCENT, BLUE, INK, MODE_NEG, MODE_POS, MUTED, SIZE_COLORS,
     configure, panel_heading, save, style_axis,
@@ -43,28 +41,26 @@ def mechanism(root, out):
     beta, trajectories = np.array(paths["beta"]), np.array(paths["m"])
     assert trajectories.shape == (14, 360)
     assert int((trajectories[:, -1] > 0).sum()) == 9
-    # Exact count probabilities at N=1024, G=0, normalized independently in
-    # each column: the equilibrium background, not a density estimate from the
-    # fourteen diffusion paths.
+    # Exact equilibrium at N=1024, G=0: the magnetization of the most probable
+    # count at each beta (one peak at 0 below the transition, two above it),
+    # not an estimate from the fourteen diffusion paths.
     log_mass = np.column_stack([log_pi_closed_form(1024, b) for b in beta])
-    relative_mass = np.exp(log_mass - log_mass.max(axis=0))
-
+    m_peak = np.abs(2.0 * log_mass.argmax(axis=0) / 1024 - 1.0)
     fig, (ax, bx) = plt.subplots(1, 2, figsize=(6, 1.96))
     fig.subplots_adjust(left=0.077, right=0.982, bottom=0.245, top=0.835, wspace=0.38)
     panel_heading(fig, ax, "(a)", "Cooling at zero field")
     panel_heading(fig, bx, "(b)", "A field biases the sign")
-    ax.imshow(relative_mass, aspect="auto", origin="lower", cmap=cmap("grayC"),
-              extent=[beta[0], beta[-1], -1, 1], interpolation="bilinear", rasterized=True)
-    ax.axvline(1, color="white", alpha=0.85, lw=0.85, ls=(0, (3.5, 2.5)))
+    ax.axvline(1, color="0.55", lw=0.85, ls=(0, (3.5, 2.5)))
     for m in trajectories:
         line, = ax.plot(beta, m, color=MODE_POS if m[-1] > 0 else MODE_NEG, lw=0.8, alpha=0.95)
-        line.set_path_effects([pe.Stroke(linewidth=1.3, foreground=(1, 1, 1, 0.4)), pe.Normal()])
-    ax.text(0.716, 0.9, r"$N=1024$, $G=0$", color="0.83", va="top")
-    ax.text(1.017, 0.9, r"$\beta=1$", color="white", va="top")
+    for sign in (1, -1):
+        ax.plot(beta, sign * m_peak, color=INK, lw=0.9, ls=(0, (2.2, 1.6)), zorder=3)
+    ax.text(0.716, 0.9, r"$N=1024$, $G=0$", color=INK, va="top")
+    ax.text(1.017, 0.9, r"$\beta=1$", color=INK, va="top")
     ax.text(1.333, 0.28, "+ sign", color=MODE_POS, ha="right", va="center")
     ax.text(1.333, -0.31, "− sign", color=MODE_NEG, ha="right", va="center")
-    ax.annotate("cooling", xy=(0.96, -0.83), xytext=(0.72, -0.83), color="0.82",
-                va="center", arrowprops=dict(arrowstyle="->", lw=0.7, color="0.82"))
+    ax.annotate("cooling", xy=(0.96, -0.83), xytext=(0.72, -0.83), color="0.4",
+                va="center", arrowprops=dict(arrowstyle="->", lw=0.7, color="0.4"))
     ax.set(xlim=(0.7, 1.35), ylim=(-1, 1), yticks=[-1, 0, 1],
            xlabel=r"Inverse temperature $\beta$", ylabel=r"Magnetization $m$")
     ax.set_xticks([0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3],
@@ -120,7 +116,7 @@ def validation(root, out):
                 label=f"{n}")
     ax.set_xscale("log")
     ax.set(xlim=(0.00019, 0.0052), ylim=(0.025, 0.21),
-           xlabel=r"Ramp rate $\gamma$ (per expected sweep)", ylabel=r"Log-odds ratio $c$")
+           xlabel=r"Cooling rate $\gamma$ (per expected sweep)", ylabel=r"Fraction $c$")
     ax.set_xticks([0.00025, 0.001, 0.004], labels=[r"$2.5\!\times\!10^{-4}$", r"$10^{-3}$", r"$4\!\times\!10^{-3}$"])
     ax.xaxis.set_minor_locator(NullLocator())
     ax.set_yticks([0.05, 0.10, 0.15, 0.20])
@@ -129,7 +125,7 @@ def validation(root, out):
     ax.add_artist(sizes)
     ax.legend(handles=[Line2D([], [], color=INK, lw=1.65, label="Selection law"),
                        Line2D([], [], color=INK, marker="o", mfc="white", mew=1.1,
-                              ms=4.6, lw=0, label="Numerical evolution")],
+                              ms=4.6, lw=0, label="Exact calculation")],
               loc="lower left", bbox_to_anchor=(0, 1.04), frameon=False,
               handlelength=1.8, handletextpad=0.6, borderpad=0, borderaxespad=0,
               labelspacing=0.25)
@@ -162,7 +158,7 @@ def validation(root, out):
               handlelength=1.8, handletextpad=0.6, borderpad=0, borderaxespad=0,
               labelspacing=0.25)
     bx.set(xlim=(-3.95, 3.95), ylim=(-1.04, 1.04), xticks=[-3, 0, 3], yticks=[-1, 0, 1],
-           xlabel=r"Reference log-odds $\operatorname{logit}q_{\rm eq}$",
+           xlabel=r"Equilibrium log-odds $\operatorname{logit}q_{\rm eq}$",
            ylabel=r"Sampled log-odds $\operatorname{logit}q_{\rm chain}$")
     for axis in (ax, bx):
         style_axis(axis)

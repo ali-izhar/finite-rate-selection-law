@@ -44,7 +44,7 @@ Python 3.12 or 3.13 and a CPU are enough to recheck every number the paper print
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m src              # the exact sampler: "82/82 checks passed" (seconds)
-python -m checks.claims    # every printed number: "75 PASS, 0 FAIL, 4 UNVERIFIED" (2 min)
+python -m checks.claims    # every printed number: "78 PASS, 0 FAIL, 4 UNVERIFIED" (2 min)
 ```
 
 The four UNVERIFIED rows are GPU and MNIST reruns; their saved outputs are checked.
