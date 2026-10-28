@@ -1,0 +1,4 @@
+# Tests of the Hopfield-test code: python -m pytest -q src/simple/tests
+-r requirements.txt
+pytest==9.1.1
+hypothesis==6.170.12

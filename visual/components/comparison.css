@@ -1,0 +1,27 @@
+/* components/comparison.css — the test chapter's plate; scoped under .ve-comparison; tokens from lib/theme.css. */
+.ve-comparison { min-width: 0; }
+.ve-comparison__loading { margin: 0; font: 400 var(--fs-s)/1.5 var(--font-ui); color: var(--ink-3); min-height: 12rem; }
+.ve-comparison__panels { display: grid; min-width: 0; }
+.ve-comparison__panel { display: grid; gap: 12px; align-content: start; min-width: 0; }
+
+/* one row per Table 1 row; the ratio track sits between the label and the value */
+.ve-cmp-rows { display: grid; }
+.ve-cmp-group { padding: 12px 0 4px 8px; font: 560 0.8125rem/1.2 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .08em; color: var(--ink-3); }
+.ve-cmp-group sub { font-variant-caps: normal; }
+.ve-cmp-row, .ve-cmp-axis { display: grid; grid-template-columns: 116px minmax(0, 1fr) 48px; align-items: center; }
+.ve-cmp-row {
+  min-height: 36px; border-top: 1px solid var(--rule); color: var(--ink);
+}
+.ve-cmp-row.is-main { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--ink); }
+.ve-cmp-row__l { padding-left: 8px; font: 450 0.8125rem/1.25 var(--font-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ve-cmp-row__v { text-align: right; padding-right: 8px; font: 450 0.8125rem/1 var(--font-ui); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.ve-cmp-row.is-main .ve-cmp-row__v { color: var(--ink); font-weight: 600; }
+.ve-cmp-row__t { display: block; min-width: 0; }
+.ve-cmp-row__t svg { display: block; width: 100%; height: 36px; overflow: visible; }
+.ve-cmp-axis { border-top: 1px solid var(--rule-strong); }
+.ve-cmp-axis svg { height: 22px; }
+.ve-cmp-axis text { fill: var(--ink-3); font: 450 11px var(--font-ui); }
+@media (max-width: 520px) {
+  .ve-cmp-row, .ve-cmp-axis { grid-template-columns: 100px minmax(0, 1fr) 44px; }
+}
+

@@ -1,0 +1,7 @@
+/* components/race.css — scoped under .ve-race */
+.ve-race sup { font-size: max(11px, 0.72em); line-height: 0; }
+
+/* the cooling rate, under the plot */
+.ve-race .ve-race__sliders { max-width: 420px; margin-top: var(--s3); }
+.ve-race .ve-race__sliders .ve-slider__top { height: 30px; align-items: center; }
+.ve-race .ve-slider__scale { display: none; }

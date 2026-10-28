@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the paper."
+title: "A Finite-Rate Selection Law for Annealed Gibbs Sampling"
+authors:
+  - family-names: Ali
+    given-names: Izhar
+    affiliation: Rowan University
+  - family-names: Khan
+    given-names: Muhammad Haris
+    affiliation: "Department of Computer Science, University of Copenhagen"
+  - family-names: Ahmad
+    given-names: Saeed
+    affiliation: IKLAB Inc.
+repository-code: "https://github.com/ali-izhar/finite-rate-selection-law"
+url: "https://ali-izhar.github.io/finite-rate-selection-law/"
+license:
+  - MIT
+  - CC-BY-4.0
+preferred-citation:
+  type: conference-paper
+  title: "A Finite-Rate Selection Law for Annealed Gibbs Sampling"
+  authors:
+    - family-names: Ali
+      given-names: Izhar
+    - family-names: Khan
+      given-names: Muhammad Haris
+    - family-names: Ahmad
+      given-names: Saeed
+  collection-title: "DynaFront Workshop at NeurIPS 2026"
+  year: 2026
+  url: "https://github.com/ali-izhar/finite-rate-selection-law"

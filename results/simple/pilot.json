@@ -1,0 +1,134 @@
+{
+ "step": "pilot",
+ "note": "not part of the pre-registered analysis",
+ "g0": {
+  "N": 16,
+  "p": 3,
+  "updates": 50,
+  "chains": 400,
+  "spins_changed": 2788,
+  "states_equal": true,
+  "projections_equal": true,
+  "drift_gpu": 0,
+  "drift_ref": 0,
+  "p_plus_max_abs_diff": 0.0,
+  "passed": true
+ },
+ "timing": [
+  {
+   "N": 2048,
+   "p": 1,
+   "batch": 131000,
+   "updates_per_second": 528315403.60925233,
+   "row_hours": 0.07752944494931753,
+   "drift": 0
+  },
+  {
+   "N": 2048,
+   "p": 2,
+   "batch": 131000,
+   "updates_per_second": 346502076.1990746,
+   "row_hours": 0.11820996990640655,
+   "drift": 0
+  },
+  {
+   "N": 2048,
+   "p": 3,
+   "batch": 131000,
+   "updates_per_second": 403272402.42469156,
+   "row_hours": 0.13013536181613689,
+   "drift": 0
+  },
+  {
+   "N": 2048,
+   "p": 4,
+   "batch": 131000,
+   "updates_per_second": 301155111.10433125,
+   "row_hours": 0.19976416730698737,
+   "drift": 0
+  },
+  {
+   "N": 1024,
+   "p": 1,
+   "batch": 131000,
+   "updates_per_second": 538400575.8498023,
+   "row_hours": 0.019019296151081118,
+   "drift": 0
+  },
+  {
+   "N": 1024,
+   "p": 3,
+   "batch": 131000,
+   "updates_per_second": 409871697.2792783,
+   "row_hours": 0.042159534592664874,
+   "drift": 0
+  },
+  {
+   "N": 4096,
+   "p": 1,
+   "batch": 131000,
+   "updates_per_second": 480974339.1925221,
+   "row_hours": 0.3353193442102607,
+   "drift": 0
+  },
+  {
+   "N": 4096,
+   "p": 3,
+   "batch": 131000,
+   "updates_per_second": 385040563.391424,
+   "row_hours": 0.4853514610356047,
+   "drift": 0
+  }
+ ],
+ "total_hours": 1.4074885799684598,
+ "p1_check": {
+  "N": 256,
+  "runs": 100000,
+  "n_pattern1": 100000,
+  "q_hat": 0.66689,
+  "q_exact": 0.6663787018465651,
+  "z": 0.3429152396737866,
+  "logit_ratio": 1.0033254681398662,
+  "passed": true,
+  "drift": 0,
+  "wall_seconds": 11.473862648010254
+ },
+ "provenance": {
+  "utc": "2026-10-27T19:49:01+00:00",
+  "argv": [
+   "/workspace/src/simple/__main__.py",
+   "pilot"
+  ],
+  "host": "7471a636a014",
+  "python": "3.12.3",
+  "numpy": "2.1.0",
+  "scipy": "1.17.1",
+  "git_head": "d606a1592b3134e461e5bcb0ea612e2c3e089d6d",
+  "git_dirty": "?? src/simple/__init__.py\n?? src/simple/__main__.py\n?? src/simple/analyse.py\n?? src/simple/design.py\n?? src/simple/estimate.py\n?? src/simple/predict.py\n?? src/simple/provenance.py\n?? src/simple/reference.py\n?? src/simple/run.py\n?? src/simple/sampler.py\n?? src/simple/tests/__init__.py\n?? src/simple/tests/conftest.py\n?? src/simple/tests/test_estimate.py\n?? src/simple/tests/test_gauge.py\n?? src/simple/tests/test_gpu.py\n?? src/simple/tests/test_kernel.py",
+  "source_sha256": {
+   "src/simple/__init__.py": "512b02de4cfd1018",
+   "src/simple/__main__.py": "4c8c4b0c21194f1f",
+   "src/simple/analyse.py": "85a00d521bad6926",
+   "src/simple/design.py": "7c5c05b5997dbf3d",
+   "src/simple/estimate.py": "964f2508ef3b6e92",
+   "src/simple/predict.py": "507e2cdb9d8adf4b",
+   "src/simple/provenance.py": "2911b1fd31da9fba",
+   "src/simple/reference.py": "4d71d293854fad50",
+   "src/simple/run.py": "dc18c3f03a886a31",
+   "src/simple/sampler.py": "a09dadab41238c84",
+   "src/simple/tests/__init__.py": "e3b0c44298fc1c14",
+   "src/simple/tests/conftest.py": "19a4f1245372670a",
+   "src/simple/tests/test_estimate.py": "f7de668359d68eee",
+   "src/simple/tests/test_gauge.py": "ba728d5b02370575",
+   "src/simple/tests/test_gpu.py": "1b5253d9fb628b1f",
+   "src/simple/tests/test_kernel.py": "73bec40fd093ae9f"
+  },
+  "seeds": {
+   "pilot_seed": 1,
+   "p1_check_seed": 2
+  },
+  "torch": "2.12.0a0+0291f960b6.nv26.04.48445190",
+  "cuda": "13.2",
+  "device": "NVIDIA GB10"
+ }
+}

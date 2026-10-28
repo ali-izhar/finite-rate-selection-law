@@ -1,0 +1,319 @@
+{
+ "step": "analyse",
+ "seed_offset": 0,
+ "rows": {
+  "N1024_p1": {
+   "estimate": {
+    "c": 0.09278349537922467,
+    "lo": 0.09042363187324931,
+    "hi": 0.09517000739349094,
+    "n_pattern1": 320000,
+    "q": 0.58215625,
+    "q_plus": 0.58181875,
+    "q_minus": 0.58249375
+   },
+   "c_pred": 0.09369944602648907,
+   "prediction": "exact (gauge identity)",
+   "reading": {
+    "ratio": 0.9902245884462811,
+    "ratio_lo": 0.9650391299825436,
+    "ratio_hi": 1.0156944510278763,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 0,
+    "runs": 320000
+   },
+   "win_share_pattern1": 1.0,
+   "c_over_Ap_csel": 0.9994846062458546
+  },
+  "N2048_p1": {
+   "estimate": {
+    "c": 0.06594408522595151,
+    "lo": 0.06428174425585338,
+    "hi": 0.06753482842493344,
+    "n_pattern1": 640000,
+    "q": 0.5586609375,
+    "q_plus": 0.559575,
+    "q_minus": 0.557746875
+   },
+   "c_pred": 0.06587418845290097,
+   "prediction": "exact (gauge identity)",
+   "reading": {
+    "ratio": 1.0010610646550966,
+    "ratio_lo": 0.9758259762367143,
+    "ratio_hi": 1.0252092664977543,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 0,
+    "runs": 640000
+   },
+   "win_share_pattern1": 1.0,
+   "c_over_Ap_csel": 1.00571365321027
+  },
+  "N4096_p1": {
+   "estimate": {
+    "c": 0.04716345292063048,
+    "lo": 0.04616772349843333,
+    "hi": 0.04821269422599939,
+    "n_pattern1": 1260000,
+    "q": 0.5420515873015873,
+    "q_plus": 0.542215873015873,
+    "q_minus": 0.5418873015873016
+   },
+   "c_pred": 0.04644632289011245,
+   "prediction": "exact (gauge identity)",
+   "reading": {
+    "ratio": 1.0154399742734144,
+    "ratio_lo": 0.9940016911061343,
+    "ratio_hi": 1.0380303805764346,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 0,
+    "runs": 1260000
+   },
+   "win_share_pattern1": 1.0,
+   "c_over_Ap_csel": 1.0177896632163579
+  },
+  "N2048_p2": {
+   "estimate": {
+    "c": 0.0946281219398056,
+    "lo": 0.09234903508195387,
+    "hi": 0.09704919638933064,
+    "n_pattern1": 321598,
+    "q": 0.5837691776690154,
+    "q_plus": 0.5832372021483769,
+    "q_minus": 0.5843040658518334
+   },
+   "c_pred": 0.09363417077209096,
+   "prediction": "exact two-block chain",
+   "reading": {
+    "ratio": 1.0106152610688885,
+    "ratio_lo": 0.9862749284845469,
+    "ratio_hi": 1.0364720015041515,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 4318,
+    "runs": 640000
+   },
+   "win_share_pattern1": 0.502496875,
+   "c_over_Ap_csel": 1.0204781750240894
+  },
+  "N2048_p3": {
+   "estimate": {
+    "c": 0.1090037713671796,
+    "lo": 0.10591189271541963,
+    "hi": 0.11233503632403162,
+    "n_pattern1": 274222,
+    "q": 0.5961994296591813,
+    "q_plus": 0.5965999736545526,
+    "q_minus": 0.5958015933011572
+   },
+   "c_pred": 0.10950788543988729,
+   "prediction": "A_p * c_CW",
+   "reading": {
+    "ratio": 0.9953965500230172,
+    "ratio_lo": 0.9671622485447258,
+    "ratio_hi": 1.0258168703814141,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 6619,
+    "runs": 820000
+   },
+   "win_share_pattern1": 0.3344170731707317,
+   "c_over_Ap_csel": 1.0000228118565968,
+   "R": {
+    "R": 0.9953965500230172,
+    "lo": 0.9671622485447258,
+    "hi": 1.0258168703814141,
+    "p_over_N_gamma": 0.3662109375,
+    "contains_1": true,
+    "below_1": false,
+    "above_1": false
+   }
+  },
+  "N2048_p4": {
+   "estimate": {
+    "c": 0.11369248848972104,
+    "lo": 0.1069030186789287,
+    "hi": 0.12099508106927326,
+    "n_pattern1": 254495,
+    "q": 0.600227902316352,
+    "q_plus": 0.6000582443270812,
+    "q_minus": 0.6003970371300336
+   },
+   "c_pred": 0.12092948256293296,
+   "prediction": "A_p * c_CW",
+   "reading": {
+    "ratio": 0.9401552547829211,
+    "ratio_lo": 0.8840112139179563,
+    "ratio_hi": 1.0005424525512723,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 7780,
+    "runs": 940000
+   },
+   "win_share_pattern1": 0.27073936170212765,
+   "c_over_Ap_csel": 0.9445247740189893,
+   "R": {
+    "R": 0.9401552547829211,
+    "lo": 0.8840112139179563,
+    "hi": 1.0005424525512723,
+    "p_over_N_gamma": 0.48828125,
+    "contains_1": true,
+    "below_1": false,
+    "above_1": false
+   }
+  },
+  "N1024_p3": {
+   "estimate": {
+    "c": 0.15183873124418926,
+    "lo": 0.14627379182875072,
+    "hi": 0.1571084487925491,
+    "n_pattern1": 181324,
+    "q": 0.6324424786569897,
+    "q_plus": 0.6332283899475283,
+    "q_minus": 0.6316589389750988
+   },
+   "c_pred": 0.15576401686657593,
+   "prediction": "A_p * c_CW",
+   "reading": {
+    "ratio": 0.9747997920100572,
+    "ratio_lo": 0.9390730591780108,
+    "ratio_hi": 1.0086312099098265,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 5752,
+    "runs": 540000
+   },
+   "win_share_pattern1": 0.3357851851851852,
+   "c_over_Ap_csel": 0.9839155658762637,
+   "R": {
+    "R": 0.9747997920100572,
+    "lo": 0.9390730591780108,
+    "hi": 1.0086312099098265,
+    "p_over_N_gamma": 0.732421875,
+    "contains_1": true,
+    "below_1": false,
+    "above_1": false
+   }
+  },
+  "N4096_p3": {
+   "estimate": {
+    "c": 0.07584065382518482,
+    "lo": 0.0734194710223075,
+    "hi": 0.07819749226645913,
+    "n_pattern1": 504568,
+    "q": 0.5673685211904045,
+    "q_plus": 0.5662577514154759,
+    "q_minus": 0.5684786571351582
+   },
+   "c_pred": 0.07721140443029566,
+   "prediction": "A_p * c_CW",
+   "reading": {
+    "ratio": 0.982246785753673,
+    "ratio_lo": 0.9508889465750956,
+    "ratio_hi": 1.0127712718534174,
+    "passed": true
+   },
+   "excluded": {
+    "tie": 0,
+    "m1zero": 6708,
+    "runs": 1460000
+   },
+   "win_share_pattern1": 0.3455945205479452,
+   "c_over_Ap_csel": 0.9845196669383818,
+   "R": {
+    "R": 0.982246785753673,
+    "lo": 0.9508889465750956,
+    "hi": 1.0127712718534174,
+    "p_over_N_gamma": 0.18310546875,
+    "contains_1": true,
+    "below_1": false,
+    "above_1": false
+   }
+  }
+ },
+ "gates": {
+  "G0": {
+   "passed": true,
+   "g0_file": true,
+   "drift_zero": true,
+   "missing_or_incomplete": []
+  },
+  "G1": {
+   "passed": true,
+   "per_row": [
+    true,
+    true,
+    true
+   ]
+  },
+  "G2": {
+   "passed": true
+  },
+  "all_passed": true
+ },
+ "T": {
+  "reading": "(a)",
+  "spearman_rho_deficit_vs_p_over_N_gamma": 0.6000000000000001,
+  "rows_present": [
+   "N2048_p3",
+   "N2048_p4",
+   "N1024_p3",
+   "N4096_p3"
+  ],
+  "primary": "N2048_p3"
+ },
+ "size_exponent_p3": {
+  "value": 0.5007482677562735,
+  "lo": 0.4663696660447175,
+  "hi": 0.534075792790287,
+  "exact_CW": 0.506
+ },
+ "provenance": {
+  "utc": "2026-10-27T22:47:09+00:00",
+  "argv": [
+   "/home/izhar/.claude/study/finite-rate-selection-law/src/simple/__main__.py",
+   "analyse"
+  ],
+  "host": "spark-7942",
+  "python": "3.13.11",
+  "numpy": "2.5.2",
+  "scipy": "1.18.1",
+  "git_head": "d606a1592b3134e461e5bcb0ea612e2c3e089d6d",
+  "git_dirty": "?? src/simple/__init__.py\n?? src/simple/__main__.py\n?? src/simple/analyse.py\n?? src/simple/design.py\n?? src/simple/estimate.py\n?? src/simple/predict.py\n?? src/simple/provenance.py\n?? src/simple/reference.py\n?? src/simple/run.py\n?? src/simple/sampler.py\n?? src/simple/tests/__init__.py\n?? src/simple/tests/conftest.py\n?? src/simple/tests/test_estimate.py\n?? src/simple/tests/test_gauge.py\n?? src/simple/tests/test_gpu.py\n?? src/simple/tests/test_kernel.py",
+  "source_sha256": {
+   "src/simple/__init__.py": "512b02de4cfd1018",
+   "src/simple/__main__.py": "4c8c4b0c21194f1f",
+   "src/simple/analyse.py": "3a203f9c91fd9bec",
+   "src/simple/design.py": "f4de3c5877bea6e5",
+   "src/simple/estimate.py": "a204d1e2f2cba0c5",
+   "src/simple/predict.py": "507e2cdb9d8adf4b",
+   "src/simple/provenance.py": "2911b1fd31da9fba",
+   "src/simple/reference.py": "4d71d293854fad50",
+   "src/simple/run.py": "848ef5974100ecd4",
+   "src/simple/sampler.py": "a09dadab41238c84",
+   "src/simple/tests/__init__.py": "e3b0c44298fc1c14",
+   "src/simple/tests/conftest.py": "19a4f1245372670a",
+   "src/simple/tests/test_estimate.py": "f7de668359d68eee",
+   "src/simple/tests/test_gauge.py": "ba728d5b02370575",
+   "src/simple/tests/test_gpu.py": "1b5253d9fb628b1f",
+   "src/simple/tests/test_kernel.py": "73bec40fd093ae9f"
+  },
+  "seeds": {}
+ }
+}
