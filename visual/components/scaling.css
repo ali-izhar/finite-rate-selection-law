@@ -1,0 +1,47 @@
+/* components/scaling.css — scoped under .ve-scaling */
+.ve-scaling { display: grid; min-width: 0; }
+.ve-scaling .ve-figure { margin: 0; }
+
+/* guess first: one ruled line, the question in italic serif, hairline pills */
+.ve-scaling .scl-guess {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; align-items: center;
+  margin: 0 0 4px; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.ve-scaling .scl-guess__q { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.ve-scaling .scl-guess__k { font: 560 0.875rem/1.2 var(--font-text); font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink-3); }
+.ve-scaling .scl-guess__s { font: italic 400 1.0625rem/1.4 var(--font-text); color: var(--ink); text-wrap: balance; }
+.ve-scaling .scl-guess__btns { display: flex; gap: 8px; }
+.ve-scaling .scl-guess__btns .ve-btn {
+  min-width: 52px; min-height: 32px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--rule-strong); background: none; color: var(--ink-2);
+  font: 450 0.8125rem/1 var(--font-ui); font-variant-numeric: tabular-nums; letter-spacing: 0;
+}
+.ve-scaling .scl-guess__btns .ve-btn:hover { border-color: var(--ink); color: var(--ink); }
+.ve-scaling .scl-guess__btns .ve-btn[data-state="right"] { border-color: var(--highlight); color: var(--highlight-ink); font-weight: 600; }
+.ve-scaling .scl-guess__btns .ve-btn[data-state="wrong"] { color: var(--ink-3); border-color: var(--rule); text-decoration: line-through; }
+.ve-scaling .scl-guess__a { grid-column: 1 / -1; margin: 0; font: 400 0.9375rem/1.55 var(--font-text); color: var(--ink-2); max-width: 46rem; }
+.ve-scaling .scl-guess__a:empty { display: none; }
+.ve-scaling .scl-guess__a b { color: var(--ink); font-weight: 600; }
+@media (pointer: coarse) { .ve-scaling .scl-guess__btns .ve-btn { min-height: 40px; } }
+
+/* the plot */
+.ve-scaling .scl-col { min-width: 0; display: grid; gap: 6px; align-content: start; margin-top: 12px; }
+.ve-scaling .scl-plotbox { position: relative; min-width: 0; }
+.ve-scaling .scl-plotbox canvas { cursor: crosshair; }
+
+/* hover / tap tip on a ring */
+.ve-scaling .scl-tip {
+  position: absolute; z-index: 5; pointer-events: none; max-width: min(380px, calc(100% - 8px));
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow);
+  padding: var(--s2) var(--s3); font: 450 0.75rem/1.5 var(--font-num); font-variant-numeric: tabular-nums; color: var(--ink-2);
+}
+.ve-scaling .scl-tip[hidden] { display: none; }
+.ve-scaling .scl-tip__h { color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+.ve-scaling .scl-tip table { border-collapse: collapse; }
+.ve-scaling .scl-tip td { padding: 0 var(--s2) 0 0; white-space: nowrap; }
+.ve-scaling .scl-tip__f { margin-top: 2px; color: var(--ink-3); }
+
+
+@media (max-width: 560px) {
+  .ve-scaling .scl-guess { grid-template-columns: minmax(0, 1fr); }
+}

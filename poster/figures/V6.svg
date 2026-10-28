@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="453.60pt" height="313.20pt" viewBox="0 0 453.60 313.20" role="img" aria-label="Measured over predicted c for the eight rows of Table 1, with 95% intervals. The exact rows (p = 1, 2) lie within 1.5% of 1; the four p &gt;= 3 rows lie below 1, by 0.5 to 6%; p = 4 is lowest, 0.940." class="fig" id="fig-V6">
+<text x="14.00" y="22.00" font-family="KaTeX_Math, 'Source Serif 4', serif" font-size="24" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums proportional-nums;font-style:italic" >p</text>
+<text x="132.00" y="22.00" font-family="KaTeX_Math, 'Source Serif 4', serif" font-size="24" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;font-style:italic" >N</text>
+<text x="266.80" y="22.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums proportional-nums;" >measured ÷ predicted</text>
+<text x="453.60" y="22.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" >ratio</text>
+<line x1="0.00" y1="34.00" x2="453.60" y2="34.00" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<text x="14.00" y="57.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >1</text>
+<text x="132.00" y="57.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >1,024</text>
+<text x="453.60" y="57.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.990</text>
+<text x="14.00" y="85.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >1</text>
+<text x="132.00" y="85.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >2,048</text>
+<text x="453.60" y="85.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >1.001</text>
+<text x="14.00" y="113.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >1</text>
+<text x="132.00" y="113.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >4,096</text>
+<text x="453.60" y="113.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >1.015</text>
+<text x="14.00" y="141.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >2</text>
+<text x="132.00" y="141.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >2,048</text>
+<text x="453.60" y="141.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >1.011</text>
+<line x1="0.00" y1="151.00" x2="453.60" y2="151.00" stroke="#A4A39D" stroke-width="1.2" stroke-linecap="butt" />
+<text x="14.00" y="179.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >3</text>
+<text x="132.00" y="179.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >1,024</text>
+<text x="453.60" y="179.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.975</text>
+<text x="14.00" y="207.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >3</text>
+<text x="132.00" y="207.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >2,048</text>
+<text x="453.60" y="207.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.995</text>
+<text x="14.00" y="235.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >3</text>
+<text x="132.00" y="235.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >4,096</text>
+<text x="453.60" y="235.00" font-family="Inter, sans-serif" font-size="22" font-weight="500" fill="#3B3D43" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.982</text>
+<rect x="0.00" y="241.00" width="453.60" height="28.00" fill="rgba(176,138,46,0.20)" rx="3"/>
+<text x="14.00" y="263.00" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#141518" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >4</text>
+<text x="132.00" y="263.00" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#141518" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >2,048</text>
+<text x="453.60" y="263.00" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#141518" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.940</text>
+<line x1="209.92" y1="36.00" x2="209.92" y2="274.00" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="304.72" y1="36.00" x2="304.72" y2="274.00" stroke="#141518" stroke-width="2.2" stroke-dasharray="8 6" stroke-linecap="butt" />
+<line x1="271.58" y1="49.00" x2="319.60" y2="49.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="295.45" cy="49.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="281.80" y1="77.00" x2="328.62" y2="77.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="305.73" cy="77.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="299.03" y1="105.00" x2="340.77" y2="105.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="319.36" cy="105.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="291.71" y1="133.00" x2="339.30" y2="133.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="314.78" cy="133.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="246.96" y1="171.00" x2="312.90" y2="171.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="280.83" cy="171.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="273.59" y1="199.00" x2="329.19" y2="199.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="300.36" cy="199.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="258.16" y1="227.00" x2="316.83" y2="227.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="287.89" cy="227.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="194.76" y1="255.00" x2="305.23" y2="255.00" stroke="#7A5C0E" stroke-width="3" stroke-linecap="butt" />
+<circle cx="247.99" cy="255.00" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.2"/>
+<line x1="172.00" y1="274.00" x2="361.60" y2="274.00" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<text x="209.92" y="304.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >0.9</text>
+<text x="304.72" y="304.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >1.0</text>
+<text x="330.72" y="304.00" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" >= predicted</text>
+</svg>

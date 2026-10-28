@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+.venv/
+.ruff_cache/
+
+# LaTeX (the build goes to paper/build/; paper/main.pdf is a tracked copy)
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+paper/build/
+paper/figures/*.png
+
+# visual edition: dependencies and site builds
+visual/node_modules/
+visual/_site/
+visual/dist/
+
+# local secrets and settings
+.env
+.claude/
+
+# poster: dependencies and build intermediates
+poster/node_modules/
+poster/poster.render.html
+poster/poster-detail.png
+poster/poster.qr.json

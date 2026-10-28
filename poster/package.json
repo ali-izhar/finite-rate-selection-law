@@ -1,0 +1,15 @@
+{
+  "name": "finite-rate-selection-law-poster",
+  "version": "1.0.0",
+  "description": "Build of the DynaFront 2026 poster (KaTeX math, QR code, Playwright print)",
+  "private": true,
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "jsqr": "1.4.0",
+    "katex": "0.16.47",
+    "playwright": "1.63.0",
+    "pngjs": "7.0.0",
+    "qrcode": "1.5.4"
+  }
+}

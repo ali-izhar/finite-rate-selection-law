@@ -1,0 +1,175 @@
+/* Poster: A Finite-Rate Selection Law for Annealed Gibbs Sampling
+   24 x 36 in portrait. The visual edition's tokens (visual/lib/theme.css): light page, one dark hero band.
+   Grid: margins 0.75 in; three 7.1 in columns, 0.6 in gutters; card padding 0.45 in; figure frames 6.3 x 4.35 in.
+   Bands (top, in): header 0.5-4.7 (QR code at right) | hero 5.0-15.0 | section I 15.5 | row 1 16.55-24.7 |
+   section II 25.2 | row 2 26.25-34.55 | footer 35.05. One gap (--gap, 0.5 in) from the hero, row 1 and row 2
+   to the next band. Type scale: --t-* below; figure text in make_figures.py (FL 22, FA 24, FD 34). */
+
+@font-face { font-family: "Source Serif 4"; src: url("../visual/fonts/SourceSerif4-Roman-opsz-wght.woff2") format("woff2"); font-weight: 200 900; font-style: normal; }
+@font-face { font-family: "Source Serif 4"; src: url("../visual/fonts/SourceSerif4-Italic-opsz-wght.woff2") format("woff2"); font-weight: 200 900; font-style: italic; }
+@font-face { font-family: "Inter"; src: url("../visual/fonts/Inter-opsz-wght.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "JetBrains Mono"; src: url("../visual/fonts/JetBrainsMono-wght.woff2") format("woff2"); font-weight: 300 700; font-style: normal; }
+
+@page { size: 24in 36in; margin: 0; }
+
+:root {
+  --bg: #F7F6F2; --card: #FCFBF8; --climax: #FBF6E9;
+  --ink: #141518; --ink-2: #3B3D43; --ink-3: #6A6C72;
+  --rule: #DAD8D1; --rule-strong: #A4A39D;
+  --mode-a: #2350B4; --mode-b: #B84A1A;
+  --gilt: #B08A2E; --gilt-ink: #7A5C0E;
+  --d-bg: #111214; --d-ink: #E8E7E2; --d-ink-2: #BDBCB6; --d-ink-3: #8C8B86; --d-gilt: #D9B350;
+
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", monospace;
+
+  /* type scale (pt): few levels, far apart */
+  --t-title: 82pt; --t-hero: 60pt; --t-sec: 48pt; --t-head: 34pt; --t-key: 24pt; --t-cap: 18pt; --t-ref: 16pt;
+
+  --m: 0.75in; --col: 7.1in; --g: 0.6in; --pad-y: 0.45in; --pad-x: 0.4in; --gap: 0.6in;   /* pad-x: 0.4 + 6.3 frame + 0.4 = 7.1 column */
+  --x1: 0.75in; --x2: 8.45in; --x3: 16.15in;
+  --fw: 6.3in; --fh: 4.35in;
+
+  --y-head: 0.5in; --h-head: 3.55in;
+  --y-hero: calc(var(--y-head) + var(--h-head) + 0.4in); --h-hero: 10.0in;
+  --h-sec: 0.8in; --sec-card: 0.25in;
+  --y-s1: calc(var(--y-hero) + var(--h-hero) + var(--gap));
+  --y-r1: calc(var(--y-s1) + var(--h-sec) + var(--sec-card)); --h-r1: 8.15in;
+  --y-s2: calc(var(--y-r1) + var(--h-r1) + var(--gap));
+  --y-r2: calc(var(--y-s2) + var(--h-sec) + var(--sec-card)); --h-r2: 8.3in;
+  --y-f: calc(var(--y-r2) + var(--h-r2) + var(--gap)); --h-f: 0.5in;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 24in; height: 36in; background: var(--bg); overflow: hidden; }
+body {
+  position: relative; font-family: var(--serif); color: var(--ink);
+  font-variant-numeric: lining-nums; font-optical-sizing: auto;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; text-rendering: geometricPrecision;
+}
+.katex { font-size: 1em; }
+svg.fig { display: block; overflow: visible; }
+i { font-family: var(--serif); font-style: italic; }
+.c { color: var(--gilt-ink); font-weight: 600; }
+sub { font-size: 0.68em; line-height: 0; }
+sup { font-size: 0.62em; line-height: 0; }
+
+.band { position: absolute; left: var(--m); width: calc(24in - 2 * var(--m)); }
+
+/* ------------------------------------------------------------ header */
+#header { top: var(--y-head); height: var(--h-head); }
+h1 {
+  position: absolute; left: 0; top: 0;
+  font-weight: 500; font-size: var(--t-title); line-height: 1.0; letter-spacing: -0.016em;
+  font-variation-settings: "opsz" 60;
+}
+.people { position: absolute; left: 0; bottom: 0; font-family: var(--sans); }
+.authors { font-size: var(--t-head); font-weight: 600; color: var(--ink); }
+.affil { font-size: var(--t-key); color: var(--ink-2); margin-top: 0.08in; }
+.people .sep { margin: 0 0.22em; color: var(--ink-3); font-weight: 400; }
+.hright { position: absolute; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: space-between; }
+.venue { display: flex; align-items: center; gap: 0.3in; }
+.dfmark { width: 1.1in; height: auto; display: block; }
+.vtext { font-family: var(--sans); border-left: 2.5pt solid var(--ink); padding-left: 0.3in; }
+.v1 { font-size: var(--t-head); font-weight: 700; letter-spacing: -0.01em; }
+.v2 { font-size: var(--t-key); font-weight: 400; color: var(--ink-2); margin-top: 0.04in; }
+
+/* ------------------------------------------------------------ hero band (dark) */
+#hero { position: absolute; left: 0; top: var(--y-hero); width: 24in; height: var(--h-hero); background: var(--d-bg); color: var(--d-ink); }
+#hero .inner { position: absolute; left: var(--m); top: 0.5in; width: 22.5in; height: calc(var(--h-hero) - 0.5in); }
+#hero .kick {
+  font-family: var(--sans); font-size: var(--t-key); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--d-gilt);
+}
+#hero .claim {
+  position: absolute; left: 0; top: 0.5in; width: 22.5in;
+  font-size: var(--t-hero); line-height: 1.1; font-weight: 400; letter-spacing: -0.01em; color: var(--d-ink);
+  font-variation-settings: "opsz" 48;
+}
+#hero .claim .c { color: var(--d-gilt); font-weight: 600; }
+#hero .frame { position: absolute; left: 0; top: 2.6in; width: 22.5in; height: 6.0in; }
+#hero .cap {
+  position: absolute; top: 8.75in; width: 12.9in;
+  font-family: var(--sans); font-size: var(--t-cap); line-height: 1.3; color: var(--d-ink-3);
+}
+#hero .cap i { font-family: var(--serif); }
+
+/* ------------------------------------------------------------ section labels */
+.sec {
+  position: absolute; left: var(--m); width: 22.5in; height: var(--h-sec);
+  display: flex; align-items: baseline; gap: 0.28in; white-space: nowrap; line-height: 1.1;
+}
+#sec1 { top: var(--y-s1); }  #sec2 { top: var(--y-s2); }
+.sec .n { font-family: var(--serif); font-size: var(--t-sec); font-weight: 600; color: var(--gilt-ink); }
+.sec .t { font-family: var(--serif); font-size: var(--t-sec); font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+.sec .r { flex: 1; border-top: 2pt solid var(--ink); transform: translateY(-0.17in); }
+
+/* ------------------------------------------------------------ cards */
+.card {
+  position: absolute; width: var(--col); padding: var(--pad-y) var(--pad-x);
+  background: var(--card); border: 1.5pt solid var(--rule); border-radius: 6pt;
+  display: flex; flex-direction: column;
+}
+.col1 { left: var(--x1); } .col2 { left: var(--x2); } .col3 { left: var(--x3); }
+.r1 { top: var(--y-r1); height: var(--h-r1); }
+.r2 { top: var(--y-r2); height: var(--h-r2); }
+.hd { display: flex; align-items: center; gap: 0.2in; height: 0.62in; }
+.k {
+  flex: none; width: 0.56in; height: 0.56in; border-radius: 50%; background: var(--ink); color: var(--card);
+  font-family: var(--sans); font-weight: 700; font-size: var(--t-key); display: flex; align-items: center; justify-content: center;
+}
+h2 { font-family: var(--serif); font-size: var(--t-head); font-weight: 600; line-height: 1.05; letter-spacing: -0.01em; white-space: nowrap; }
+.card .frame { width: var(--fw); height: var(--fh); margin-top: 0.18in; flex: none; }
+.txt { margin-top: auto; border-top: 1.5pt solid var(--rule); padding-top: 0.2in; display: flex; flex-direction: column; flex: none; }
+/* one text height per row: the rules and first lines align across a row, the captions align at the bottom */
+.r1 .txt { height: 1.85in; } .r2 .txt { height: 2.0in; }
+.txt .cap { margin-top: auto; padding-top: 0.14in; }
+.line { font-size: var(--t-key); line-height: 1.22; color: var(--ink); }
+.line.eq { font-size: var(--t-key); white-space: nowrap; }
+.cap { font-family: var(--sans); font-size: var(--t-cap); line-height: 1.3; color: var(--ink-2); margin-top: 0.14in; }
+.cap i { font-family: var(--serif); font-size: 1.06em; }
+
+/* climax */
+.climax { background: var(--climax); border: 6px solid var(--gilt); padding: calc(var(--pad-y) + 2px - 6px) calc(var(--pad-x) + 2px - 6px); }   /* border + padding = the plain card's */
+.climax .k { background: var(--gilt); }
+.climax h2 { color: var(--gilt-ink); }
+.strip { display: grid; grid-template-columns: auto auto auto; justify-content: start;
+  align-items: baseline; column-gap: 0.12in; row-gap: 0.04in; }
+.strip .l { justify-self: end; white-space: nowrap; }
+.strip b { font-family: var(--serif); font-weight: 400; font-size: var(--t-key); line-height: 1.2; }
+.strip .op { font-family: var(--serif); font-size: var(--t-key); line-height: 1.2; color: var(--ink-3); margin: 0 0.08in; }
+.strip .lb { font-family: var(--sans); font-size: var(--t-key); color: var(--ink-2); line-height: 1.1; white-space: nowrap; }
+.strip .meas { color: var(--gilt-ink); font-weight: 700; }
+.strip b.meas { font-weight: 600; }
+.climax .txt .line { margin-top: 0.12in; }
+
+/* ------------------------------------------------------------ footer */
+#footer { top: var(--y-f); height: var(--h-f); border-top: 1.5pt solid var(--rule-strong); padding-top: 0.14in; }
+/* the repository QR code: header, right, under the venue and the logos */
+.qr { display: flex; align-items: flex-end; gap: 0.3in; }
+.qr img { width: 1.8in; height: 1.8in; display: block; }
+.qr .qtext { text-align: right; padding-bottom: 0.02in; }
+.qr .t { white-space: nowrap; font-family: var(--sans); font-size: var(--t-cap); color: var(--ink-2); }
+.qr .u { white-space: nowrap; font-family: var(--sans); font-size: var(--t-key); font-weight: 600; color: var(--ink); margin-top: 0.06in; }
+.logos { display: flex; align-items: center; gap: 0.28in; height: 0.55in; }
+.logo { display: block; }
+.logo.rowan { height: 0.36in; }
+.logo.ucph { height: 0.52in; }
+.logo.iklab { height: 0.48in; }
+.refs { font-family: var(--sans); font-size: var(--t-ref); line-height: 1.3; color: var(--ink-3); white-space: nowrap; }
+#hero .capL { left: 0; }
+#hero .capR { left: 14.3in; width: 8.2in; }
+#hero .cap { white-space: nowrap; }
+.card .cap { white-space: nowrap; }
+.climax .frame svg.fig { margin-top: 0; }
+.card .frame { margin-bottom: 0.24in; }   /* minimum gap; .txt sits at the card bottom, so captions align across a row */
+#p4 .txt .line + .line { margin-top: 0.1in; }
+.txt .cap.attr { margin-top: 0.02in; padding-top: 0; }
+#p1 .txt .cap { padding-top: 0.08in; }
+/* a two-line headline (panel 5): its frame is shorter by the same amount, so the frame bottom aligns */
+.two .hd { height: 1.02in; align-items: flex-start; }
+.two .hd .k { margin-top: 0.03in; }
+.two h2 { white-space: normal; line-height: 1.0; }
+.two .frame { height: calc(var(--fh) - 0.40in); }

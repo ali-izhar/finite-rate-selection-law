@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finite-Rate Selection Law</title>
+<meta name="description" content="Visual edition of “A Finite-Rate Selection Law for Annealed Gibbs Sampling” (DynaFront @ NeurIPS 2026): live simulations and the paper’s data, one chapter at a time.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ℋ</text></svg>">
+<link rel="preload" href="fonts/SourceSerif4-Roman-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SourceSerif4-Italic-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Inter-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="lib/theme.css">
+<link rel="stylesheet" href="fonts/katex/katex.min.css">
+<link rel="stylesheet" href="components/speciation.css">
+<link rel="stylesheet" href="components/odds.css">
+<link rel="stylesheet" href="components/race.css">
+<link rel="stylesheet" href="components/scaling.css">
+<link rel="stylesheet" href="components/amplify.css">
+<link rel="stylesheet" href="components/comparison.css">
+<link rel="stylesheet" href="lib/shell.css">
+<script>
+  /* theme before first paint (try/catch: storage can be blocked) */
+  try { var t = localStorage.getItem('ve2.theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+</head>
+<body>
+<a class="v2-skip" href="#main">Skip to the chapter</a>
+
+<!-- ================================================================ PHONE BAR -->
+<header class="v2-bar" aria-label="Chapter bar">
+  <button class="v2-bar__menu" type="button" aria-controls="rail" aria-expanded="false" aria-label="Open the chapter list">
+    <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 5h13M2.5 9h13M2.5 13h13"/></svg>
+  </button>
+  <span class="v2-bar__t" data-bar-t>The paper</span>
+  <a class="v2-bar__next" href="#commit" data-bar-next>Next →</a>
+  <span class="v2-bar__prog" aria-hidden="true"><i></i></span>
+</header>
+
+<!-- ================================================================ RAIL -->
+<nav class="v2-rail" id="rail" aria-label="Chapters">
+  <div class="v2-rail__scroll">
+    <div class="v2-titleblock">
+      <p class="v2-titleblock__t"><a href="#overview">Finite-Rate Selection Law</a></p>
+      <p class="v2-titleblock__v">DynaFront @ NeurIPS 2026 · poster</p>
+    </div>
+    <ol class="v2-toc" data-toc><!-- built by lib/shell.js from the chapters --></ol>
+  </div>
+  <div class="v2-rail__foot">
+    <p class="v2-links"><a href="https://github.com/ali-izhar/finite-rate-selection-law/blob/main/paper/main.pdf" target="_blank" rel="noopener">Paper (PDF)</a><a href="https://github.com/ali-izhar/finite-rate-selection-law" target="_blank" rel="noopener">Code</a></p>
+    <div class="v2-seg" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme-set="system" aria-checked="true">Auto</button>
+      <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
+      <button type="button" role="radio" data-theme-set="dark" aria-checked="false">Dark</button>
+    </div>
+  </div>
+</nav>
+<div class="v2-scrim" data-scrim></div>
+
+<!-- ================================================================ MAIN -->
+<main class="v2-main" id="main">
+
+  <!-- 0 · OVERVIEW ---------------------------------------------------- -->
+  <section class="v2-ch" id="ch-overview" data-chapter="overview" data-n="" data-title="Finite-Rate Selection Law" hidden>
+    <header class="v2-head">
+      <p class="v2-kick v2-kick--over">DynaFront @ NeurIPS 2026 · poster</p>
+      <h1 class="v2-title v2-title--over">A Finite-Rate Selection Law for Annealed Gibbs Sampling</h1>
+      <p class="v2-lede">A sampler can produce clear samples in the wrong proportions. Cooled at a finite rate, a Gibbs sampler can turn the model’s 36&nbsp;:&nbsp;1 preference between two modes into 1.27&nbsp;:&nbsp;1.</p>
+      <p class="v2-links v2-links--over"><a href="https://github.com/ali-izhar/finite-rate-selection-law/blob/main/paper/main.pdf" target="_blank" rel="noopener">Paper (PDF)</a><a href="https://github.com/ali-izhar/finite-rate-selection-law" target="_blank" rel="noopener">Code</a></p>
+    </header>
+
+    <figure class="v2-front">
+      <canvas data-emblem="front" role="img" aria-label="Live traces of m against β for a Curie–Weiss sampler with 1,024 variables; each run ends in mode A or mode B, chosen near β = 1."></canvas>
+      <figcaption class="v2-front__cap">live · one line per sampling run</figcaption>
+    </figure>
+
+    <div class="v2-headline">
+      <div class="v2-rd v2-rd--c v2-reticle"><span class="v2-rd__l"><i>c</i>, the share of the model’s log-odds that the sampler keeps; Hopfield network with three stored patterns, N = 2,048, pooled over 50 random pattern sets: predicted · measured</span><span class="v2-rd__v"><span class="v2-rd__pre">0.1095</span> · 0.1090</span><span class="v2-rd__s"><a href="#limits">Four patterns measure 6% low; single pattern sets depart beyond sampling noise, and the protocol does not support the competition factor as derived →</a></span></div>
+    </div>
+  </section>
+
+  <!-- 1 · COMMIT ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-commit" data-chapter="commit" data-n="1" data-sec="Sec. 2–3" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">When does a run choose its mode?</h1>
+      <p class="v2-lede">Cooling raises <i>β</i>, the way a lower temperature sharpens a softmax. Near <i>β</i>&nbsp;=&nbsp;1 one valley splits into two modes, A and B.</p>
+    </header>
+    <div class="v2-platebar"><span class="v2-platebar__set">live · Curie–Weiss model, N = 1,024 variables</span></div>
+    <div class="v2-plate" data-mount="speciation" data-opts='{"plate":1}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 1</span><span class="v2-result__s">A run picks its mode near <i>β</i>&nbsp;=&nbsp;1 and keeps it: at N&nbsp;=&nbsp;2,048 a switch takes about 5&nbsp;×&nbsp;10<sup>7</sup> sweeps, and the longest ramp lasts 3,600.</span></p>
+  </section>
+
+  <!-- 2 · ODDS --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-odds" data-chapter="odds" data-n="2" data-sec="Sec. 2" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">How much of the model’s preference survives?</h1>
+      <p class="v2-lede">A weak field <i>G</i> makes the model prefer mode A. The sampler keeps a fraction <i>c</i> of that preference, measured in log-odds:</p>
+      <div class="v2-eqline" data-tex-display="c = \frac{\operatorname{logit} q_{\text{chain}}}{\operatorname{logit} q_{\text{eq}}}"></div>
+    </header>
+    <div class="v2-platebar"><span class="v2-platebar__set">exact Curie–Weiss chain · N = 2,048 · the test’s ramp</span></div>
+    <div class="v2-plate" data-mount="odds" data-opts='{"plate":2}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 2</span><span class="v2-result__s">The sampler keeps <span class="v2-c">c<sub>CW</sub>&nbsp;=&nbsp;0.0659</span> of the log-odds, and this fraction barely changes with the weak field.</span></p>
+  </section>
+
+  <!-- 3 · RACE --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-race" data-chapter="race" data-n="3" data-sec="Sec. 3" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">Where does the rest of the preference go?</h1>
+      <p class="v2-lede">Each line is one run on the test’s ramp, cooling through <i>β</i>&nbsp;=&nbsp;1 with the same weak field toward A. A sweep is N updates, about one per variable.</p>
+    </header>
+    <div class="v2-platebar"><span class="v2-platebar__set">live · drift-plus-noise model of the mean spin m</span></div>
+    <div class="v2-plate" data-mount="race" data-opts='{"plate":3}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 3</span><span class="v2-result__s">The sign is set in the shaded window, where the field’s push is small next to the noise. It only tilts a coin: P(A)&nbsp;=&nbsp;Φ(push&nbsp;÷&nbsp;spread), with Φ the Gaussian CDF (<a href="https://doi.org/10.1103/PhysRevLett.50.1023" target="_blank" rel="noopener">Kondepudi and Nelson 1983</a>).</span></p>
+    <p class="v2-caveat">Assumes a slow ramp from well below <i>β</i>&nbsp;=&nbsp;1, a nearly linear drift, and little later switching.</p>
+  </section>
+
+  <!-- 4 · SCALING ------------------------------------------------------ -->
+  <section class="v2-ch" id="ch-scaling" data-chapter="scaling" data-n="4" data-sec="Sec. 3, Table 2" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">Does sampling more slowly fix it?</h1>
+      <p class="v2-lede">A slower ramp gives the field more time, and the fluctuations too.</p>
+    </header>
+    <div class="v2-platebar"><span class="v2-platebar__set">exact Curie–Weiss chain · linear ramps</span></div>
+    <div class="v2-plate" data-mount="scaling" data-opts='{}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 4</span><span class="v2-result__s">On a linear ramp <span class="nw"><i>c</i> ∝ (N²γ)<sup>−1/4</sup></span>:<span data-after-guess hidden> 16× the sweeps only doubles <i>c</i>, and</span> 4× the model size halves it.</span></p>
+    <p class="v2-caveat">Weak field only (<span class="nw">G√N(π/γ)<sup>1/4</sup> ≪ 1</span>); very slow cooling at fixed N recovers equilibrium.</p>
+  </section>
+
+  <!-- 5 · MODES -------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-modes" data-chapter="modes" data-n="5" data-sec="Sec. 4" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">What changes when patterns compete?</h1>
+      <p class="v2-lede">A Hopfield network stores <i>p</i> patterns, and the field favours pattern 1’s + sign over its − sign. <i>c</i> compares the sign log-odds of the runs that end in pattern 1, not how often pattern 1 wins. You might expect competition to lose more of the preference.</p>
+    </header>
+    <div class="v2-platebar"><span class="v2-platebar__set">live · Gaussian draws</span></div>
+    <div class="v2-plate" data-mount="amplify" data-opts='{"plate":5}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 5</span><span class="v2-result__s">It keeps more: a larger early overlap carries more of the field, so the prediction multiplies <i>c</i> by <i>A<sub>p</sub></i>&nbsp;=&nbsp;kept mean&nbsp;÷&nbsp;all mean.</span></p>
+    <p class="v2-caveat">Assumed: the early overlaps are independent Gaussians of common variance, the field shifts only overlap 1, and the largest early overlap decides the final pattern.</p>
+  </section>
+
+  <!-- 6 · TEST --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-test" data-chapter="test" data-n="6" data-sec="Sec. 4, Table 1" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">Does the prediction match the network?</h1>
+      <p class="v2-lede">A written <a href="https://github.com/ali-izhar/finite-rate-selection-law/blob/main/docs/protocol-simple.md" target="_blank" rel="noopener">protocol</a> fixes the predictions, run counts and readings.</p>
+    </header>
+    <div class="v2-chain">
+      <div class="v2-rd"><span class="v2-rd__l">Curie–Weiss</span><span class="v2-rd__v">0.0659</span><span class="v2-rd__s"><i>c</i><sub>CW</sub></span></div>
+      <span class="v2-chain__op" aria-hidden="true">×</span>
+      <div class="v2-rd"><span class="v2-rd__l">3 patterns</span><span class="v2-rd__v">1.662</span><span class="v2-rd__s"><i>A</i><sub>3</sub></span></div>
+      <span class="v2-chain__op" aria-hidden="true">=</span>
+      <div class="v2-rd"><span class="v2-rd__l">Predicted</span><span class="v2-rd__v">0.1095</span><span class="v2-rd__s">N = 2,048</span></div>
+      <div class="v2-rd v2-rd--c v2-chain__meas"><span class="v2-reticle v2-chain__ret"><span class="v2-rd__l">Measured</span><span class="v2-rd__v">0.1090</span><span class="v2-rd__s">95%: <span class="nw">0.1059–0.1123</span></span></span></div>
+    </div>
+    <div class="v2-platebar"><span class="v2-platebar__set">Measured ÷ predicted <i>c</i> · 50 pattern sets per row · 95% intervals</span></div>
+    <div class="v2-plate" data-mount="comparison" data-opts='{}'></div>
+    <p class="v2-result"><span class="v2-result__k">Result 6</span><span class="v2-result__s">Pooled over all runs of 50 random pattern sets, three patterns lie within 3% at three sizes (point estimates); four patterns measure 6% low. By the protocol’s readings, <i>A<sub>p</sub></i> is not supported as derived (see <a href="#limits">Limits</a>).</span></p>
+  </section>
+
+  <!-- L · LIMITS ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-limits" data-chapter="limits" data-n="L" data-sec="Sec. 5" hidden>
+    <header class="v2-head">
+      <h1 class="v2-title">Where the prediction falls short</h1>
+    </header>
+    <ol class="v2-limits">
+      <li><b>Four patterns measure 6% low, at the edge of significance.</b> Their 95% interval is [0.884,&nbsp;1.00]; its upper end is 0.997–1.002 over 200 bootstrap seeds. All four competition rows lie 0.5–6% below their predictions.</li>
+      <li><b>Random patterns are correlated.</b> The prediction assumes independent overlaps of common variance, which needs Nγ&nbsp;≫&nbsp;p; here p/(Nγ) is 0.18 to 0.73. The protocol reads deficits ordered by p/(Nγ) as a finite-rate correction and unordered ones as a failed assumption. They are not ordered, although their differences lie within the intervals, so <i>A<sub>p</sub></i> is not supported as derived: the largest deficit is at p&nbsp;=&nbsp;4, N&nbsp;=&nbsp;2,048, not at p&nbsp;=&nbsp;3, N&nbsp;=&nbsp;1,024, where p/(Nγ) is largest.</li>
+      <li><b>Single pattern sets depart from the prediction (post-hoc analysis).</b> The pooled agreement is an average over pattern sets, not a property of one network: pattern 1 should win a share 1/p of the runs in every set; over the four-pattern sets it wins 0.09 to 0.71. Per-set <i>c</i> falls as this share rises and, beyond sampling noise, varies between sets with a standard deviation of 7–13% of the prediction. The pooled ratio counts each set by its pattern-1 runs, so it weights most the sets with a high win share and low <i>c</i>; the mean of the per-set ratios is 1.00 for four patterns. Unequal amplitude variances from pattern correlations would produce the uneven shares and the falling <i>c</i> (untested).</li>
+      <li><b>One cooling rate, one field.</b> The test uses one cooling rate and one field strength (NG), so it does not show how competition depends on the cooling rate.</li>
+      <li><b>Single-spin Gibbs sampling only.</b> Other samplers, such as diffusion models (<a href="https://doi.org/10.1038/s41467-024-54281-3" target="_blank" rel="noopener">Biroli et al. 2024</a>), need their own calculation.</li>
+    </ol>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" defer></script>
+<script src="lib/ui.js"></script>
+<script src="lib/sim.js"></script>
+<script src="components/speciation.js" defer></script>
+<script src="components/odds.js" defer></script>
+<script src="components/race.js" defer></script>
+<script src="components/scaling.js" defer></script>
+<script src="components/amplify.js" defer></script>
+<script src="components/comparison.js" defer></script>
+<script src="lib/shell.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* components/amplify.css — scoped under .ve-amplify */
+.ve-amplify .ve-figure__stage { display: grid; gap: 28px; }
+.ve-amplify sub { font-size: .7em; line-height: 0; }
+
+.ve-amplify__pctl .ve-toggle { display: flex; align-items: center; gap: 12px; }
+
+.ve-amplify__steps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.ve-amplify__step { display: grid; align-content: start; gap: 14px; min-width: 0; padding-top: 14px; border-top: 1px solid var(--rule); }
+.ve-amplify__body { display: grid; gap: 12px; min-width: 0; }
+.ve-amplify__h { display: flex; align-items: baseline; margin: 0; }
+
+.ve-amplify__btns { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+
+.ve-amplify__foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+.ve-amplify__foot .ve-legend { font: 450 0.8125rem/1.3 var(--font-ui); gap: 4px 16px; color: var(--ink-3); }
+.ve-amplify__ap { position: relative; padding: 4px 10px; gap: 4px; }
+.ve-amplify__ap .ve-readout__label { font: 450 0.8125rem/1.3 var(--font-ui); text-transform: none; letter-spacing: 0; color: var(--ink-3); }
+.ve-amplify__ap .ve-readout__label i { font-family: var(--font-text); font-size: 1.05em; }
+.ve-amplify__ap .ve-readout__value { color: var(--highlight-ink); }
+.ve-amplify__ap .ve-readout__sub { font: 450 0.75rem/1.3 var(--font-ui); color: var(--ink-3); }
+.ve-amplify__ap::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(var(--highlight), var(--highlight)) left top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) left bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left bottom / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right bottom / 1px 8px no-repeat;
+}
+
+
+/* one draw needs no more width than this */
+.ve-amplify__steps > .ve-amplify__step:first-child .ve-amplify__body { max-width: 640px; }
