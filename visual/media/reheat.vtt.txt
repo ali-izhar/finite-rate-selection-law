@@ -1,0 +1,84 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.835
+Reheating means raising
+the temperature again,
+
+2
+00:00:02.902 --> 00:00:05.923
+so a run can leave
+its mode and choose again.
+
+3
+00:00:06.130 --> 00:00:09.852
+The paper tests its prediction
+on such Hopfield runs,
+
+4
+00:00:09.892 --> 00:00:13.063
+from a deliberately
+imbalanced filtered start.
+
+5
+00:00:13.595 --> 00:00:20.296
+After a brief cooling, every run labelled
+pattern one, positive, is removed.
+
+6
+00:00:20.573 --> 00:00:25.595
+The rest are reheated below β = 1,
+where there is one valley,
+
+7
+00:00:25.635 --> 00:00:27.982
+then cooled on the paper's schedule.
+
+8
+00:00:28.270 --> 00:00:32.011
+The Curie–Weiss numbers, 61% and c,
+
+9
+00:00:32.056 --> 00:00:38.872
+came from these same steps; there, almost
+none of that imbalance survives reheating.
+
+10
+00:00:39.277 --> 00:00:43.957
+Every field strength is run in both
+directions, with the same removal.
+
+11
+00:00:44.490 --> 00:00:49.577
+If the removal left a memory, the two
+directions would not mirror each other;
+
+12
+00:00:49.982 --> 00:00:53.606
+within the comparisons'
+precision, they do.
+
+13
+00:00:54.010 --> 00:00:57.333
+That does not prove
+the runs match fresh starts.
+
+14
+00:00:57.737 --> 00:01:00.913
+In a deep Boltzmann
+machine trained on digits,
+
+15
+00:01:00.953 --> 00:01:05.402
+a reheated eight can become
+a three under a bias toward threes.
+
+16
+00:01:05.609 --> 00:01:11.218
+So reheating can free a run,
+but the run then cools and chooses again;
+
+17
+00:01:11.623 --> 00:01:16.466
+the sign chosen in that cooling
+can decide the proportions.

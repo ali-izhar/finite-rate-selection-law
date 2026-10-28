@@ -1,0 +1,117 @@
+[
+  {
+    "name": "ladder budget K(beta) reproduced",
+    "passed": true,
+    "detail": "beta=0.60: tau=2.4984 K=15(spec 15), beta=0.80: tau=4.9696 K=30(spec 30), beta=0.90: tau=9.6820 K=59(spec 59), beta=0.95: tau=17.6916 K=107(spec 107), beta=1.00: tau=59.0024 K=355(spec 355), beta=1.05: tau=24.1475 K=145(spec 145), beta=1.10: tau=10.7311 K=65(spec 65), beta=1.20: tau=5.1194 K=31(spec 31), beta=1.40: tau=2.5406 K=16(spec 16), beta=1.60: tau=1.6946 K=11(spec 11)",
+    "values": {
+      "rows": [
+        [
+          0.6,
+          2.4983597316817443,
+          15,
+          15
+        ],
+        [
+          0.8,
+          4.969567904766754,
+          30,
+          30
+        ],
+        [
+          0.9,
+          9.681989204299885,
+          59,
+          59
+        ],
+        [
+          0.95,
+          17.691635147830937,
+          107,
+          107
+        ],
+        [
+          1.0,
+          59.00238189363827,
+          355,
+          355
+        ],
+        [
+          1.05,
+          24.147506854923222,
+          145,
+          145
+        ],
+        [
+          1.1,
+          10.731107055169867,
+          65,
+          65
+        ],
+        [
+          1.2,
+          5.119401554415139,
+          31,
+          31
+        ],
+        [
+          1.4,
+          2.540585200959886,
+          16,
+          16
+        ],
+        [
+          1.6,
+          1.6945552151327594,
+          11,
+          11
+        ]
+      ]
+    }
+  },
+  {
+    "name": "interval machinery (Wilson / MOVER) verified",
+    "passed": true,
+    "detail": "max |closed form - Brent root of the score equation| = 2.220e-16 (tol 1e-12); wilson(50,100) = [0.4038, 0.5962] vs [0.4038, 0.5962]: True; wilson(0,100) upper = 0.03699 vs 0.03698: True; MOVER symmetric = True, covers 1 on a 0.6+0.4 pair = True",
+    "values": {
+      "max_wilson_residual": 2.220446049250313e-16
+    }
+  },
+  {
+    "name": "G1b fast O(Np) sweep == dense J s sweep",
+    "passed": true,
+    "detail": "N=64, p=3, 20 sweeps: states identical=True, max |numerator_fast - numerator_dense| = 0 (integer, exact)",
+    "values": {
+      "identical": true,
+      "max_numerator_gap": 0
+    }
+  },
+  {
+    "name": "G1a detailed balance (enumeration)",
+    "passed": true,
+    "detail": "N=10, p=2, betas=(0.7, 1.6), G in (0.0, 0.0006125, 0.05): max |pi P - (pi P)^T| = 2.168e-18, max |pi P - pi| = 5.551e-17, tol = 1e-06 (worst at beta=1.6, G=0.0006125)",
+    "values": {
+      "db_residual": 2.168404344971009e-18,
+      "stationarity_residual": 5.551115123125783e-17,
+      "tol": 1e-06
+    }
+  },
+  {
+    "name": "G1c GPU kernel == NumPy reference (same random stream)",
+    "passed": true,
+    "detail": "N=32, p=3, 7 chains, 6 sweeps, G in (0.0006125, -0.0006125): differing spins = 0 of 224, projections identical = True",
+    "values": {
+      "identical": true,
+      "n_differing_spins": 0
+    }
+  },
+  {
+    "name": "G1d empirical law of the GPU sampler vs Boltzmann",
+    "passed": true,
+    "detail": "N=10, p=2, beta=1.6, G=0.05, 2.40e+07 draws in 200 independent groups: max |emp - pi| = 2.527e-04, max across-group z = 3.28 sigma (threshold 5), median SE = 1.62e-06; carried-vs-recomputed projection drift = 0",
+    "values": {
+      "max_abs_dev": 0.00025273624127369887,
+      "max_z": 3.2833269694142495,
+      "projection_drift": 0
+    }
+  }
+]

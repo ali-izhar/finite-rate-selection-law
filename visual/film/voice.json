@@ -1,0 +1,13 @@
+{
+ "voice_name": "annie-k-technical-female",
+ "voice_id": "XW70ikSsadUbinwLMZ5w",
+ "model_id": "eleven_multilingual_v2",
+ "settings": {
+  "stability": 0.7,
+  "similarity_boost": 0.8,
+  "style": 0.0,
+  "use_speaker_boost": true,
+  "speed": 0.92
+ },
+ "status": "chosen by the author"
+}

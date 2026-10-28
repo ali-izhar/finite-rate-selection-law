@@ -1,0 +1,17 @@
+# CPU environment: checks, figures, exact-chain calculations, page data.
+# Tested with Python 3.12 and 3.13:  python -m venv .venv && pip install -r requirements.txt
+numpy==2.5.2
+scipy==1.18.1
+matplotlib==3.11.1
+cmcrameri==1.10      # figure palettes (paper/figures/colormaps.py)
+mpmath==1.3.0        # visual/data/ref/make_reference.py
+pillow==12.3.0       # visual/data/make_exports.py
+# matplotlib dependencies, pinned to the tested versions
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.63.0
+kiwisolver==1.5.0
+packaging==26.3
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+six==1.17.0

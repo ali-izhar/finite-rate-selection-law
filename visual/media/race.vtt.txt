@@ -1,0 +1,118 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.599
+To see where the preference is lost,
+zoom in near β = 1.
+
+2
+00:00:04.679 --> 00:00:10.915
+Below β = 1, an imbalance in m shrinks;
+above one, it grows.
+
+3
+00:00:11.262 --> 00:00:18.032
+The field adds a steady push,
+so m drifts at (β − 1)m + G.
+
+4
+00:00:18.135 --> 00:00:22.793
+Random updates add fluctuations
+of variance 2/N per sweep.
+
+5
+00:00:22.837 --> 00:00:28.110
+To calculate, the paper takes
+the simplest schedule: a ramp of slope γ.
+
+6
+00:00:28.375 --> 00:00:34.337
+Past one, an imbalance grows
+at rate β − 1, which is γt,
+
+7
+00:00:34.377 --> 00:00:37.084
+the sweeps since β crossed one.
+
+8
+00:00:37.152 --> 00:00:43.103
+So it is multiplied by e
+to the area under that line, γt²/2.
+
+9
+00:00:43.143 --> 00:00:50.006
+That area reaches about one after roughly
+γ^(−1/2) sweeps: the selection interval.
+
+10
+00:00:50.410 --> 00:00:56.751
+Before then, the sign is still open;
+after it, the imbalance runs away.
+
+11
+00:00:57.237 --> 00:01:01.825
+Over that interval, the field's push
+adds up in proportion to its length,
+
+12
+00:01:01.927 --> 00:01:04.692
+the fluctuations only
+like its square root.
+
+13
+00:01:05.178 --> 00:01:12.924
+Their ratio is G√N · γ^(−1/4):
+slower cooling favours the field.
+
+14
+00:01:13.189 --> 00:01:17.243
+To turn this race into a probability,
+undo the growth.
+
+15
+00:01:17.345 --> 00:01:22.084
+It stretches every run by the same factor,
+so each keeps its sign.
+
+16
+00:01:22.442 --> 00:01:28.265
+The runs then form, approximately,
+a Gaussian: the field sets its mean,
+
+17
+00:01:28.305 --> 00:01:30.373
+the fluctuations its spread.
+
+18
+00:01:30.650 --> 00:01:33.601
+Call a the mean over
+the standard deviation.
+
+19
+00:01:33.878 --> 00:01:38.779
+The positive area, Φ(a),
+is the chance of the positive sign.
+
+20
+00:01:39.149 --> 00:01:45.652
+This is a classical result; with little
+switching later, Φ(a) is the final share.
+
+21
+00:01:46.057 --> 00:01:51.736
+On a ramp at the opening's
+size and field, a is 0.208.
+
+22
+00:01:51.943 --> 00:01:58.818
+So the positive sign wins only 58% of the
+time, near the 61 of the paper's schedule.
+
+23
+00:01:59.223 --> 00:02:01.639
+That is where the preference is lost:
+
+24
+00:02:02.044 --> 00:02:07.502
+the weak field only tilts a choice
+the fluctuations mostly decide.

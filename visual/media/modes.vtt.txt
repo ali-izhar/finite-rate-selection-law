@@ -1,0 +1,127 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.495
+Curie–Weiss has only two modes,
+so a run makes one choice.
+
+2
+00:00:05.004 --> 00:00:09.510
+A Hopfield model stores random
+patterns of +1s and −1s;
+
+3
+00:00:09.706 --> 00:00:14.758
+at low temperature, configurations
+settle near one pattern or its negative.
+
+4
+00:00:15.139 --> 00:00:21.550
+With three patterns, a run makes two
+choices: which pattern, and which sign.
+
+5
+00:00:21.861 --> 00:00:25.462
+Does competition change how
+much preference survives?
+
+6
+00:00:25.867 --> 00:00:29.008
+A sample's overlap with a pattern
+is its average agreement
+
+7
+00:00:29.048 --> 00:00:33.845
+with it, from −1 at the negative
+to +1 at the pattern.
+
+8
+00:00:34.377 --> 00:00:39.546
+Each sample is labelled by its largest
+overlap in size, and its sign.
+
+9
+00:00:39.753 --> 00:00:42.290
+With the field favouring pattern one,
+
+10
+00:00:42.330 --> 00:00:47.231
+the paper compares signs only
+among samples labelled pattern one.
+
+11
+00:00:47.543 --> 00:00:49.809
+The paper then approximates.
+
+12
+00:00:49.877 --> 00:00:57.344
+Near β = 1, where the choice is made, the
+three overlaps are independent Gaussians.
+
+13
+00:00:57.446 --> 00:01:01.871
+Pattern one's is shifted by the field,
+as in Curie–Weiss.
+
+14
+00:01:02.148 --> 00:01:05.436
+The largest in size
+decides the final pattern.
+
+15
+00:01:05.713 --> 00:01:10.358
+Compare the curve's heights at the same
+size on either side of zero.
+
+16
+00:01:10.763 --> 00:01:14.538
+The log of their ratio
+is the sign's log-odds.
+
+17
+00:01:14.850 --> 00:01:21.260
+On a log scale the Gaussian is a parabola,
+and the shift adds a straight tilt.
+
+18
+00:01:21.572 --> 00:01:25.880
+So the gap between the two sides
+grows in proportion to the size.
+
+19
+00:01:26.285 --> 00:01:29.909
+Pattern one wins only
+by beating the other two,
+
+20
+00:01:30.035 --> 00:01:33.090
+so its winning overlaps
+are larger than usual.
+
+21
+00:01:33.216 --> 00:01:40.323
+On average they are 1.662 times larger,
+so their sign's log-odds are too.
+
+22
+00:01:40.530 --> 00:01:45.994
+The paper also takes the Hopfield model's
+own preference to be the Curie–Weiss one,
+
+23
+00:01:46.034 --> 00:01:49.658
+so the gain changes only
+the sampler's side of c.
+
+24
+00:01:49.784 --> 00:01:52.142
+Neither assumption is guaranteed.
+
+25
+00:01:52.268 --> 00:01:59.491
+Under both, the prediction is the
+Curie–Weiss c times this gain: 0.199.
+
+26
+00:01:59.803 --> 00:02:03.787
+Competition keeps more of the preference.

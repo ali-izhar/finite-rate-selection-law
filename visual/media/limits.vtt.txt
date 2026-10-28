@@ -1,0 +1,61 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:09.185
+Across sizes, c falls as N^(−0.36),
+not the −0.46 predicted for this schedule.
+
+2
+00:00:09.706 --> 00:00:12.285
+The paper has not established why.
+
+3
+00:00:12.585 --> 00:00:18.102
+The Hopfield runs never vary the cooling
+rate, so they do not test the rate law.
+
+4
+00:00:18.309 --> 00:00:21.353
+The law is about annealed Gibbs sampling;
+
+5
+00:00:21.560 --> 00:00:24.237
+comparing it with annealed
+importance sampling,
+
+6
+00:00:24.277 --> 00:00:28.377
+or extending it to diffusion models,
+is future work.
+
+7
+00:00:28.688 --> 00:00:32.440
+97 asked for; 61 delivered.
+
+8
+00:00:32.844 --> 00:00:39.313
+The sign is chosen near β = 1, where
+the weak field only tilts the choice.
+
+9
+00:00:39.683 --> 00:00:45.838
+About an eighth of the model's
+log-odds survives: c, 0.12.
+
+10
+00:00:46.335 --> 00:00:50.528
+Slower cooling raises it only
+through a quarter power on a ramp.
+
+11
+00:00:50.909 --> 00:00:52.618
+On the paper's schedule,
+
+12
+00:00:52.686 --> 00:00:58.249
+sixteen times the final cooling buys
+about 4 positive samples in 100.
+
+13
+00:00:58.653 --> 00:01:01.047
+Competing patterns keep more.

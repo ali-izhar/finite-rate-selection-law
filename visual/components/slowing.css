@@ -1,0 +1,108 @@
+/* components/slowing.css — scoped under .ve-slowing
+   Three panels on hairlines; each panel head is a small-caps letter, a serif title and an ⓘ
+   whose card holds the explanation. Readouts: Inter label over light serif numerals, no boxes. */
+.ve-slowing { min-width: 0; }
+.ve-slowing .ve-figure { margin-top: 0; }
+.ve-slowing__intro { margin: 0; max-width: 36rem; font: 400 1.0625rem/1.62 var(--font-text); color: var(--ink); text-wrap: pretty; }
+
+.ve-slowing__panel { display: grid; gap: 14px; min-width: 0; padding-top: 22px; border-top: 1px solid var(--rule); }
+.ve-slowing__panel:first-of-type { border-top: 0; padding-top: 4px; }
+.ve-slowing__panel + .ve-slowing__panel { margin-top: 26px; }
+
+.ve-slowing__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-width: 0; }
+.ve-slowing__k {
+  display: inline-block; margin-right: 12px; font: 560 0.9375rem/1 var(--font-text); font-variant-caps: all-small-caps;
+  letter-spacing: .09em; color: var(--ink-3); min-width: 0.9em;
+}
+.ve-slowing__step {
+  margin: 0; font: 400 1.1875rem/1.3 var(--font-text); font-variation-settings: "opsz" 32;
+  letter-spacing: -0.004em; color: var(--ink); text-wrap: balance;
+}
+.ve-slowing__step .ve-slowing__i { width: 22px; height: 22px; margin: -4px 0 -2px -2px; }
+.ve-slowing__hint2 { margin-left: auto; font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+
+.ve-slowing__pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; min-width: 0; }
+.ve-slowing__cell { display: grid; gap: 4px; min-width: 0; align-content: start; }
+.ve-slowing__cellhead { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+
+.ve-slowing__ctl { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: flex-end; min-width: 0; }
+.ve-slowing__ctl > .ve-slider { flex: 1 1 320px; }
+.ve-slowing__ctl > .ve-toggle { flex: 0 1 auto; }
+.ve-slowing__ctl--n { align-items: center; }
+.ve-slowing__ctl--n > .ve-legend { flex: 1 1 280px; justify-content: flex-end; }
+
+.ve-slowing__readouts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 28px; min-width: 0;
+  padding-top: 12px; border-top: 1px solid var(--rule);
+}
+.ve-slowing__readouts .ve-readout { align-content: start; }
+.ve-slowing__readouts .ve-readout__value { font-size: 2.25rem; white-space: nowrap; }
+.ve-slowing__readouts .ve-readout__sub:empty { display: none; }
+
+/* the live line: one italic sentence, its long form behind the ⓘ */
+.ve-slowing__say {
+  margin: 0; max-width: 40rem; min-height: 1.5em;
+  font: italic 400 0.9375rem/1.5 var(--font-text); color: var(--ink-2); text-wrap: pretty;
+}
+.ve-slowing__say .ve-slowing__i { width: 22px; height: 22px; margin: -4px 0 -2px -2px; }
+.ve-slowing__say sup { font-size: 0.72em; line-height: 0; }
+
+.ve-slowing__plot2 canvas { cursor: crosshair; }
+.ve-slowing .ve-slowing__sym { text-transform: none; letter-spacing: 0; font-family: var(--font-text); font-style: italic; font-size: 1.1em; }
+.ve-slowing .ve-legend { min-width: 0; }
+.ve-slowing .ve-key { white-space: normal; min-width: 0; }
+
+@media (max-width: 720px) {
+  .ve-slowing__pair { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .ve-slowing__hint2 { margin-left: 0; flex-basis: 100%; }
+  .ve-slowing__ctl--n > .ve-legend { justify-content: flex-start; }
+}
+@media (max-width: 560px) {
+  .ve-slowing__readouts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+  .ve-slowing__readouts .ve-readout__value { font-size: 1.9rem; }
+  .ve-slowing__ctl > .ve-slider { flex-basis: 100%; }
+}
+
+/* The half-height bracket key matches the bracket on the plot */
+.ve-slowing .ve-key__mark[data-mark="bracket"]::before { left: 2px; right: 2px; height: 1.5px; }
+.ve-slowing .ve-key__mark[data-mark="bracket"]::after {
+  content: ""; position: absolute; left: 1px; right: 1px; top: 50%; height: 9px; transform: translateY(-50%);
+  border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
+}
+/* the chapter's "Reading the figure" card: on phones, each panel label sits above its text */
+@media (max-width: 560px) {
+  #slowdown-read .v2-dl { grid-template-columns: minmax(0, 1fr); }
+  #slowdown-read .v2-dl dt { padding-bottom: 0; white-space: nowrap; }
+  #slowdown-read .v2-dl dd { border-top: 0; padding-top: 2px; }
+}
+
+/* Table 3 (the cooling schedule) inside the chapter's "Why" drawer: eleven narrow columns, scrolls
+   inside its own box on phones so the page never scrolls sideways */
+.ve-slowing-ladder { overflow-x: auto; margin: 4px 0 12px; }
+.ve-slowing-ladder .v2-table { width: auto; min-width: 100%; margin: 0; }
+.ve-slowing-ladder .v2-table th, .ve-slowing-ladder .v2-table td { padding: 6px 8px 6px 0; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ve-slowing-ladder .v2-table th:first-child, .ve-slowing-ladder .v2-table td:first-child { text-align: left; padding-right: 12px; }
+.ve-slowing-ladder .v2-table thead th { font-variant-caps: normal; letter-spacing: 0; font-family: var(--font-ui); font-size: 0.8125rem; }
+.ve-slowing-ladder .v2-table td b { font-weight: 650; }
+/* the shell stacks tables into blocks on phones; this one stays a two-row grid */
+.ve-slowing-ladder .v2-table { display: table; }
+.ve-slowing-ladder .v2-table thead { display: table-header-group; }
+.ve-slowing-ladder .v2-table tbody { display: table-row-group; }
+.ve-slowing-ladder .v2-table tr { display: table-row; padding: 0; border: 0; }
+.ve-slowing-ladder .v2-table th, .ve-slowing-ladder .v2-table td { display: table-cell; }
+.ve-slowing-ladder .v2-table td { border-top: 1px solid var(--rule); }
+@media (max-width: 560px) {
+  .ve-slowing-ladder .v2-table th, .ve-slowing-ladder .v2-table td { padding: 5px 6px 5px 0; font-size: 0.8125rem; }
+  .ve-slowing-ladder .v2-table th:first-child, .ve-slowing-ladder .v2-table td:first-child { padding-right: 8px; }
+}
+@media (max-width: 400px) {
+  .ve-slowing-ladder .v2-table th, .ve-slowing-ladder .v2-table td { padding-right: 3px; font-size: 0.75rem; }
+  .ve-slowing-ladder .v2-table th:first-child, .ve-slowing-ladder .v2-table td:first-child { padding-right: 5px; }
+}
+
+/* Table 3 under the plate (the chapter's answer): a quiet caption over the two-row ladder */
+.ve-slowing-ladder--plate { margin: 18px 0 6px; }
+.ve-slowing-ladder--plate figcaption {
+  margin: 0 0 6px; font: 450 0.8125rem/1.4 var(--font-ui); color: var(--ink-3); text-wrap: pretty;
+}
+.ve-slowing-ladder--plate .v2-table td b { color: var(--ink); }

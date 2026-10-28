@@ -1,0 +1,66 @@
+[
+  {
+    "id": "hook",
+    "title": "The wrong proportions",
+    "chapter": "overview",
+    "poster": 40.4,
+    "play": [640, 620],
+    "film_play": [1110, 170]
+  },
+  {
+    "id": "commit",
+    "title": "Where the choice is made",
+    "chapter": "commit",
+    "poster": 90.0,
+    "play": [1110, 620]
+  },
+  {
+    "id": "odds",
+    "title": "How much preference survives",
+    "chapter": "odds",
+    "poster": 118.5,
+    "play": [1050, 620]
+  },
+  {
+    "id": "race",
+    "title": "Field against fluctuations",
+    "chapter": "race",
+    "poster": 90.0,
+    "play": [1110, 230]
+  },
+  {
+    "id": "scaling",
+    "title": "Why slower barely helps",
+    "chapter": "scaling",
+    "poster": 76.84,
+    "play": [640, 115]
+  },
+  {
+    "id": "modes",
+    "title": "Competing patterns",
+    "chapter": "modes",
+    "poster": 90.8,
+    "play": [1000, 560]
+  },
+  {
+    "id": "reheat",
+    "title": "Where the runs start",
+    "chapter": "reheat",
+    "poster": 47.29,
+    "play": [1150, 380]
+  },
+  {
+    "id": "test",
+    "title": "The test",
+    "chapter": "test",
+    "poster": 86.95,
+    "play": [1140, 450]
+  },
+  {
+    "id": "limits",
+    "title": "What the law does and does not say",
+    "chapter": "limits",
+    "poster": 57.91,
+    "play": [640, 110]
+  }
+]

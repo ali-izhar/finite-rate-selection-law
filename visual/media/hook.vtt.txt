@@ -1,0 +1,63 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.818
+Suppose a model of handwritten digits
+makes a three twice as likely as an eight.
+
+2
+00:00:05.886 --> 00:00:09.557
+A correct sampler draws
+about twice as many threes.
+
+3
+00:00:09.764 --> 00:00:15.559
+A sampler can draw clear threes and clear
+eights, and still get that ratio wrong.
+
+4
+00:00:15.685 --> 00:00:19.697
+The paper measures this error
+in a model with two outcomes,
+
+5
+00:00:19.737 --> 00:00:24.604
+positive and negative, whose correct
+proportions are known exactly.
+
+6
+00:00:25.008 --> 00:00:30.641
+Its sampler starts hot and lowers
+the temperature step by step: cooling.
+
+7
+00:00:31.173 --> 00:00:38.744
+Of 100 samples, 97 should be positive;
+the sampler delivers 61.
+
+8
+00:00:39.056 --> 00:00:42.854
+The natural remedy is to cool more slowly.
+
+9
+00:00:43.166 --> 00:00:47.236
+With a quarter of the paper's
+sampling time at every cooling step,
+
+10
+00:00:47.276 --> 00:00:50.029
+the sampler delivers about 59.
+
+11
+00:00:50.434 --> 00:00:57.634
+With 4× the paper's time, 16× the first,
+it delivers about 63.
+
+12
+00:00:57.946 --> 00:01:02.596
+So two things need explaining:
+where the preference is lost,
+
+13
+00:01:02.636 --> 00:01:05.552
+and how much of it survives.

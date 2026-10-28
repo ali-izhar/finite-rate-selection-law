@@ -1,0 +1,52 @@
+{
+ "N": 2048,
+ "G": 0.0006125,
+ "ladder": [
+  0.6,
+  0.8,
+  0.9,
+  0.95,
+  1.0,
+  1.05,
+  1.1,
+  1.2,
+  1.4,
+  1.6
+ ],
+ "sweeps_per_level": [
+  15,
+  30,
+  59,
+  107,
+  355,
+  145,
+  65,
+  31,
+  16,
+  11
+ ],
+ "scarce_sweeps_per_level": 2,
+ "beta_reheat": 0.7,
+ "reheat_sweeps": 30,
+ "beta_final": 1.6,
+ "runs": [
+  {
+   "dt": 0.02,
+   "f_mis": 0.4675883303710068,
+   "q_chain": 0.6054622381557719,
+   "q_eq": 0.9727396877964474,
+   "c_cw": 0.119808426187369
+  },
+  {
+   "dt": 0.01,
+   "f_mis": 0.4675883214299905,
+   "q_chain": 0.6054622381795799,
+   "q_eq": 0.9727396877964474,
+   "c_cw": 0.11980842621525005
+  }
+ ],
+ "c_cw": 0.11980842621525005,
+ "source": "src.experiments.exact_protocol.protocol(G0, dt) and .q_eq(G0); logit(q_chain)/logit(q_eq)",
+ "paper": "Sec. 4 (c_CW = 0.120 at N = 2048), Table 1 caption",
+ "command": "python visual/data/make_exports.py (from the repository root)"
+}

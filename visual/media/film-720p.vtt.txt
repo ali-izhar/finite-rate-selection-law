@@ -1,0 +1,844 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.818
+Suppose a model of handwritten digits
+makes a three twice as likely as an eight.
+
+2
+00:00:05.886 --> 00:00:09.557
+A correct sampler draws
+about twice as many threes.
+
+3
+00:00:09.764 --> 00:00:15.559
+A sampler can draw clear threes and clear
+eights, and still get that ratio wrong.
+
+4
+00:00:15.685 --> 00:00:19.697
+The paper measures this error
+in a model with two outcomes,
+
+5
+00:00:19.737 --> 00:00:24.604
+positive and negative, whose correct
+proportions are known exactly.
+
+6
+00:00:25.008 --> 00:00:30.641
+Its sampler starts hot and lowers
+the temperature step by step: cooling.
+
+7
+00:00:31.173 --> 00:00:38.744
+Of 100 samples, 97 should be positive;
+the sampler delivers 61.
+
+8
+00:00:39.056 --> 00:00:42.854
+The natural remedy is to cool more slowly.
+
+9
+00:00:43.166 --> 00:00:47.236
+With a quarter of the paper's
+sampling time at every cooling step,
+
+10
+00:00:47.276 --> 00:00:50.029
+the sampler delivers about 59.
+
+11
+00:00:50.434 --> 00:00:57.634
+With 4× the paper's time, 16× the first,
+it delivers about 63.
+
+12
+00:00:57.946 --> 00:01:02.596
+So two things need explaining:
+where the preference is lost,
+
+13
+00:01:02.636 --> 00:01:05.552
+and how much of it survives.
+
+14
+00:01:05.733 --> 00:01:10.657
+The model is a row of N spins,
+each +1 or −1.
+
+15
+00:01:11.190 --> 00:01:14.245
+One setting of all of them
+is a configuration.
+
+16
+00:01:14.649 --> 00:01:19.725
+In the Curie–Weiss model, every spin
+favours agreeing with every other,
+
+17
+00:01:19.851 --> 00:01:23.312
+so mostly-agreeing
+configurations are more probable.
+
+18
+00:01:23.403 --> 00:01:28.304
+The inverse temperature, β,
+sets how strongly agreement is favoured,
+
+19
+00:01:28.349 --> 00:01:30.301
+like softmax sharpness:
+
+20
+00:01:30.404 --> 00:01:36.304
+small β gives a broad distribution,
+large β a concentrated one.
+
+21
+00:01:36.581 --> 00:01:38.660
+Cooling is raising β.
+
+22
+00:01:39.146 --> 00:01:42.329
+The average spin is the magnetization m:
+
+23
+00:01:42.420 --> 00:01:46.695
+positive for mostly +1s,
+negative for mostly minus.
+
+24
+00:01:47.041 --> 00:01:51.815
+Plot minus the log-probability of m,
+so likely values sit in valleys.
+
+25
+00:01:52.161 --> 00:01:59.640
+At small β there is one valley, at zero;
+past β = 1 it splits into the two modes.
+
+26
+00:01:59.917 --> 00:02:01.741
+Annealed Gibbs sampling
+
+27
+00:02:01.844 --> 00:02:06.304
+redraws one spin at a time
+from its probability given all the others.
+
+28
+00:02:06.674 --> 00:02:10.948
+N such updates make one sweep,
+the unit of sampling time.
+
+29
+00:02:11.132 --> 00:02:13.966
+Step by step, β rises.
+
+30
+00:02:14.336 --> 00:02:16.114
+Here are several runs.
+
+31
+00:02:16.217 --> 00:02:20.630
+Each wanders near zero; near β = 1,
+
+32
+00:02:20.687 --> 00:02:25.727
+a small random imbalance grows,
+and the run falls into one mode.
+
+33
+00:02:26.109 --> 00:02:27.945
+Once the modes form,
+
+34
+00:02:28.001 --> 00:02:31.904
+switching between them can take
+far longer than settling in one.
+
+35
+00:02:32.204 --> 00:02:37.291
+So the sign chosen near β = 1
+can decide the final mode.
+
+36
+00:02:37.767 --> 00:02:43.899
+Now give the model a preference:
+a small bias toward +1 on every spin,
+
+37
+00:02:44.025 --> 00:02:46.093
+a field of strength G.
+
+38
+00:02:46.219 --> 00:02:49.564
+It tilts the landscape
+toward the positive valley.
+
+39
+00:02:49.969 --> 00:02:53.296
+The paper's schedule cools in 10 steps,
+
+40
+00:02:53.336 --> 00:02:59.375
+with the most sweeps at β = 1, where
+the distribution takes longest to settle.
+
+41
+00:02:59.779 --> 00:03:01.151
+In this model,
+
+42
+00:03:01.277 --> 00:03:06.554
+every arrangement with the same number
+k of positive spins is equally likely,
+
+43
+00:03:06.594 --> 00:03:08.837
+and the sampler treats them alike.
+
+44
+00:03:09.044 --> 00:03:16.082
+So we can track N + 1 probabilities,
+one for each k, instead of 2^N.
+
+45
+00:03:16.602 --> 00:03:22.827
+Watch the positive share: it moves while
+the bump splits in two, then it freezes.
+
+46
+00:03:23.127 --> 00:03:30.448
+The model's own distribution is 97.3%
+positive; the sampler ends at 60.5%,
+
+47
+00:03:30.488 --> 00:03:32.289
+with no counting noise.
+
+48
+00:03:32.392 --> 00:03:34.507
+Call q the positive share.
+
+49
+00:03:35.004 --> 00:03:40.405
+Measure each share in log-odds:
+the log of q / (1 − q).
+
+50
+00:03:40.682 --> 00:03:46.465
+The model has 3.57; the sampler, 0.43.
+
+51
+00:03:46.823 --> 00:03:52.026
+A share cannot double
+past 100%; log-odds can.
+
+52
+00:03:52.315 --> 00:03:55.196
+The field sits
+in the exponent of the model,
+
+53
+00:03:55.252 --> 00:03:58.992
+so for a weak field the log-odds
+grow in proportion to G.
+
+54
+00:03:59.374 --> 00:04:04.020
+Doubling G roughly doubles both,
+so their ratio stays the same.
+
+55
+00:04:04.413 --> 00:04:12.681
+That ratio, 0.120, is called c: the
+fraction of the log-odds that survives.
+
+56
+00:04:13.166 --> 00:04:16.017
+Equivalently, the sampler's odds are
+
+57
+00:04:16.057 --> 00:04:22.758
+the model's odds to the power c:
+about 36:1 becomes about 1.5:1.
+
+58
+00:04:22.826 --> 00:04:26.752
+And c barely changes across
+the paper's eight fields.
+
+59
+00:04:27.157 --> 00:04:31.396
+So at these weak fields,
+c does not depend on the field:
+
+60
+00:04:31.708 --> 00:04:37.189
+on this schedule, about an eighth
+of the model's log-odds survives.
+
+61
+00:04:37.600 --> 00:04:42.199
+To see where the preference is lost,
+zoom in near β = 1.
+
+62
+00:04:42.279 --> 00:04:48.515
+Below β = 1, an imbalance in m shrinks;
+above one, it grows.
+
+63
+00:04:48.862 --> 00:04:55.632
+The field adds a steady push,
+so m drifts at (β − 1)m + G.
+
+64
+00:04:55.735 --> 00:05:00.393
+Random updates add fluctuations
+of variance 2/N per sweep.
+
+65
+00:05:00.437 --> 00:05:05.710
+To calculate, the paper takes
+the simplest schedule: a ramp of slope γ.
+
+66
+00:05:05.975 --> 00:05:11.937
+Past one, an imbalance grows
+at rate β − 1, which is γt,
+
+67
+00:05:11.977 --> 00:05:14.684
+the sweeps since β crossed one.
+
+68
+00:05:14.752 --> 00:05:20.703
+So it is multiplied by e
+to the area under that line, γt²/2.
+
+69
+00:05:20.743 --> 00:05:27.606
+That area reaches about one after roughly
+γ^(−1/2) sweeps: the selection interval.
+
+70
+00:05:28.010 --> 00:05:34.351
+Before then, the sign is still open;
+after it, the imbalance runs away.
+
+71
+00:05:34.837 --> 00:05:39.425
+Over that interval, the field's push
+adds up in proportion to its length,
+
+72
+00:05:39.527 --> 00:05:42.292
+the fluctuations only
+like its square root.
+
+73
+00:05:42.778 --> 00:05:50.524
+Their ratio is G√N · γ^(−1/4):
+slower cooling favours the field.
+
+74
+00:05:50.789 --> 00:05:54.843
+To turn this race into a probability,
+undo the growth.
+
+75
+00:05:54.945 --> 00:05:59.684
+It stretches every run by the same factor,
+so each keeps its sign.
+
+76
+00:06:00.042 --> 00:06:05.865
+The runs then form, approximately,
+a Gaussian: the field sets its mean,
+
+77
+00:06:05.905 --> 00:06:07.973
+the fluctuations its spread.
+
+78
+00:06:08.250 --> 00:06:11.201
+Call a the mean over
+the standard deviation.
+
+79
+00:06:11.478 --> 00:06:16.379
+The positive area, Φ(a),
+is the chance of the positive sign.
+
+80
+00:06:16.749 --> 00:06:23.252
+This is a classical result; with little
+switching later, Φ(a) is the final share.
+
+81
+00:06:23.657 --> 00:06:29.336
+On a ramp at the opening's
+size and field, a is 0.208.
+
+82
+00:06:29.543 --> 00:06:36.418
+So the positive sign wins only 58% of the
+time, near the 61 of the paper's schedule.
+
+83
+00:06:36.823 --> 00:06:39.239
+That is where the preference is lost:
+
+84
+00:06:39.644 --> 00:06:45.102
+the weak field only tilts a choice
+the fluctuations mostly decide.
+
+85
+00:06:45.300 --> 00:06:49.354
+For small a, the positive area
+grows in a straight line with a.
+
+86
+00:06:49.712 --> 00:06:52.505
+So the sampler's log-odds go like a,
+
+87
+00:06:52.545 --> 00:06:55.739
+the ratio of field
+to fluctuations found above.
+
+88
+00:06:56.213 --> 00:07:02.496
+The model's log-odds go like N·G,
+since the field acts on all N spins.
+
+89
+00:07:02.680 --> 00:07:10.774
+Divide, and G cancels, as the flat
+c showed: c goes like (N²γ)^(−1/4).
+
+90
+00:07:10.889 --> 00:07:15.023
+So cooling 16× more slowly only doubles c.
+
+91
+00:07:15.126 --> 00:07:20.933
+This holds for a slow ramp starting well
+below β = 1, with little switching later.
+
+92
+00:07:21.245 --> 00:07:23.464
+The exact chain agrees.
+
+93
+00:07:23.671 --> 00:07:31.544
+At the smallest size,
+16× slower takes c from 0.094 to 0.189.
+
+94
+00:07:31.752 --> 00:07:33.546
+Over all nine ramps,
+
+95
+00:07:33.586 --> 00:07:38.835
+the exact chain lies slightly
+above the full formula, within 2%.
+
+96
+00:07:38.903 --> 00:07:43.983
+The law does not hold for arbitrarily
+slow cooling at fixed size: long enough
+
+97
+00:07:44.023 --> 00:07:47.972
+sampling at the final temperature
+recovers the model's proportions.
+
+98
+00:07:48.284 --> 00:07:55.751
+On the paper's schedule, the opening's
+59 to 63 is c growing only 1.48×.
+
+99
+00:07:56.248 --> 00:08:01.695
+The law was derived for a ramp; the paper
+does not derive this smaller gain.
+
+100
+00:08:02.100 --> 00:08:05.991
+Either way, slower cooling buys little.
+
+101
+00:08:06.500 --> 00:08:10.995
+Curie–Weiss has only two modes,
+so a run makes one choice.
+
+102
+00:08:11.504 --> 00:08:16.010
+A Hopfield model stores random
+patterns of +1s and −1s;
+
+103
+00:08:16.206 --> 00:08:21.258
+at low temperature, configurations
+settle near one pattern or its negative.
+
+104
+00:08:21.639 --> 00:08:28.050
+With three patterns, a run makes two
+choices: which pattern, and which sign.
+
+105
+00:08:28.361 --> 00:08:31.962
+Does competition change how
+much preference survives?
+
+106
+00:08:32.367 --> 00:08:35.508
+A sample's overlap with a pattern
+is its average agreement
+
+107
+00:08:35.548 --> 00:08:40.345
+with it, from −1 at the negative
+to +1 at the pattern.
+
+108
+00:08:40.877 --> 00:08:46.046
+Each sample is labelled by its largest
+overlap in size, and its sign.
+
+109
+00:08:46.253 --> 00:08:48.790
+With the field favouring pattern one,
+
+110
+00:08:48.830 --> 00:08:53.731
+the paper compares signs only
+among samples labelled pattern one.
+
+111
+00:08:54.043 --> 00:08:56.309
+The paper then approximates.
+
+112
+00:08:56.377 --> 00:09:03.844
+Near β = 1, where the choice is made, the
+three overlaps are independent Gaussians.
+
+113
+00:09:03.946 --> 00:09:08.371
+Pattern one's is shifted by the field,
+as in Curie–Weiss.
+
+114
+00:09:08.648 --> 00:09:11.936
+The largest in size
+decides the final pattern.
+
+115
+00:09:12.213 --> 00:09:16.858
+Compare the curve's heights at the same
+size on either side of zero.
+
+116
+00:09:17.263 --> 00:09:21.038
+The log of their ratio
+is the sign's log-odds.
+
+117
+00:09:21.350 --> 00:09:27.760
+On a log scale the Gaussian is a parabola,
+and the shift adds a straight tilt.
+
+118
+00:09:28.072 --> 00:09:32.380
+So the gap between the two sides
+grows in proportion to the size.
+
+119
+00:09:32.785 --> 00:09:36.409
+Pattern one wins only
+by beating the other two,
+
+120
+00:09:36.535 --> 00:09:39.590
+so its winning overlaps
+are larger than usual.
+
+121
+00:09:39.716 --> 00:09:46.823
+On average they are 1.662 times larger,
+so their sign's log-odds are too.
+
+122
+00:09:47.030 --> 00:09:52.494
+The paper also takes the Hopfield model's
+own preference to be the Curie–Weiss one,
+
+123
+00:09:52.534 --> 00:09:56.158
+so the gain changes only
+the sampler's side of c.
+
+124
+00:09:56.284 --> 00:09:58.642
+Neither assumption is guaranteed.
+
+125
+00:09:58.768 --> 00:10:05.991
+Under both, the prediction is the
+Curie–Weiss c times this gain: 0.199.
+
+126
+00:10:06.303 --> 00:10:10.287
+Competition keeps more of the preference.
+
+127
+00:10:10.467 --> 00:10:13.302
+Reheating means raising
+the temperature again,
+
+128
+00:10:13.369 --> 00:10:16.390
+so a run can leave
+its mode and choose again.
+
+129
+00:10:16.597 --> 00:10:20.319
+The paper tests its prediction
+on such Hopfield runs,
+
+130
+00:10:20.359 --> 00:10:23.530
+from a deliberately
+imbalanced filtered start.
+
+131
+00:10:24.062 --> 00:10:30.763
+After a brief cooling, every run labelled
+pattern one, positive, is removed.
+
+132
+00:10:31.040 --> 00:10:36.062
+The rest are reheated below β = 1,
+where there is one valley,
+
+133
+00:10:36.102 --> 00:10:38.449
+then cooled on the paper's schedule.
+
+134
+00:10:38.737 --> 00:10:42.478
+The Curie–Weiss numbers, 61% and c,
+
+135
+00:10:42.523 --> 00:10:49.339
+came from these same steps; there, almost
+none of that imbalance survives reheating.
+
+136
+00:10:49.744 --> 00:10:54.424
+Every field strength is run in both
+directions, with the same removal.
+
+137
+00:10:54.957 --> 00:11:00.044
+If the removal left a memory, the two
+directions would not mirror each other;
+
+138
+00:11:00.449 --> 00:11:04.073
+within the comparisons'
+precision, they do.
+
+139
+00:11:04.477 --> 00:11:07.800
+That does not prove
+the runs match fresh starts.
+
+140
+00:11:08.204 --> 00:11:11.380
+In a deep Boltzmann
+machine trained on digits,
+
+141
+00:11:11.420 --> 00:11:15.869
+a reheated eight can become
+a three under a bias toward threes.
+
+142
+00:11:16.076 --> 00:11:21.685
+So reheating can free a run,
+but the run then cools and chooses again;
+
+143
+00:11:22.090 --> 00:11:26.933
+the sign chosen in that cooling
+can decide the proportions.
+
+144
+00:11:27.100 --> 00:11:32.366
+The test uses three patterns
+and eight fields: four strengths,
+
+145
+00:11:32.406 --> 00:11:34.451
+each pointing both ways.
+
+146
+00:11:34.983 --> 00:11:37.783
+At the strongest field toward pattern one,
+
+147
+00:11:37.851 --> 00:11:42.914
+66.9% of samples labelled
+pattern one are positive.
+
+148
+00:11:43.447 --> 00:11:49.370
+The model's own share, 97.26%,
+is only approximate here.
+
+149
+00:11:49.681 --> 00:11:54.269
+So after reheating, the proportions
+are still far from the model's.
+
+150
+00:11:54.801 --> 00:11:56.631
+Across the eight fields,
+
+151
+00:11:56.671 --> 00:12:01.490
+the slope of sampled against
+the model's log-odds is the measured c.
+
+152
+00:12:01.895 --> 00:12:09.861
+It is 0.199, with a 95%
+interval up to 0.2095.
+
+153
+00:12:10.265 --> 00:12:13.889
+The prediction is also 0.199.
+
+154
+00:12:14.410 --> 00:12:22.179
+At the strongest field,
+67.1% positive, against 66.9% measured.
+
+155
+00:12:22.815 --> 00:12:25.766
+But a single pattern has no competition.
+
+156
+00:12:26.136 --> 00:12:31.889
+Flipping the spins where it is −1
+turns the Hopfield model into Curie–Weiss,
+
+157
+00:12:31.929 --> 00:12:33.696
+up to small differences.
+
+158
+00:12:33.984 --> 00:12:39.570
+Yet its measured c
+is 1.063× the Curie–Weiss c.
+
+159
+00:12:39.777 --> 00:12:45.148
+Use that larger c as the base,
+and the prediction becomes 0.212,
+
+160
+00:12:45.188 --> 00:12:46.722
+outside the interval.
+
+161
+00:12:47.417 --> 00:12:51.389
+So the close match can come
+from approximations that cancel.
+
+162
+00:12:51.793 --> 00:12:55.452
+In separate runs at other
+pattern counts and sizes,
+
+163
+00:12:55.520 --> 00:12:58.947
+the prediction misses by up to 11%.
+
+164
+00:12:59.479 --> 00:13:05.058
+It captures the gain from competition,
+with errors that depend on pattern count,
+
+165
+00:13:05.098 --> 00:13:08.316
+size and update rule.
+
+166
+00:13:08.467 --> 00:13:17.652
+Across sizes, c falls as N^(−0.36),
+not the −0.46 predicted for this schedule.
+
+167
+00:13:18.173 --> 00:13:20.752
+The paper has not established why.
+
+168
+00:13:21.052 --> 00:13:26.569
+The Hopfield runs never vary the cooling
+rate, so they do not test the rate law.
+
+169
+00:13:26.776 --> 00:13:29.820
+The law is about annealed Gibbs sampling;
+
+170
+00:13:30.027 --> 00:13:32.704
+comparing it with annealed
+importance sampling,
+
+171
+00:13:32.744 --> 00:13:36.844
+or extending it to diffusion models,
+is future work.
+
+172
+00:13:37.155 --> 00:13:40.907
+97 asked for; 61 delivered.
+
+173
+00:13:41.311 --> 00:13:47.780
+The sign is chosen near β = 1, where
+the weak field only tilts the choice.
+
+174
+00:13:48.150 --> 00:13:54.305
+About an eighth of the model's
+log-odds survives: c, 0.12.
+
+175
+00:13:54.802 --> 00:13:58.995
+Slower cooling raises it only
+through a quarter power on a ramp.
+
+176
+00:13:59.376 --> 00:14:01.085
+On the paper's schedule,
+
+177
+00:14:01.153 --> 00:14:06.716
+sixteen times the final cooling buys
+about 4 positive samples in 100.
+
+178
+00:14:07.120 --> 00:14:09.514
+Competing patterns keep more.

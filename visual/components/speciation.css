@@ -1,0 +1,164 @@
+/* components/speciation.css — scoped under .ve-speciation
+   Chrome is hairlines and type; chroma is data only. Explanations sit behind (i) cards
+   and reappear inline (.sp-more) only under "All details". */
+
+.ve-speciation .ve-figure__stage { display: grid; gap: 18px; min-width: 0; }
+
+/* ---------------------------------------------------------------- panel heads */
+.ve-speciation .sp-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 32px;
+  min-width: 0;
+}
+.ve-speciation .sp-panel { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.ve-speciation .sp-panel__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 28px; padding-bottom: 4px; border-bottom: 1px solid var(--rule);
+}
+.ve-speciation .sp-panel__head .ve-label {
+  font: 450 0.8125rem/1.3 var(--font-ui); letter-spacing: 0; text-transform: none; font-variant-caps: normal; color: var(--ink-2);
+}
+.ve-speciation .sp-info { margin-right: -4px; flex: none; }
+.ve-speciation .sp-info svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
+.ve-speciation .sp-info:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ve-speciation .sp-info[hidden] { display: none; }
+.ve-speciation .sp-ring {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  border: 1.5px solid var(--ink); vertical-align: -1px; margin-left: 2px;
+}
+.ve-speciation .sp-forknote { margin: 0; font: 450 0.8125rem/1.4 var(--font-ui); color: var(--ink-3); }
+.ve-speciation .sp-forknote:empty, .ve-speciation .sp-forknote[hidden] { display: none; }
+
+/* ---------------------------------------------------------------- legend (one quiet line) */
+.ve-speciation .ve-legend { gap: 4px 18px; font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); margin-top: -4px; }
+
+/* ---------------------------------------------------------------- controls */
+.ve-speciation .ve-figure__controls {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 28px;
+  padding-top: 14px; border-top: 1px solid var(--rule);
+}
+.ve-speciation .sp-buttons { display: flex; flex-wrap: wrap; gap: 8px; flex: 0 0 auto; padding-bottom: 14px; }
+.ve-speciation .sp-buttons .ve-btn--primary { min-width: 168px; justify-content: center; }
+.ve-speciation .ve-figure__controls > .ve-slider { flex: 1 1 300px; }
+.ve-speciation .sp-biasrow { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.ve-speciation .sp-biasrow > .ve-toggle { flex: 0 0 auto; display: flex; align-items: center; gap: 12px; }
+.ve-speciation .sp-biasrow .ve-toggle__label { min-height: 0; }
+.ve-speciation .sp-biasrow > .sp-info { margin: 0 0 0 -8px; }
+.ve-speciation .sp-hint { margin: 0; font: italic 400 0.9375rem/1.4 var(--font-text); color: var(--ink-3); }
+.ve-speciation .sp-hint b { font-style: normal; font: 500 0.8125rem/1 var(--font-ui); color: var(--ink-2); }
+.ve-speciation .sp-pulse { animation: sp-pulse 1.6s cubic-bezier(.22,.8,.24,1) infinite; }
+@keyframes sp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 4px var(--bias-wash), 0 0 0 5px var(--bias); }
+}
+.ve-speciation .ve-slider__marklabel { font-size: 11px; }
+
+/* ---------------------------------------------------------------- lower row */
+.ve-speciation .sp-low {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 32px;
+  min-width: 0;
+  margin-top: 6px;
+}
+.ve-speciation .sp-spins { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.ve-speciation .sp-spins__row {
+  display: grid; grid-template-columns: minmax(108px, 150px) minmax(0, 1fr);
+  gap: 20px; align-items: start; min-width: 0;
+}
+.ve-speciation .sp-spins__grid { outline: 1px solid var(--rule-strong); outline-offset: 0; }
+
+.ve-speciation .sp-tally { display: grid; gap: 8px; min-width: 0; align-content: start; }
+.ve-speciation .sp-tally__eq { display: grid; gap: 2px; }
+.ve-speciation .sp-tally__lab { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); }
+.ve-speciation .sp-tally__m {
+  font: 300 2.25rem/1 var(--font-display); font-variation-settings: "opsz" 60;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.01em; color: var(--ink);
+}
+.ve-speciation .sp-tally__counts {
+  display: flex; gap: 14px; font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3);
+}
+.ve-speciation .sp-tally__counts .ve-num { font: 500 0.8125rem/1.3 var(--font-ui); font-variant-numeric: tabular-nums; }
+.ve-speciation .sp-bar { position: relative; display: flex; height: 4px; overflow: hidden; background: var(--rule); }
+.ve-speciation .sp-bar__a { background: var(--mode-a); height: 100%; transition: width 120ms linear; order: 2; }
+.ve-speciation .sp-bar__b { background: var(--mode-b); height: 100%; transition: width 120ms linear; order: 1; }
+.ve-speciation .sp-bar__mid { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--bg); }
+.ve-speciation .sp-tally__status { font: italic 400 0.9375rem/1.35 var(--font-text); }
+.ve-speciation .sp-tally__status[data-tone="mode-a"] { color: var(--mode-a); }
+.ve-speciation .sp-tally__status[data-tone="mode-b"] { color: var(--mode-b); }
+.ve-speciation .sp-tally__status[data-tone="noise"] { color: var(--ink-3); }
+
+.ve-speciation .sp-side { display: grid; gap: 22px; align-content: start; min-width: 0; }
+
+/* the three regimes: one ruled strip; the active regime takes an ink rule and ink type */
+.ve-speciation .sp-phasebox { display: grid; gap: 10px; min-width: 0; }
+.ve-speciation .sp-phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 14px; }
+.ve-speciation .sp-phase {
+  min-width: 0; padding-top: 8px; border-top: 2px solid var(--rule);
+  transition: border-color 240ms cubic-bezier(.22,.8,.24,1);
+}
+.ve-speciation .sp-phase__head { font: 450 0.8125rem/1.3 var(--font-ui); color: var(--ink-3); transition: color 240ms cubic-bezier(.22,.8,.24,1); }
+.ve-speciation .sp-phase__sub { margin-top: 2px; font: italic 400 0.9375rem/1.35 var(--font-text); color: var(--ink-3); }
+.ve-speciation .sp-phase[data-active="true"] { border-top-color: var(--ink); }
+.ve-speciation .sp-phase[data-active="true"] .sp-phase__head { color: var(--ink); font-weight: 600; }
+.ve-speciation .sp-phase[data-active="true"] .sp-phase__sub { color: var(--ink-2); }
+.ve-speciation .sp-phase__body { margin: 8px 0 0; font: 400 0.875rem/1.5 var(--font-text); color: var(--ink-2); }
+
+/* readouts (bias on): no boxes; Inter label over light serif numerals */
+.ve-speciation .sp-ro { display: grid; gap: 10px; }
+.ve-speciation .sp-ro[hidden] { display: none; }
+.ve-speciation .sp-readouts { gap: 12px 28px; }
+.ve-speciation .sp-readouts .ve-readout__value { color: var(--tone, var(--ink)); }
+.ve-speciation .sp-readouts .ve-readout[hidden] { display: none; }
+/* c is gilt, with the reticle: four 8 px corner ticks */
+.ve-speciation .sp-c { position: relative; padding: 6px 10px 6px 10px; margin: -6px -10px; }
+.ve-speciation .sp-c .ve-readout__value { color: var(--highlight-ink); }
+.ve-speciation .sp-c::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(var(--highlight), var(--highlight)) left top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right top / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right top / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) left bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) left bottom / 1px 8px no-repeat,
+    linear-gradient(var(--highlight), var(--highlight)) right bottom / 8px 1px no-repeat, linear-gradient(var(--highlight), var(--highlight)) right bottom / 1px 8px no-repeat;
+}
+
+/* the end-of-run sentence: one italic line on a hairline */
+.ve-speciation .sp-gap { display: grid; gap: 6px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.ve-speciation .sp-gap[hidden] { display: none; }
+.ve-speciation .sp-gap p { margin: 0; }
+.ve-speciation .sp-gap__row { display: flex; align-items: flex-start; gap: 6px; }
+.ve-speciation .sp-gap__main { flex: 1 1 auto; font: italic 400 1rem/1.5 var(--font-text); color: var(--ink); text-wrap: pretty; }
+.ve-speciation .sp-gap__fine { font: 400 0.875rem/1.5 var(--font-text); color: var(--ink-2); }
+
+/* progressive disclosure: card texts also live here, shown only under "All details" */
+.ve-speciation .sp-more { display: none; }
+.v2-all .ve-speciation .sp-more, .ve-speciation.sp-all .sp-more { display: block; }
+.ve-speciation .sp-more > p { margin: 0 0 6px; }
+.ve-speciation div.sp-more, .ve-speciation p.sp-more:not(.sp-phase__body):not(.sp-gap__fine) {
+  font: 400 0.875rem/1.5 var(--font-text); color: var(--ink-2); max-width: 40rem;
+}
+.ve-speciation .sp-biasrow > .sp-more { flex: 1 1 100%; }
+.v2-all .ve-speciation .sp-info, .ve-speciation.sp-all .sp-info { display: none; }
+
+/* ---------------------------------------------------------------- narrow */
+@media (max-width: 860px) {
+  .ve-speciation .sp-low { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+}
+@media (max-width: 720px) {
+  .ve-speciation .sp-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+}
+@media (max-width: 560px) {
+  .ve-speciation .ve-figure__controls { gap: 12px 16px; }
+  .ve-speciation .sp-buttons { flex: 1 1 100%; padding-bottom: 0; }
+  .ve-speciation .sp-buttons .ve-btn--primary { min-width: 0; flex: 1 1 auto; }
+  .ve-speciation .sp-biasrow > .ve-toggle { flex-wrap: wrap; gap: 6px 12px; }
+  .ve-speciation .sp-phases { gap: 0 10px; }
+  .ve-speciation .sp-phase__sub { font-size: 0.875rem; }
+  .ve-speciation .sp-spins__row { grid-template-columns: minmax(0, 112px) minmax(0, 1fr); gap: 16px; }
+  .ve-speciation .sp-tally__m { font-size: 1.9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ve-speciation .sp-bar__a, .ve-speciation .sp-bar__b, .ve-speciation .sp-phase, .ve-speciation .sp-phase__head { transition: none; }
+  .ve-speciation .sp-pulse { animation: none; box-shadow: 0 0 0 4px var(--bias-wash), 0 0 0 5px var(--bias); }
+}

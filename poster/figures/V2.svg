@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="453.60pt" height="313.20pt" viewBox="0 0 453.60 313.20" role="img" aria-label="Exact-chain c on linear ramps against N squared times gamma, log-log, on the selection law's line: at N = 2,048, 16 times slower cooling raises c from 0.066 to 0.133." class="fig" id="fig-V2">
+<line x1="177.20" y1="40.00" x2="177.20" y2="211.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="310.40" y1="40.00" x2="310.40" y2="211.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="443.60" y1="40.00" x2="443.60" y2="211.20" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<line x1="78.00" y1="189.36" x2="443.60" y2="189.36" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="66.00" y="197.36" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.05</text>
+<line x1="78.00" y1="121.52" x2="443.60" y2="121.52" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="66.00" y="129.52" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.1</text>
+<line x1="78.00" y1="53.68" x2="443.60" y2="53.68" stroke="#DAD8D1" stroke-width="1.2" stroke-linecap="butt" />
+<text x="66.00" y="61.68" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.2</text>
+<line x1="78.00" y1="211.20" x2="443.60" y2="211.20" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<line x1="78.00" y1="40.00" x2="78.00" y2="211.20" stroke="#3B3D43" stroke-width="2" stroke-linecap="butt" />
+<text x="177.20" y="243.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >10<tspan dy='-10' font-size='15'>3</tspan></text>
+<text x="310.40" y="243.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums tabular-nums;" >10<tspan dy='-10' font-size='15'>4</tspan></text>
+<text x="443.60" y="243.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >10<tspan dy='-10' font-size='15'>5</tspan></text>
+<text x="66.00" y="26.00" font-family="'Source Serif 4', serif" font-size="24" font-weight="600" fill="#7A5C0E" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" ><tspan font-family="KaTeX_Math, 'Source Serif 4', serif" font-style="italic" fill="#7A5C0E">c</tspan></text>
+<text x="246.80" y="269.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="middle" style="font-variant-numeric:lining-nums proportional-nums;" ><tspan font-family="KaTeX_Math, 'Source Serif 4', serif" font-style="italic">N</tspan><tspan dy="-10" font-size="15">2</tspan><tspan dy="10"><tspan font-family="KaTeX_Math, 'Source Serif 4', serif" font-style="italic">γ</tspan></tspan>:  size² × cooling rate</text>
+<polyline points="78.00,51.05 81.07,52.37 84.14,53.70 87.22,55.02 90.29,56.34 93.36,57.66 96.43,58.98 99.51,60.30 102.58,61.62 105.65,62.94 108.72,64.26 111.79,65.58 114.87,66.90 117.94,68.21 121.01,69.53 124.08,70.85 127.16,72.16 130.23,73.48 133.30,74.79 136.37,76.11 139.45,77.42 142.52,78.73 145.59,80.05 148.66,81.36 151.73,82.67 154.81,83.98 157.88,85.30 160.95,86.61 164.02,87.92 167.10,89.23 170.17,90.54 173.24,91.85 176.31,93.16 179.38,94.47 182.46,95.78 185.53,97.09 188.60,98.40 191.67,99.71 194.75,101.02 197.82,102.32 200.89,103.63 203.96,104.94 207.04,106.25 210.11,107.56 213.18,108.86 216.25,110.17 219.32,111.48 222.40,112.78 225.47,114.09 228.54,115.40 231.61,116.70 234.69,118.01 237.76,119.31 240.83,120.62 243.90,121.92 246.97,123.23 250.05,124.54 253.12,125.84 256.19,127.15 259.26,128.45 262.34,129.75 265.41,131.06 268.48,132.36 271.55,133.67 274.63,134.97 277.70,136.28 280.77,137.58 283.84,138.88 286.91,140.19 289.99,141.49 293.06,142.79 296.13,144.10 299.20,145.40 302.28,146.70 305.35,148.01 308.42,149.31 311.49,150.61 314.56,151.91 317.64,153.22 320.71,154.52 323.78,155.82 326.85,157.12 329.93,158.43 333.00,159.73 336.07,161.03 339.14,162.33 342.22,163.63 345.29,164.94 348.36,166.24 351.43,167.54 354.50,168.84 357.58,170.14 360.65,171.45 363.72,172.75 366.79,174.05 369.87,175.35 372.94,176.65 376.01,177.95 379.08,179.25 382.15,180.56 385.23,181.86 388.30,183.16 391.37,184.46 394.44,185.76 397.52,187.06 400.59,188.36 403.66,189.66 406.73,190.96 409.81,192.27 412.88,193.57 415.95,194.87 419.02,196.17 422.09,197.47 425.17,198.77 428.24,200.07 431.31,201.37 434.38,202.67 437.46,203.97 440.53,205.27 443.60,206.57" fill="none" stroke="#3B3D43" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="10 7" />
+<line x1="327.45" y1="157.36" x2="206.63" y2="106.05" stroke="#7A5C0E" stroke-width="4" stroke-linecap="butt" /><polygon points="191.91,99.79 214.23,98.41 206.41,116.81" fill="#7A5C0E" />
+<circle cx="260.14" cy="127.89" r="11.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<circle cx="179.94" cy="92.93" r="11.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<circle cx="99.75" cy="59.38" r="11.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<rect x="410.53" y="186.57" width="20.00" height="20.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<rect x="330.33" y="152.35" width="20.00" height="20.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<rect x="250.14" y="117.98" width="20.00" height="20.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<circle cx="340.33" cy="162.38" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="1.5"/>
+<circle cx="260.14" cy="127.87" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="1.5"/>
+<circle cx="179.94" cy="93.51" r="7.50" fill="#B08A2E" stroke="#FCFBF8" stroke-width="1.5"/>
+<text x="443.60" y="58.70" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" >16× slower cooling:</text>
+<text x="443.60" y="90.70" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="end" style="font-variant-numeric:lining-nums proportional-nums;" ><tspan font-family="KaTeX_Math, 'Source Serif 4', serif" font-style="italic" fill="#7A5C0E">c</tspan> only ×2</text>
+<text x="356.33" y="148.38" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="start" style="font-variant-numeric:lining-nums tabular-nums;" >0.066</text>
+<text x="165.94" y="133.51" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7A5C0E" text-anchor="end" style="font-variant-numeric:lining-nums tabular-nums;" >0.133</text>
+<text x="0.00" y="307.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#6A6C72" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" ><tspan font-family="KaTeX_Math, 'Source Serif 4', serif" font-style="italic">N</tspan>:</text>
+<circle cx="52.00" cy="299.20" r="9.00" fill="none" stroke="#141518" stroke-width="2.6"/>
+<text x="66.00" y="307.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="start" style="font-variant-numeric:lining-nums tabular-nums;" >1,024</text>
+<circle cx="150.00" cy="299.20" r="9.00" fill="#B08A2E" stroke="#FCFBF8" stroke-width="2.5"/>
+<text x="165.00" y="307.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="start" style="font-variant-numeric:lining-nums tabular-nums;" >2,048</text>
+<rect x="241.50" y="291.70" width="15.00" height="15.00" fill="#FCFBF8" stroke="#141518" stroke-width="2.6"/>
+<text x="265.00" y="307.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="start" style="font-variant-numeric:lining-nums tabular-nums;" >4,096</text>
+<line x1="352.00" y1="299.20" x2="392.00" y2="299.20" stroke="#3B3D43" stroke-width="2.6" stroke-dasharray="10 7" stroke-linecap="butt" />
+<text x="400.00" y="307.20" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#3B3D43" text-anchor="start" style="font-variant-numeric:lining-nums proportional-nums;" >law</text>
+</svg>

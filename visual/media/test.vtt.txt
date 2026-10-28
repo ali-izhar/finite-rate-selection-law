@@ -1,0 +1,102 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.266
+The test uses three patterns
+and eight fields: four strengths,
+
+2
+00:00:05.306 --> 00:00:07.351
+each pointing both ways.
+
+3
+00:00:07.883 --> 00:00:10.683
+At the strongest field toward pattern one,
+
+4
+00:00:10.751 --> 00:00:15.814
+66.9% of samples labelled
+pattern one are positive.
+
+5
+00:00:16.347 --> 00:00:22.270
+The model's own share, 97.26%,
+is only approximate here.
+
+6
+00:00:22.581 --> 00:00:27.169
+So after reheating, the proportions
+are still far from the model's.
+
+7
+00:00:27.701 --> 00:00:29.531
+Across the eight fields,
+
+8
+00:00:29.571 --> 00:00:34.390
+the slope of sampled against
+the model's log-odds is the measured c.
+
+9
+00:00:34.795 --> 00:00:42.761
+It is 0.199, with a 95%
+interval up to 0.2095.
+
+10
+00:00:43.165 --> 00:00:46.789
+The prediction is also 0.199.
+
+11
+00:00:47.310 --> 00:00:55.079
+At the strongest field,
+67.1% positive, against 66.9% measured.
+
+12
+00:00:55.715 --> 00:00:58.666
+But a single pattern has no competition.
+
+13
+00:00:59.036 --> 00:01:04.789
+Flipping the spins where it is −1
+turns the Hopfield model into Curie–Weiss,
+
+14
+00:01:04.829 --> 00:01:06.596
+up to small differences.
+
+15
+00:01:06.884 --> 00:01:12.470
+Yet its measured c
+is 1.063× the Curie–Weiss c.
+
+16
+00:01:12.677 --> 00:01:18.048
+Use that larger c as the base,
+and the prediction becomes 0.212,
+
+17
+00:01:18.088 --> 00:01:19.622
+outside the interval.
+
+18
+00:01:20.317 --> 00:01:24.289
+So the close match can come
+from approximations that cancel.
+
+19
+00:01:24.693 --> 00:01:28.352
+In separate runs at other
+pattern counts and sizes,
+
+20
+00:01:28.420 --> 00:01:31.847
+the prediction misses by up to 11%.
+
+21
+00:01:32.379 --> 00:01:37.958
+It captures the gain from competition,
+with errors that depend on pattern count,
+
+22
+00:01:37.998 --> 00:01:41.216
+size and update rule.

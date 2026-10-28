@@ -1,0 +1,76 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.054
+For small a, the positive area
+grows in a straight line with a.
+
+2
+00:00:04.412 --> 00:00:07.205
+So the sampler's log-odds go like a,
+
+3
+00:00:07.245 --> 00:00:10.439
+the ratio of field
+to fluctuations found above.
+
+4
+00:00:10.913 --> 00:00:17.196
+The model's log-odds go like N·G,
+since the field acts on all N spins.
+
+5
+00:00:17.380 --> 00:00:25.474
+Divide, and G cancels, as the flat
+c showed: c goes like (N²γ)^(−1/4).
+
+6
+00:00:25.589 --> 00:00:29.723
+So cooling 16× more slowly only doubles c.
+
+7
+00:00:29.826 --> 00:00:35.633
+This holds for a slow ramp starting well
+below β = 1, with little switching later.
+
+8
+00:00:35.945 --> 00:00:38.164
+The exact chain agrees.
+
+9
+00:00:38.371 --> 00:00:46.244
+At the smallest size,
+16× slower takes c from 0.094 to 0.189.
+
+10
+00:00:46.452 --> 00:00:48.246
+Over all nine ramps,
+
+11
+00:00:48.286 --> 00:00:53.535
+the exact chain lies slightly
+above the full formula, within 2%.
+
+12
+00:00:53.603 --> 00:00:58.683
+The law does not hold for arbitrarily
+slow cooling at fixed size: long enough
+
+13
+00:00:58.723 --> 00:01:02.672
+sampling at the final temperature
+recovers the model's proportions.
+
+14
+00:01:02.984 --> 00:01:10.451
+On the paper's schedule, the opening's
+59 to 63 is c growing only 1.48×.
+
+15
+00:01:10.948 --> 00:01:16.395
+The law was derived for a ramp; the paper
+does not derive this smaller gain.
+
+16
+00:01:16.800 --> 00:01:20.691
+Either way, slower cooling buys little.

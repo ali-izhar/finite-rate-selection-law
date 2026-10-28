@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Finite-Rate Selection Law</title>
+<meta name=”description” content=”Visual edition of “A Finite-Rate Selection Law for Annealed Gibbs Sampling” (DynaFront @ NeurIPS 2026): live simulations and the paper’s data, one chapter at a time.”>
+<link rel=”icon” href=”data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ℋ</text></svg>”>
+<link rel="preload" href="fonts/SourceSerif4-Roman-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SourceSerif4-Italic-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Inter-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="lib/theme.css">
+<link rel="stylesheet" href="fonts/katex/katex.min.css">
+<link rel="stylesheet" href="components/hero.css">
+<link rel="stylesheet" href="components/speciation.css">
+<link rel="stylesheet" href="components/slowing.css">
+<link rel="stylesheet" href="components/odds.css">
+<link rel="stylesheet" href="components/race.css">
+<link rel="stylesheet" href="components/scaling.css">
+<link rel="stylesheet" href="components/amplify.css">
+<link rel="stylesheet" href="components/reheat.css">
+<link rel="stylesheet" href="components/comparison.css">
+<link rel="stylesheet" href="lib/shell.css">
+<script>
+  /* theme before first paint (try/catch: storage can be blocked) */
+  try { var t = localStorage.getItem('ve2.theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  try { if (localStorage.getItem('ve2.details') === '1') document.documentElement.classList.add('v2-all'); } catch (e) {}
+</script>
+</head>
+<body>
+<a class="v2-skip" href="#main">Skip to the chapter</a>
+
+<!-- ================================================================ PHONE BAR -->
+<header class="v2-bar" aria-label="Chapter bar">
+  <button class="v2-bar__menu" type="button" aria-controls="rail" aria-expanded="false" aria-label="Open the chapter list">
+    <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 5h13M2.5 9h13M2.5 13h13"/></svg>
+  </button>
+  <canvas data-emblem="mini" width="28" height="28" aria-hidden="true"></canvas>
+  <span class="v2-bar__t" data-bar-t><b>0</b>The paper</span>
+  <a class="v2-bar__next" href="#commit" data-bar-next>Next →</a>
+  <span class="v2-bar__prog" aria-hidden="true"><i></i></span>
+</header>
+
+<!-- ================================================================ RAIL -->
+<nav class="v2-rail" id="rail" aria-label="Chapters">
+  <div class="v2-rail__scroll">
+    <div class="v2-titleblock">
+      <p class="v2-titleblock__k">Visual edition</p>
+      <p class="v2-titleblock__t"><a href="#overview">A Finite-Rate Selection Law for Annealed Gibbs Sampling</a></p>
+      <p class="v2-titleblock__v">DynaFront @ NeurIPS 2026 · poster</p>
+    </div>
+
+    <div class="v2-emblem">
+      <canvas data-emblem="rail" role="img" aria-label="A live Curie–Weiss sampler that cools to the β of the chapter you are reading. Each cooling run leaves a trace of m against β."></canvas>
+      <p class="v2-emblem__line"><span data-emblem-line="rail">β 0.60 · m +0.00 · cooling</span><button class="v2-info" type="button" popovertarget="card-emblem" aria-label="About the live model"></button></p>
+    </div>
+
+    <ol class="v2-scale" data-scale aria-label="The paper’s cooling schedule; chapters sit on its inverse temperatures">
+      <!-- built by lib/shell.js from data/c_cw.json (ladder, sweeps_per_level) and the chapters' data-beta -->
+    </ol>
+  </div>
+  <div class="v2-rail__foot">
+    <div class="v2-off" data-off></div>
+    <div class="v2-seg" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme-set="system" aria-checked="true">Auto</button>
+      <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
+      <button type="button" role="radio" data-theme-set="dark" aria-checked="false">Dark</button>
+    </div>
+    <button class="v2-switch" type="button" role="switch" aria-checked="false" data-all-details title="Open every explanation on the page"><span class="v2-switch__t" aria-hidden="true"></span>All details</button>
+  </div>
+</nav>
+<div class="v2-scrim" data-scrim></div>
+
+<div class="v2-card" id="card-rail" popover>
+  <p class="v2-card__k">This rail is the paper’s cooling schedule</p>
+  <p>Each bar is the number of sweeps the paper spends at one inverse temperature β (N&nbsp;=&nbsp;2,048; 834 sweeps in all, ten inverse temperatures from 0.6 to 1.6). The longest dwell, 355 of 834 sweeps, is at β&nbsp;=&nbsp;1, where relaxation is slowest.</p>
+  <p>Placing chapters on these temperatures is a reading device, so that reading is a cooling run. Only “Field against fluctuations” at β&nbsp;=&nbsp;1 has a physical meaning there.</p>
+  <p><button class="v2-chip" type="button" popovertarget="overview-howto">Colours and marks</button></p>
+</div>
+<div class="v2-card" id="card-emblem" popover>
+  <p class="v2-card__k">The live model</p>
+  <p>A Curie–Weiss sampler with N&nbsp;=&nbsp;256 binary variables and a small field toward <b class="v2-a">mode A</b>, updated by heat-bath Gibbs moves at random sites, one sweep per frame. It cools from β&nbsp;=&nbsp;0.6 to the β of the chapter you are reading, holds for six seconds, reheats to 0.6 and cools again.</p>
+  <p>Each cooling run leaves a trace of m against β. Traces that end above β&nbsp;=&nbsp;1.05 take the colour of the mode they end in (<b class="v2-a">A</b> or <b class="v2-b">B</b>); traces that stop before β&nbsp;=&nbsp;1.05 stay grey. The strip under it is one mark per variable, coloured by its recent average sign.</p>
+  <p><button class="v2-chip" type="button" popovertarget="card-rail">This rail is the paper’s schedule</button></p>
+</div>
+
+<!-- ================================================================ MAIN -->
+<main class="v2-main" id="main">
+
+  <!-- 0 · OVERVIEW ---------------------------------------------------- -->
+  <section class="v2-ch" id="ch-overview" data-chapter="overview" data-beta="0.6" data-n="0" data-title="The paper" data-takeaway="A fraction c of the log-odds survives" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick v2-kick--over"><span class="v2-kick__ed">Visual edition</span><span>DynaFront @ NeurIPS 2026 · poster</span></p>
+        <h1 class="v2-title v2-title--over">A Finite-Rate Selection Law for Annealed Gibbs Sampling</h1>
+        <p class="v2-lede">A sampler can produce clear samples in the wrong proportions. In annealed Gibbs sampling, a <span data-term="weakField">weak field</span> competes with <span data-term="fluctuations">random fluctuations</span> while cooling picks a <span data-term="mode">mode</span>.</p>
+        <p class="v2-howto"><button class="v2-chip" type="button" popovertarget="overview-howto">Colours and marks</button></p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+
+    <figure class="v2-front" aria-label="Frontispiece: a live Curie–Weiss sampler cooling again and again">
+      <canvas data-emblem="front" role="img" aria-label="Live traces of m against β for a Curie–Weiss sampler with 1,024 variables; each run chooses mode A or mode B near β = 1."></canvas>
+      <figcaption class="v2-front__cap"><span>live · <span data-term="curieWeiss">Curie–Weiss</span>, N = 1,024 · field toward A</span><span data-emblem-line="front"></span></figcaption>
+    </figure>
+
+    <div class="v2-headline">
+      <div class="v2-rd"><span class="v2-rd__l">Predicted <i>c</i></span><span class="v2-rd__v">0.199</span><span class="v2-rd__s"><span data-term="cPred"><i>c</i><sub>CW</sub>&#8201;×&#8201;<i>A</i><sub>3</sub></span></span></div>
+      <div class="v2-rd v2-rd--c v2-reticle"><span class="v2-rd__l">Measured <i>c</i></span><span class="v2-rd__v">0.199</span><span class="v2-rd__s">95%: <span class="nw">0.1908–0.2095</span></span></div>
+      <div class="v2-rd v2-rd--set"><span class="v2-rd__l">Setting</span><span class="v2-rd__v" style="color:var(--ink-3)"><i>N</i>&#8201;=&#8201;2,048</span><span class="v2-rd__s">three patterns, Hopfield model</span></div>
+    </div>
+    <p class="v2-clockline v2-clockline--over">Other settings miss by up to 11%; a one-pattern correction gives 0.212, outside the measured interval. <a href="#limits">Limits</a>.</p>
+
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 0</span>
+      <span class="v2-platebar__set">live · N = 256 · not the paper’s c</span>
+      <button class="v2-chip" type="button" popovertarget="overview-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="overview-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="hero"></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-result"><span class="v2-result__k">The result</span><span class="v2-result__s">Only a fraction <i>c</i> of the model’s <span data-term="logOdds">log-odds</span> survives. A <span data-term="selectionFormula">selection formula</span> predicts the sign choice; on the paper’s schedule, the <span data-term="exactCount">exact CW chain</span> gives <i>c</i><sub>CW</sub>&nbsp;=&nbsp;0.120.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="overview-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why is the preference lost?</span></summary>
+        <div class="v2-drawer__body">
+          <p>The runs choose a mode near <i>β</i>&nbsp;=&nbsp;1, where the field’s push toward A is still weak next to random fluctuations. After the modes form, switching can take much longer than settling within one (paper Sec.&nbsp;3).</p>
+          <p>The dashed mark on the <i>c</i> meter is the selection formula (Eq.&nbsp;3) for this field, size and cooling rate, divided by the model’s own log-odds; nothing is fitted. Try more sweeps per run: slower cooling helps, but less than you might expect (<a href="#scaling">chapter&nbsp;5</a>).</p>
+          <p>The formula and the headline’s 0.199 are linked by one step. On linear ramps the formula matches the exact CW chain within 1.81%, with the chain slightly above it in all nine cases (Table&nbsp;2). On the paper’s cooling schedule, that chain gives c<sub>CW</sub>&nbsp;=&nbsp;0.120, and the amplification factor A<sub>3</sub>&nbsp;=&nbsp;1.662 for three patterns turns it into 0.199 (<a href="#modes">chapter&nbsp;6</a>).</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="overview-scope">
+        <summary><span class="v2-drawer__k">Caveats</span><span class="v2-drawer__q">Is this the paper’s <i>c</i>?</span></summary>
+        <div class="v2-drawer__body">
+          <p>No. Fig.&nbsp;0 runs a small two-mode model (<i>N</i>&nbsp;=&nbsp;256, a linear ramp) so that it runs live in your browser, and it has its own <i>c</i>. Its closeness to 0.199 is a coincidence of the settings: <i>c</i> changes with model size and schedule.</p>
+          <p>The headline above is the paper’s test (<a href="#test">chapter&nbsp;7</a>): three stored patterns at <i>N</i>&nbsp;=&nbsp;2,048, predicted 0.120&nbsp;×&nbsp;1.662&nbsp;=&nbsp;0.199 (nothing fitted to the network runs), measured 0.199 (95%: <span class="nw">0.1908–0.2095</span>). Besides this test, <i>p</i>&nbsp;=&nbsp;4 also falls inside its interval; the other settings miss by up to 11% (<a href="#limits-1">Limits&nbsp;1</a>).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="v2-card" id="overview-howto" popover>
+      <p class="v2-card__k">Colours and marks</p>
+      <ul class="v2-keys">
+        <li><span class="v2-dot" style="background:var(--bias)"></span><span><b>live</b>: runs in your browser; size and schedule are under “What runs here”.</span></li>
+        <li><span class="v2-dot" style="border-radius:1px"></span><span><b>paper</b>: plots the paper’s own numbers.</span></li>
+        <li><span class="v2-dot" style="background:none;border-bottom:1px dotted var(--ink-3);border-radius:0"></span><span>A dotted underline opens a short definition.</span></li>
+      </ul>
+      <p>Colours: <b class="v2-a">mode A</b> (the one the model prefers), <b class="v2-b">mode B</b>, <b class="v2-bias">the model’s preference</b>, <b class="v2-c">the retained share c</b>; predictions and theory are dashed ink; grey marks the current selection.</p>
+    </div>
+    <div class="v2-card" id="overview-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-mirror" data-src=".ve-hero__caption"></p>
+    </div>
+  </section>
+
+  <!-- WATCH ----------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-watch" data-chapter="watch" data-beta="off" data-n="" data-title="Watch · 14 min" data-takeaway="" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Watch</span><span data-film-meta>14 min · narrated · captions on</span></p>
+        <h1 class="v2-title">The whole paper, narrated.</h1>
+        <p class="v2-lede">The paper’s argument in nine scenes, in the paper’s order, told with sound. Or skip it: every chapter has its figures to play with, and most have their own short clip.</p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Film</span>
+      <span class="v2-platebar__set">paper data and exact-chain numbers, drawn in manim</span>
+      <button class="v2-chip" type="button" popovertarget="watch-src">Sources</button>
+    </div>
+    <div class="v2-plate v2-film" data-film>
+      <div class="v2-film__screen" data-film-screen></div>
+      <ol class="v2-film__toc" data-film-toc aria-label="Chapters of the film"></ol>
+    </div>
+    <div class="v2-card v2-card--wide v2-film-src" id="watch-src" popover>
+      <p class="v2-card__k">Sources, scene by scene</p>
+      <p>Every number in the film comes from the paper or its data files. Pictures that only illustrate (the digit tiles, the simulated paths, the deep Boltzmann machine digits) carry a grey tag that says so.</p>
+      <ol class="v2-film-src__list">
+        <li><span class="v2-film-src__n">The wrong proportions</span> Curie–Weiss model · N&nbsp;=&nbsp;2,048 · the paper’s 834-sweep schedule, the exact CW chain · 97.3% asked, 60.5% delivered · final cooling ×¼ and ×4: about 59 and 63 of 100 (App. A)</li>
+        <li><span class="v2-film-src__n">Where the choice is made</span> Drift-plus-noise paths with no field · N&nbsp;=&nbsp;1,024 (paper Fig. 1a; an illustration)</li>
+        <li><span class="v2-film-src__n">How much preference survives</span> The exact CW chain · ten temperatures, 834 sweeps (Table 3) · c&nbsp;=&nbsp;0.120, within 0.3% over eight fields (Sec. 4, App. A)</li>
+        <li><span class="v2-film-src__n">Field against fluctuations</span> Φ(a) from Kondepudi &amp; Nelson (1983) and Kondepudi &amp; Gao (1987) (paper Eq. 3) · a&nbsp;=&nbsp;0.208 at N&nbsp;=&nbsp;2,048, γ&nbsp;=&nbsp;0.001 (Fig. 1b)</li>
+        <li><span class="v2-film-src__n">Why slower barely helps</span> c&nbsp;∝&nbsp;(N²γ)<sup>−1/4</sup> (Eq. 4) · linear ramps at N&nbsp;=&nbsp;1,024, 0.094 to 0.189 (Table 2, Fig. 2a) · the cooling schedule, ×1.48 for 16× the final cooling (Sec. 4, App. A)</li>
+        <li><span class="v2-film-src__n">Competing patterns</span> Hopfield model · p&nbsp;=&nbsp;3 · A<sub>3</sub>&nbsp;=&nbsp;1.662 · predicted c&nbsp;=&nbsp;0.199 (Eq. 6)</li>
+        <li><span class="v2-film-src__n">Where the runs start</span> The filtered start and reheating, 30 sweeps at β&nbsp;=&nbsp;0.7 (Sec. 4, App. B) · the MNIST deep Boltzmann machine picture (an illustration, not in the paper)</li>
+        <li><span class="v2-film-src__n">The test</span> Twenty pattern sets, eight fields · c&nbsp;=&nbsp;0.199 [0.1908,&nbsp;0.2095] (Sec. 4, Fig. 2b, Table 4) · the one-pattern ratio 1.063 and Table 1 (Sec. 5)</li>
+        <li><span class="v2-film-src__n">What the law does and does not say</span> Size exponent −0.36 against −0.46 for c<sub>pred</sub> (Sec. 5) · scope (Sec. 6)</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 1 · COMMIT ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-commit" data-chapter="commit" data-beta="0.8" data-n="1" data-title="Where the choice is made" data-takeaway="Runs choose their sign near β&nbsp;=&nbsp;1" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 1 · <i class="gr">β</i> 0.80</span><span class="v2-steps" data-step="1"></span></p>
+        <h1 class="v2-title">When does a run choose its mode?</h1>
+        <p class="v2-lede">Near <i>β</i>&nbsp;=&nbsp;1 one mode splits into two, and a small random imbalance grows into one of them. Switching modes afterwards can take far longer than settling in one.</p>
+      </header>
+      <div class="v2-margin">
+        <aside class="v2-note" data-q="What is β?">β is the <span data-term="beta">inverse temperature</span>, like softmax sharpness: small β is broad, large β concentrated. Cooling raises β; the modes form at β&nbsp;=&nbsp;1.</aside>
+      </div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 1</span>
+      <span class="v2-platebar__set">live · N = 1,024, as in paper Fig. 1a</span>
+      <button class="v2-chip" type="button" popovertarget="commit-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="commit-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="speciation" data-opts='{"plate":1,"intro":"The curve is the model (valleys are likely values of m) and each dot is one sampler run (a chain), here at N = 1,024. Raise β (cool), or press Run the cooling, and watch one valley split into two."}'></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-result"><span class="v2-result__k">Result 1</span><span class="v2-result__s">Near <i>β</i>&nbsp;=&nbsp;1 one valley splits in two, and the sign a run picks there can decide its final mode.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="commit-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">When are the proportions decided?</span></summary>
+        <div class="v2-drawer__body">
+          <p>Near <span data-term="transition">β&nbsp;=&nbsp;1</span> a small random imbalance between + and − spins can grow into either mode, and the field biases this early choice. Once the modes have formed, switching between them can take much longer than settling within one (Levin, Luczak and Peres 2010; Ding, Lubetzky and Peres 2009), so the sign chosen early can decide the final proportions.</p>
+          <p>The rest of the page asks how much of a small preference survives that choice.</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="commit-math">
+        <summary><span class="v2-drawer__k">The math</span><span class="v2-drawer__q">The model, and the drift that splits it</span></summary>
+        <div class="v2-drawer__body">
+          <p>The paper uses the simplest model with two modes, the <span data-term="curieWeiss">Curie–Weiss model</span>, whose probabilities and sampler both reduce exactly to the count of + spins (Sec. 2): N binary <span data-term="spin">spins</span> that all pull toward agreeing with each other,</p>
+          <div data-tex-display="\pi_{\beta,G}(x) \propto \exp\!\Big(\tfrac{\beta}{2(N-1)}\sum_{i\neq j} x_i x_j + \beta G\sum_i x_i\Big),\quad x_i=\pm 1" data-eq="1.1"></div>
+          <p>G is the <span data-term="bias">field</span>, fixed during a cooling run. Mode A is “mostly +1”, mode B is “mostly −1”, and the mean spin, the <span data-term="magnetisation">magnetisation m</span>, says which one a sample is in. For large N the magnetisation approximately follows the drift (App. A)</p>
+          <div data-tex-display="\frac{dm}{dt} \approx -m + \tanh(\beta m + \beta G)" data-eq="1.2"></div>
+          <p>With no field, for β&nbsp;&lt;&nbsp;1 only m&nbsp;=&nbsp;0 is stable; for β&nbsp;&gt;&nbsp;1 two stable states appear at opposite nonzero m.</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card" id="commit-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-mirror" data-src=".ve-figure__caption"></p>
+      <ul class="v2-keys">
+        <li><i class="v2-dot" style="background:var(--noise)"></i><span>A grey dot is an undecided chain (|m|&nbsp;&lt;&nbsp;0.15).</span></li>
+        <li><i class="v2-dot" style="background:var(--mode-a)"></i><span>A chain on the <b class="v2-a">mode A</b> side (m&nbsp;&gt;&nbsp;0), the one a positive field favours: a “3”.</span></li>
+        <li><i class="v2-dot" style="background:var(--mode-b)"></i><span>A chain on the <b class="v2-b">mode B</b> side (m&nbsp;&lt;&nbsp;0): an “8”.</span></li>
+        <li><span>Digits drawn as an illustration (samples of an MNIST network).</span></li>
+      </ul>
+      <p>In the fork, solid curves are the stable states and the dashed curve is the hilltop between them (theory). The ringed chain is shown spin by spin under the plots; each panel’s ⓘ says more.</p>
+    </div>
+  </section>
+
+  <!-- 2 · SLOWDOWN ----------------------------------------------------- -->
+  <section class="v2-ch" id="ch-slowdown" data-aside data-chapter="slowdown" data-beta="0.9" data-n="2" data-title="How the schedule is set" data-takeaway="355 of 834 sweeps at β&nbsp;=&nbsp;1" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 2 · side note</span><span class="v2-steps" data-step="2"></span></p>
+        <h1 class="v2-title">Why does the schedule linger at <i>β</i>&nbsp;=&nbsp;1?</h1>
+        <p class="v2-lede">Relaxation is slowest near <i>β</i>&nbsp;=&nbsp;1, so the schedule, six relaxation times per temperature, spends 355 of 834 sweeps there.</p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 2</span>
+      <span class="v2-platebar__set">paper Table 3 · relaxation times</span>
+      <button class="v2-chip" type="button" popovertarget="slowdown-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="slowdown-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="slowing" data-opts='{"plate":2}'></div>
+    <div class="v2-provenance"></div>
+    <figure class="ve-slowing-ladder ve-slowing-ladder--plate">
+      <figcaption>Paper Table&nbsp;3 · ⌈6τ⌉ sweeps per temperature · 834 total</figcaption>
+      <table class="v2-table"><thead><tr><th>β</th><th>.60</th><th>.80</th><th>.90</th><th>.95</th><th>1.00</th><th>1.05</th><th>1.10</th><th>1.20</th><th>1.40</th><th>1.60</th></tr></thead>
+        <tbody><tr><td>sweeps</td><td class="n">15</td><td class="n">30</td><td class="n">59</td><td class="n">107</td><td class="n"><b>355</b></td><td class="n">145</td><td class="n">65</td><td class="n">31</td><td class="n">16</td><td class="n">11</td></tr></tbody></table>
+    </figure>
+    <p class="v2-result"><span class="v2-result__k">Result 2</span><span class="v2-result__s">The relaxation-time peak near <i>β</i>&nbsp;=&nbsp;1 grows as √N; the schedule is set at N&nbsp;=&nbsp;2,048.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="slowdown-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">How is each dwell chosen?</span></summary>
+        <div class="v2-drawer__body">
+          <p>The Gibbs sampler redraws one spin at a time. At the transition the landscape over m has a flat bottom: the linear pull back to equilibrium is zero, and only the weak cubic pull m³/3 remains. Physicists call this <i>critical slowing down</i>. This chapter is a side note: you can skip to <a href="#odds">chapter&nbsp;3</a>.</p>
+          <p>The relaxation time τ is the inverse spectral gap: the time for the slowest deviation from equilibrium to shrink by a factor e. For β&nbsp;≤&nbsp;1 the schedule uses the full chain; above 1 it uses the chain held on one sign (reflected at m&nbsp;=&nbsp;0), so τ measures settling within a mode. The dwell at each temperature is ⌈6τ⌉ sweeps, computed at N&nbsp;=&nbsp;2,048 and reused at every size (Table&nbsp;3). This is a relaxation rule, not a bound on the error in mode probabilities (App.&nbsp;A).</p>
+          <p>Redesigned for each N, a schedule that contains β&nbsp;=&nbsp;1 would need a √N dwell at that temperature; here it is designed once and held fixed.</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="slowdown-math">
+        <summary><span class="v2-drawer__k">The math</span><span class="v2-drawer__q">Why decay slows at β = 1</span></summary>
+        <div class="v2-drawer__body">
+          <p>Near β&nbsp;=&nbsp;1 the drift is approximately</p>
+          <div data-tex-display="\frac{dm}{dt} \approx (\beta-1)\,m - \tfrac{1}{3}m^3" data-eq="2.1"></div>
+          <p>At β&nbsp;=&nbsp;1 only the cubic term is left, so in this large-N drift (the equation above: no field, no random kicks) the distance to rest decays as t<sup>−1/2</sup> instead of exponentially (set β&nbsp;=&nbsp;1 above: dm/dt&nbsp;≈&nbsp;−m³/3 gives m&nbsp;≈&nbsp;√(3/(2t)) at late times; panel&nbsp;a integrates the full drift live).</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card v2-card--wide" id="slowdown-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-mirror" data-src=".ve-slowing__intro"></p>
+      <dl class="v2-dl">
+        <dt>a · release</dt><dd>One chain released from m&nbsp;=&nbsp;0.9, in the infinite-N limit (no random kicks). Move β and watch how fast it settles.</dd>
+        <dt>b · relaxation time</dt><dd>Curves: τ(β) of the exact chain held on one sign, four sizes N (paper Fig.&nbsp;3a). Squares: the τ the schedule uses, at N&nbsp;=&nbsp;2,048 (Fig.&nbsp;3b).</dd>
+      </dl>
+      <p>Each panel’s ⓘ explains what it shows; “What runs here” gives the sources.</p>
+    </div>
+  </section>
+
+  <!-- 3 · ODDS --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-odds" data-chapter="odds" data-beta="0.95" data-n="3" data-title="How much survives" data-takeaway="c&lt;sub&gt;CW&lt;/sub&gt;&nbsp;=&nbsp;0.120 at N&nbsp;=&nbsp;2,048" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 3 · <i class="gr">β</i> 0.95</span><span class="v2-steps" data-step="3"></span></p>
+        <h1 class="v2-title">How much of the model’s preference survives?</h1>
+        <p class="v2-lede">Give the model a weak field <i>G</i> favouring <b class="v2-a">mode A</b> (drawn as “3”). The sampler produces A less often than the model says; <i>c</i> measures how much of the preference, in log-odds, survives.</p>
+        <div class="v2-eqline" data-tex-display="c = \frac{\operatorname{logit} q_{\text{chain}}}{\operatorname{logit} q_{\text{eq}}}" data-eq="3.1"></div>
+      </header>
+      <div class="v2-margin">
+        <aside class="v2-note" data-q="Is c a constant?">c is not a constant: it depends on the model size N and on how fast the sampler cools. Every figure states its setting; the Data drawer lists every c on this page.</aside>
+      </div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 3</span>
+      <span class="v2-platebar__set">exact CW chain · N = 2,048 · the paper’s protocol</span>
+      <button class="v2-chip" type="button" popovertarget="odds-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="odds-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="odds" data-opts='{"plate":3}'></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-result"><span class="v2-result__k">Result 3</span><span class="v2-result__s">On the paper’s protocol the <span data-term="curieWeiss">Curie–Weiss</span> sampler keeps <span class="v2-c">c<sub>CW</sub>&nbsp;=&nbsp;0.120</span> of the model’s log-odds (N&nbsp;=&nbsp;2,048), nearly the same at every field.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="odds-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why measure the preference in log-odds?</span></summary>
+        <div class="v2-drawer__body">
+          <p>A small <span data-term="bias">field G</span> pushes every spin toward +1, so the model puts more probability on mode A, the positive mode (m&nbsp;&gt;&nbsp;0); mode B is the negative one. A perfect sampler would produce mode A exactly as often as the model says. The figure counts what the paper’s sampler produces instead, and turns the gap into one number, the <span data-term="retained">retained share c</span>, measured on the <span data-term="logOdds">log-odds</span> scale.</p>
+          <p>q<sub>eq</sub> is the model’s probability of mode A at the end of cooling and q<sub>chain</sub> the share of runs that end there, both among samples with m&nbsp;≠&nbsp;0. For a weak field the sampled and the model’s log-odds are both close to proportional to G (Sec.&nbsp;3), so G nearly cancels in their ratio c. c&nbsp;=&nbsp;1 means the sampler reproduces the model; c&nbsp;=&nbsp;0 is a coin flip. If the model’s odds are 4:1, c&nbsp;=&nbsp;0.2 gives about 1.32:1 (paper Sec.&nbsp;2).</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="odds-ledger">
+        <summary><span class="v2-drawer__k">Data</span><span class="v2-drawer__q">Every c on this page, and why they differ</span></summary>
+        <div class="v2-drawer__body">
+          <table class="v2-table v2-table--ledger">
+            <colgroup><col class="w-where"><col class="w-set"><col class="w-c"></colgroup>
+            <thead><tr><th>Where</th><th>Setting</th><th>c</th></tr></thead>
+            <tbody>
+              <tr data-row="overview"><td>Overview, The paper</td><td>two modes, N&nbsp;=&nbsp;256, linear ramp of 250 sweeps</td><td class="n"><span class="nv">0.19</span> formula, computed here<sup class="odds-fn">1</sup></td></tr>
+              <tr data-row="race"><td>Chapter 4, Field against fluctuations</td><td>two modes, N&nbsp;=&nbsp;1,024, linear ramp, γ&nbsp;=&nbsp;0.001 per sweep (slider start)</td><td class="n"><span class="nv">0.13</span> formula, computed here</td></tr>
+              <tr data-row="scaling"><td>Chapter 5, Fig. 5a</td><td>two modes, N&nbsp;=&nbsp;2,048, linear ramp of 225 sweeps</td><td class="n"><span class="nv">0.066</span> exact CW chain, computed here</td></tr>
+              <tr class="ref" data-row="odds scaling"><td>Chapters 3 and 5b</td><td>two modes, N&nbsp;=&nbsp;2,048, the paper’s protocol (brief cooling, a filtered start that keeps only the runs ending in mode B, reheat, then the final cooling over 834 sweeps; why: <a href="#reheat">Where the runs start</a>): <b>the reference c<sub>CW</sub></b> (CW: the Curie–Weiss model)</td><td class="n"><span class="nv">0.120</span> exact CW chain</td></tr>
+              <tr class="ref" data-row="modes test"><td>Chapters 6 and 7</td><td>three patterns (Hopfield model), N&nbsp;=&nbsp;2,048, the paper’s protocol</td><td class="n"><span class="nv">0.199</span> predicted, <span class="nv">0.199</span> measured (paper Fig.&nbsp;2b slope; Fig.&nbsp;7b on this page)<sup class="odds-fn">2</sup></td></tr>
+            </tbody>
+          </table>
+          <p>Larger models and faster schedules keep less, so each setting has its own c. Only the two shaded rows enter the test. At other pattern counts and sizes the prediction misses by up to 11% (chapter&nbsp;7).</p>
+          <p class="v2-fn"><sup>1</sup> The live count in that picture lands within a few hundredths of the formula.<br><sup>2</sup> Based on the one-pattern Hopfield ratio (×1.063) instead, the prediction is 0.212, outside the interval (paper Sec.&nbsp;5; <a href="#test">chapter&nbsp;7</a>).</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card" id="odds-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p>Read the three panels from top to bottom.</p>
+      <p><b>a · Counts.</b> Two grids of 100 samples. The left grid is the model: a share <b class="ve-c-bias">q<sub>eq</sub></b> of its squares are blue “3”s (mode A). The right grid is the sampler: a share <b class="ve-c-data">q<sub>chain</sub></b> of its runs end in mode A.</p>
+      <p><b>b · Bars.</b> Each share becomes a log-odds bar, ln(q&nbsp;/&nbsp;(1&nbsp;−&nbsp;q)); 0 is a coin flip. The ratio of the sampler’s bar to the model’s bar is <span class="v2-c">c</span>.</p>
+      <p><b>c · Flat line.</b> The same sampler runs at 16 fields. The log-odds share c (solid) stays flat across the range drawn; the share measured in probability (dashed) drifts.</p>
+    </div>
+  </section>
+
+  <!-- 4 · RACE --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-race" data-chapter="race" data-beta="1.0" data-n="4" data-title="Field against fluctuations" data-takeaway="The field only tilts the fluctuations’ choice" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 4 · <i class="gr">β</i> 1.00</span><span class="v2-steps" data-step="4"></span></p>
+        <h1 class="v2-title">Where does the rest of the preference go?</h1>
+        <p class="v2-lede">It is lost in a short selection interval near β&nbsp;=&nbsp;1. There the <b class="v2-bias">field’s push</b> toward A competes with random <span class="v2-noise">fluctuations</span>, and the weak field only tilts the choice.</p>
+      </header>
+      <div class="v2-margin">
+        <aside class="v2-note" data-q="Where does the formula come from?">Kondepudi and Nelson (1983) and Kondepudi and Gao (1987) derived this sign probability for symmetry-breaking transitions crossed at a finite rate.</aside>
+      </div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 4</span>
+      <span class="v2-platebar__set">live · drift-plus-noise equation (Eq. 7)</span>
+      <button class="v2-chip" type="button" popovertarget="race-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="race-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="race" data-opts='{"plate":4}'></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-caveat">Check-point settings (N&nbsp;=&nbsp;1,024, linear ramp). The paper’s protocol (N&nbsp;=&nbsp;2,048) gives the Curie–Weiss <span data-term="curieWeiss">c<sub>CW</sub></span>&nbsp;=&nbsp;0.120 (<a href="#odds">Chapter&nbsp;3</a>).</p>
+    <p class="v2-result"><span class="v2-result__k">Result 4</span><span class="v2-result__s">The sign is chosen in an interval of about <span class="nw"><span data-term="gamma">γ</span><sup>−1/2</sup></span> sweeps, where the field only tilts a coin tossed by the fluctuations.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="race-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why one interval, and not the whole schedule?</span></summary>
+        <div class="v2-drawer__body">
+          <p>A natural guess is that the loss comes from too few sweeps at each value of β. Before the interval the field has nothing to choose between; after it, switching modes takes much longer than settling, so extra sweeps change little. Only very long sampling at the final temperature recovers the model’s proportions, but at N&nbsp;=&nbsp;2,048 the zero-field mean time for a mode switch is about 5&nbsp;×&nbsp;10<sup>7</sup> expected sweeps at β&nbsp;=&nbsp;1.1 (Sec. 3, App. A).</p>
+          <p>Inside the interval the weak field competes with the fluctuations, so it tilts a coin rather than deciding it.</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="race-math">
+        <summary><span class="v2-drawer__k">The math</span><span class="v2-drawer__q">Where the selection formula comes from</span></summary>
+        <div class="v2-drawer__body">
+          <p>A classical calculation (Kondepudi and Nelson 1983; Kondepudi and Gao 1987) gives the chance of the positive sign, the selection formula (paper Eq.&nbsp;3), from three inputs: the field G, the model size N, and the <span data-term="gamma">cooling rate γ</span>:</p>
+          <div data-tex-display="q_{\text{sel}} \simeq \Phi(a),\qquad a = G\sqrt{N}\,\big(\tfrac{\pi}{\gamma}\big)^{1/4}" data-eq="4.1"></div>
+          <p>It equals q<sub>chain</sub> if later switching is negligible. It assumes a slow ramp starting well below β&nbsp;=&nbsp;1; Nγ&nbsp;≫&nbsp;1 is a sufficient small-noise condition (Sec.&nbsp;3). It does not extend to arbitrarily slow cooling at fixed N.</p>
+          <p>Near β&nbsp;=&nbsp;1 the mean spin follows the drift-plus-noise equation (paper Eq.&nbsp;7), with β&nbsp;=&nbsp;1&nbsp;+&nbsp;γt and t in sweeps:</p>
+          <div data-tex-display="dm = \big[(\beta-1)m - \tfrac{1}{3}m^3 + G\big]\,dt + \sqrt{2/N}\,dW" data-eq="4.2"></div>
+          <p>The growth of m becomes appreciable over about <span data-tex="\gamma^{-1/2}"></span> sweeps around β&nbsp;=&nbsp;1. In that interval the field pushes m by about <span data-tex="G\gamma^{-1/2}"></span>, while fluctuations of size about <span data-tex="N^{-1/2}"></span> per sweep accumulate to about <span data-tex="N^{-1/2}\gamma^{-1/4}"></span>. A run lands on the A side with probability Φ(push ÷ spread), Φ the Gaussian CDF; push ÷ spread is <i>a</i> in (4.1).</p>
+          <p><a href="#scaling-math">Chapter&nbsp;5</a> turns this ratio into the scaling law for <i>c</i>, (5.1), and tests it.</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card" id="race-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-mirror" data-src=".ve-race__readp"></p>
+      <p class="v2-mirror" data-src=".ve-race__headwhy"></p>
+      <p class="v2-mirror" data-src=".ve-figure__caption"></p>
+    </div>
+  </section>
+
+  <!-- 5 · SCALING ------------------------------------------------------ -->
+  <section class="v2-ch" id="ch-scaling" data-chapter="scaling" data-beta="1.05" data-n="5" data-title="Does slower fix it?" data-takeaway="Linear ramp: 16× the sweeps, 2× c" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 5 · <i class="gr">β</i> 1.05</span><span class="v2-steps" data-step="5"></span></p>
+        <h1 class="v2-title">Does sampling more slowly fix it?</h1>
+        <p class="v2-lede">A slower ramp, a smaller <span data-term="gamma">rate γ</span>, gives the field more time, and the fluctuations too. How much does it gain?</p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 5a, 5b</span>
+      <span class="v2-platebar__set">exact CW chain · paper and repository</span>
+      <button class="v2-chip" type="button" popovertarget="scaling-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="scaling-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="scaling" data-opts='{"plate":"Fig. 5a","plateB":"Fig. 5b · the paper’s schedule","plateK":"a","plateTitle":"A linear ramp","plateBK":"b","plateBTitle":"The paper’s schedule"}'></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-caveat">5a’s 1× is a fast 225-sweep ramp, not the paper’s schedule (5b).</p>
+    <p class="v2-result"><span class="v2-result__k">Result 5</span><span class="v2-result__s">On a linear ramp, 16× the sweeps only doubles <i>c</i>, <span class="nw"><i>c</i> ∝ <span data-tex="(N^2\gamma)^{-1/4}">(N²γ)<sup>−1/4</sup></span></span>; on the paper’s cooling schedule, 16× the final cooling gains only 1.48×.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="scaling-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why does slowing down help so little?</span></summary>
+        <div class="v2-drawer__body">
+          <p>A slower ramp gives the field more time to push the chain toward the favoured mode, but it also gives the random fluctuations more time to spread. The push grows faster than the spread, but only by the fourth root of the time: 16× the sweeps buys 2× c (<a href="#scaling-math">the math</a>).</p>
+          <p>Fig.&nbsp;5a checks this on a linear ramp; Fig.&nbsp;5b runs the paper’s own <span data-term="schedule">schedule</span>, which gives the reference c<sub>CW</sub>&nbsp;=&nbsp;0.120 that the final test builds on.</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="scaling-math">
+        <summary><span class="v2-drawer__k">The math</span><span class="v2-drawer__q">The scaling law, and where it holds</span></summary>
+        <div class="v2-drawer__body">
+          <p><b>The sampler’s log-odds.</b> G is the field per spin toward the positive mode. From the race of <a href="#race-math">chapter&nbsp;4</a>, the chain’s log-odds grow as the field’s push over the fluctuation spread in the selection interval:</p>
+          <div data-tex-display="\underbrace{G\,\gamma^{-1/2}}_{\text{field}} \;\Big/\; \underbrace{N^{-1/2}\,\gamma^{-1/4}}_{\text{fluctuations}} \;=\; G\sqrt{N}\,\gamma^{-1/4}"></div>
+          <p><b>The model’s log-odds.</b> The two modes differ in log-probability by an amount proportional to <span class="nw"><span data-tex="NG">N&nbsp;G</span>:</span> a push of <span data-tex="G">G</span> on each of <span data-tex="N">N</span> spins. The chain’s log-odds grow as <span data-tex="G\sqrt{N}\,\gamma^{-1/4}">G√N&nbsp;γ<sup>−1/4</sup></span>, the model’s as <span class="nw"><span data-tex="NG">N&nbsp;G</span>.</span> Their ratio is</p>
+          <div data-tex-display="c \;\propto\; \frac{G\sqrt{N}\,\gamma^{-1/4}}{N\,G} \;=\; \big(N^2\gamma\big)^{-1/4}" data-eq="5.1"></div>
+          <p>So bigger models lose more (4× the model size halves <i>c</i>), and slowing the whole schedule helps only as <span data-tex="\gamma^{-1/4}">γ<sup>−1/4</sup></span>: sixteen times the sweeps doubles <i>c</i>. This holds when the field is weak: <span class="nw"><span data-tex="a = G\sqrt{N}(\pi/\gamma)^{1/4} \ll 1">a&nbsp;=&nbsp;G√N(π/γ)<sup>1/4</sup>&nbsp;≪&nbsp;1</span></span>. The exact CW chain agrees with the full formula, Eq.&nbsp;3, for N&nbsp;=&nbsp;1,024–4,096 and γ&nbsp;=&nbsp;0.00025–0.004: the chain lies above the formula in all nine cases, by 0.23–1.81% (Table&nbsp;2). The law does not extend to arbitrarily slow cooling at fixed N: long sampling at the final temperature recovers equilibrium, but at N&nbsp;=&nbsp;2,048 the zero-field mean time for a mode switch is about 5&nbsp;×&nbsp;10<sup>7</sup> expected sweeps at β&nbsp;=&nbsp;1.1 (Sec.&nbsp;3, App.&nbsp;A). On the paper’s cooling schedule, a quarter of the final cooling gives c&nbsp;=&nbsp;0.099 and four times gives 0.147: 1.48× for sixteen times the final cooling (Sec.&nbsp;4, App.&nbsp;A).</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="scaling-data">
+        <summary><span class="v2-drawer__k">Data</span><span class="v2-drawer__q">How the numbers were computed</span></summary>
+        <div class="v2-drawer__body">
+          <p class="v2-sub">Fig. 5a · the rings and the line</p>
+          <p>The line is the selection formula (Kondepudi &amp; Nelson 1983; Kondepudi &amp; Gao 1987), computed on this page from <span class="nw"><span data-tex="q = \Phi\big(G\sqrt{N}\,(\pi/\gamma)^{1/4}\big)">q&nbsp;=&nbsp;Φ(G√N (π/γ)<sup>1/4</sup>)</span></span> (paper Eq.&nbsp;3). Each ring is the continuous-time Gibbs dynamics, reduced exactly to <span data-tex="N+1">N + 1</span> counts (one time unit&nbsp;=&nbsp;one expected sweep: N updates on average), under a linear schedule from β&nbsp;=&nbsp;0.7 to 1.6 at rate γ. The 1× budget is γ&nbsp;=&nbsp;0.004, a ramp of 225 sweeps.</p>
+          <p>The field is scaled with size (<span data-tex="G\cdot N = 1.254">G·N = 1.254</span>), so the model’s own odds are nearly the same at every N: the positive mode has probability 0.973, log-odds 3.57. So the readout’s c is the sampler’s log-odds ÷ 3.57. Over the nine runs, the exact chain lies above the formula by 0.23–1.81% (Table&nbsp;2), over <span class="nw"><span data-tex="N^2\gamma = 262">N²γ = 262</span> to 67,109</span>.</p>
+          <p class="v2-sub">Fig. 5b · the paper’s cooling schedule</p>
+          <p>The paper does not use a linear ramp. Its cooling schedule holds β at ten inverse temperatures from 0.6 to 1.6 and dwells ⌈6τ⌉ sweeps at each, where τ is the <span data-term="trackingTime">relaxation time</span> (Table&nbsp;3), the e-fold time of the slowest deviation from equilibrium. τ peaks at the transition β&nbsp;=&nbsp;1, so the schedule spends most of its budget near it: β&nbsp;=&nbsp;1 alone takes 355 of the 834 sweeps (43%), and β&nbsp;=&nbsp;0.95 to 1.05 take 73%. The closed-form law assumes β rises at a constant rate; this schedule dwells at each temperature, longest at the transition, so here the exact CW chain is used instead.</p>
+          <p>The paper first runs a brief cooling (2 sweeps per temperature) and keeps the runs that ended in the negative mode (the filtered start). It reheats them at β&nbsp;=&nbsp;0.7 for 30 sweeps, then the final cooling follows this schedule. The scale toggle multiplies only the sweeps of the final cooling. The field is <span data-tex="G = 6.125\times10^{-4}">G = 6.125×10<sup>−4</sup></span>, and the chain is the continuous-time Gibbs dynamics, reduced exactly to 2,049 counts. Every number comes from the exact CW chain at N&nbsp;=&nbsp;2,048 unless marked.</p>
+          <p class="v2-sub">Budget and size scans</p>
+          <p>Sixteen times the final cooling (×¼ → ×4) raises c from 0.099 to 0.147, 1.48× (Sec.&nbsp;4, App.&nbsp;A), less than the 2× of the ramp law. From the repository’s computations, not in the paper: ×8 gives 0.174 (results/experiments/cw_scaling.json). A linear ramp from β&nbsp;=&nbsp;0.7 to 1.6 in 834 sweeps gives 0.091, computed on this page from Eq.&nbsp;3.</p>
+          <p>The size scan keeps the same 834 sweeps: each temperature keeps its N&nbsp;=&nbsp;2,048 sweep count at every N, and the field is rescaled so the model’s odds stay nearly fixed (repository). Between N&nbsp;=&nbsp;1,024 and 4,096 it falls as about <span data-tex="N^{-0.47}">N<sup>−0.47</sup></span>. The paper’s Table&nbsp;1 instead keeps |G|&nbsp;=&nbsp;0.0006125 at every N, with c<sub>CW</sub>&nbsp;=&nbsp;0.171, 0.120, 0.090 at N&nbsp;=&nbsp;1,024, 2,048, 4,096: <span data-tex="N^{-0.46}">N<sup>−0.46</sup></span> (two-point slope). The linear-ramp law gives −1/2, because γ stays fixed and so <span data-tex="N^2\gamma">N²γ</span> grows as <span data-tex="N^2">N²</span>. The exponent for sampling the three-pattern <span data-term="hopfield">Hopfield model</span> (<a href="#modes">chapter&nbsp;6</a>) is about −0.36 (paper Sec.&nbsp;5). From the repository’s size scan, not in the paper (results/experiments/cw_scaling.json): c falls from 0.229 at N&nbsp;=&nbsp;512 to 0.071 at N&nbsp;=&nbsp;8,192.</p>
+          <p class="v2-sub">The one-pattern ratio</p>
+          <p>Every number here comes from the exact CW chain. Sampling the <span data-term="hopfield">Hopfield model</span> (<a href="#modes">chapter&nbsp;6</a>) differs from this chain in update order and interaction strength; <a href="#test">chapter&nbsp;7</a> shows the measured one-pattern ratio and what it does to the test.</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card v2-card--wide" id="scaling-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-spec__h">Fig. 5a · a linear ramp</p>
+      <p class="v2-mirror">The left ladder, which fills in after a guess, puts sweeps on one rail and the linear-ramp law’s log-odds on the other. Each ring is one exact-chain run at one model size <i>N</i> (a bigger ring is a bigger <i>N</i>) and one ramp rate γ; more sweeps means a smaller γ. Rings at the same <i>N</i>²γ nearly overlap, so <i>c</i> depends mainly on that product (Eq.&nbsp;4). The line is the selection formula (Eq.&nbsp;3), the band the range checked by the exact CW chain (Table&nbsp;2), the gilt arrow 16× the sweeps. Tap a ring to load its run.</p>
+      <div class="scl-live"><p class="v2-mirror" data-scl-src="a"></p></div>
+      <p class="v2-spec__h">Fig. 5b · the paper’s schedule</p>
+      <p class="v2-mirror">β is the inverse temperature: higher means colder. The schedule is drawn as a staircase: each step is one of ten temperatures, and its width is the sweeps spent there. Hover, tap, or use ← → on the figure to move the shaded temperature. The right panel runs the same 834 sweeps at other model sizes; it rescales the field with N (repository), and to three decimals its values equal the paper’s fixed-field c<sub>CW</sub>&nbsp;=&nbsp;0.171 and 0.090 at N&nbsp;=&nbsp;1,024 and 4,096 (Table&nbsp;1 caption). Its dashed line is the selection formula for a linear ramp.</p>
+      <div class="scl-live"><p class="v2-mirror" data-scl-src="b"></p></div>
+    </div>
+  </section>
+
+  <!-- 6 · MODES -------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-modes" data-chapter="modes" data-beta="1.1" data-n="6" data-title="Competing patterns" data-takeaway="Predicted: A₃&nbsp;=&nbsp;1.662 for three patterns" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 6 · <i class="gr">β</i> 1.10</span><span class="v2-steps" data-step="6"></span></p>
+        <h1 class="v2-title">What changes when patterns compete?</h1>
+        <p class="v2-lede">If the largest early overlap picks the pattern, pattern 1 wins only with a larger-than-usual overlap, which carries more of the field’s preference. Competition should then keep more of it.</p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 6</span>
+      <span class="v2-platebar__set">live · a: Hopfield, N = 256 (paper 2,048) · b, c: Gaussian draws</span>
+      <button class="v2-chip" type="button" popovertarget="modes-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="modes-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="amplify" data-opts='{"plate":6,"measured":false,"intro":"Move p to change the number of stored patterns. Panels a to c show why the winning pattern votes harder; panel d turns that into a prediction."}'></div>
+    <div class="v2-provenance"></div>
+    <p class="v2-caveat">A prediction; chapter 7 measures it.</p>
+    <p class="v2-result"><span class="v2-result__k">Result 6</span><span class="v2-result__s">Under a Gaussian approximation, three patterns amplify <i>c</i> by A<sub>3</sub>&nbsp;=&nbsp;1.662: predicted <i>c</i>&nbsp;=&nbsp;0.120&nbsp;×&nbsp;1.662&nbsp;=&nbsp;0.199.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="modes-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why would competing patterns help?</span></summary>
+        <div class="v2-drawer__body">
+          <p>The Curie–Weiss model has only two modes. The paper also tests the law on a <span data-term="hopfield">Hopfield model</span> that stores <i>p</i> random patterns; each pattern and its negative is a mode. You might expect competition to make the sampler worse at honouring the model’s preference.</p>
+          <p>The paper predicts the opposite. The field acts on pattern 1, so <i>c</i> is measured only on the kept runs: those that end in pattern 1 or its negative. If the largest early <span data-term="overlap">overlap</span> decides, those runs won with a larger-than-usual overlap, and a larger overlap carries a stronger sign preference; c rises by an <span data-term="amplification">amplification factor A<sub>p</sub></span>.</p>
+          <p>The paper approximates the early overlaps by independent Gaussians with a common variance, the field shifting only the mean of overlap&nbsp;1, as in the Curie–Weiss model. It assumes the largest in size decides the pattern, and takes the Hopfield model’s own preference to be the Curie–Weiss one. Small <i>p</i>/<i>N</i> guarantees neither this equality nor independent overlaps (Sec. 4).</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="modes-math">
+        <summary><span class="v2-drawer__k">The math</span><span class="v2-drawer__q">Where A<sub>p</sub> comes from</span></summary>
+        <div class="v2-drawer__body">
+          <p>Approximate the <i>p</i> early overlaps by independent Gaussians with a common spread, and assume the largest in magnitude decides the pattern. Sign log-odds grow with the magnitude, so, to first order in the field, the kept runs express the preference more:</p>
+          <div data-tex-display="A_p = \frac{\mathbb{E}\big[\max_{k\le p} |Z_k|\big]}{\mathbb{E}\,|Z|},\qquad c_{\text{pred}} = c_{\text{CW}}\,A_p" data-eq="6.1"></div>
+          <table class="v2-table"><thead><tr><th><i>p</i></th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+            <tbody><tr><td>A<sub>p</sub></td><td class="n">1</td><td class="n">√2 = 1.414</td><td class="n">1.662</td><td class="n">1.836</td></tr></tbody></table>
+          <p>Here c<sub>CW</sub> is the Curie–Weiss value of c, computed numerically for the Hopfield protocol. The <i>p</i>&nbsp;=&nbsp;2 cross-check is in the drawer below.</p>
+        </div>
+      </details>
+    </div>
+    <div class="v2-card" id="modes-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p>The slider sets <i>p</i>, the number of stored patterns; each pattern and its negative is a mode, so there are 2<i>p</i>. Blue marks pattern 1, the one the field favours.</p>
+      <p><b>a</b>&ensp;A live sample next to the stored pattern it is closest to. Each bar is the sample’s overlap with one stored pattern; the strip under the bars is the inverse temperature β, rising through the transition at β&nbsp;=&nbsp;1.</p>
+      <p><b>b</b>&ensp;One draw gives each pattern a Gaussian overlap, independent of the others: an assumption, not a fact of the network. The largest in size is assumed to win, between the dashed ± lines. A run is kept, and counts toward <i>c</i>, only when pattern 1 wins: about 1 in <i>p</i>.</p>
+      <p><b>c</b>&ensp;The size of overlap 1: grey over all runs, blue over the kept runs, dashed the Gaussian-theory curves. The vertical lines are the two means; their ratio is <i>A<sub>p</sub></i>, and the line below tracks it as draws accumulate.</p>
+      <p><b>d</b>&ensp;The one-pattern <i>c</i><sub>CW</sub> times <i>A<sub>p</sub></i> gives the predicted <i>c</i>, in the gilt reticle. Each panel’s ⓘ holds its full explanation.</p>
+    </div>
+  </section>
+
+  <!-- M · REHEAT ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-reheat" data-chapter="reheat" data-beta="1.2" data-n="M" data-title="Where the runs start" data-takeaway="Filtered start, reheated at β&nbsp;=&nbsp;0.7" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span title="The chapter’s place on the sidebar’s scale, a reading aid only">Method · <i class="gr">β</i> 1.20</span></p>
+        <h1 class="v2-title">Where do the test runs start?</h1>
+        <p class="v2-lede"><span data-term="hopfield">Hopfield</span> test runs begin from a <span data-term="filteredStart">filtered start</span>: after a brief cooling, runs labelled (1,+), nearest to pattern&nbsp;1 with a + sign, are removed; the rest are <span data-term="reheating">reheated</span> at <i class="gr">β</i>&nbsp;=&nbsp;0.7 and cooled again.</p>
+      </header>
+      <div class="v2-margin">
+        <aside class="v2-note" data-q="Do reheated runs match fresh ones?">Not shown: that reheated runs match fresh ones (App.&nbsp;B).</aside>
+      </div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. M</span>
+      <span class="v2-platebar__set">illustration · field exaggerated (h&nbsp;=&nbsp;0.05)</span>
+      <button class="v2-chip" type="button" popovertarget="reheat-read">Reading the figure</button>
+      <button class="v2-chip" type="button" data-spec="reheat-spec">What runs here</button>
+    </div>
+    <div class="v2-plate" data-mount="reheat" data-opts='{"plate":"M","prefix":"Fig. ","part":"reheat","intro":false}'></div>
+    <div class="v2-headline v2-headline--rh">
+      <div class="v2-rd v2-rd--set"><span class="v2-rd__l">Source</span><span class="v2-rd__v" style="color:var(--ink-3)">App.&nbsp;B</span><span class="v2-rd__s">Hopfield runs</span></div>
+      <div class="v2-rd"><span class="v2-rd__l">Zero field: share positive</span><span class="v2-rd__v">49.6%</span><span class="v2-rd__s">95%: <span class="nw">48.6–50.5%</span></span></div>
+      <div class="v2-rd"><span class="v2-rd__l">Positive at +<span data-term="bias"><i>G</i></span> plus −<i>G</i></span><span class="v2-rd__v">≈&#8201;1</span><span class="v2-rd__s">4 of 4 intervals contain 1</span></div>
+    </div>
+    <div class="v2-provenance"></div>
+    <p class="v2-caveat">Paired-field sums are consistent with one.</p>
+    <p class="v2-result"><span class="v2-result__k">Method</span><span class="v2-result__s">For G&nbsp;&gt;&nbsp;0 the filtered start imitates a sampler settled away from the favoured mode; reheating must undo that choice (reselection).</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="reheat-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">Why a filtered start?</span></summary>
+        <div class="v2-drawer__body">
+          <p>The paper tests the competition prediction on runs that choose a mode again, not on fresh starts (Sec.&nbsp;4). For G&nbsp;&gt;&nbsp;0 the filtered start imitates a sampler that settled away from the favoured mode; reheating at <i class="gr">β</i>&nbsp;=&nbsp;0.7, where the drift reduces an imbalance, must undo that choice, and the final cooling chooses again. The removal is applied at both field signs, so paired fields ±G follow one protocol.</p>
+          <p>For a symmetric start, flipping every spin and the sign of G would give q<sub>chain</sub>(G)&nbsp;+&nbsp;q<sub>chain</sub>(−G)&nbsp;=&nbsp;1; the removal breaks this symmetry, and its memory could shift the sum. The measured sums are consistent with one but do not establish equivalence to fresh starts (App.&nbsp;B).</p>
+          <p>The steps: after two sweeps at each of the ten schedule temperatures, every run labelled (pattern&nbsp;1,&nbsp;+) is removed, for both signs of the field. The rest reheat for 30 sweeps at <i class="gr">β</i>&nbsp;=&nbsp;0.7, below the transition, with the patterns and field unchanged; then the final cooling follows the 834-sweep schedule, which begins at the hotter <i class="gr">β</i>&nbsp;=&nbsp;0.6.</p>
+          <p>The Curie–Weiss reference c<sub>CW</sub> runs through the same removal and reheating. For Curie–Weiss, 30 sweeps at <i class="gr">β</i>&nbsp;=&nbsp;0.7 shrink the slowest deviation to about 1.2&nbsp;×&nbsp;10<sup>−4</sup>; this does not bound the memory of the filtered Hopfield runs (App.&nbsp;B).</p>
+          <p>Fig. M is an illustration, not this protocol: it follows the large-N drift with a field exaggerated to h&nbsp;=&nbsp;0.05, so that you can see one well remain below <i class="gr">β</i>&nbsp;=&nbsp;1.</p>
+        </div>
+      </details>
+      <details class="v2-drawer v2-drawer--plot" id="reheat-wait" data-lazy="reheat" data-opts='{"plate":"M","prefix":"Fig. ","part":"wait"}'>
+        <summary><span class="v2-drawer__k">Plot M·a</span><span class="v2-drawer__q">How long would waiting take? (repository)</span></summary>
+        <div class="v2-drawer__body"><div class="v2-plate v2-plate--nested" data-lazy-target></div></div>
+      </details>
+      <details class="v2-drawer v2-drawer--plot" id="reheat-cav" data-lazy="reheat" data-opts='{"plate":"M","prefix":"Fig. ","part":"dbm"}'>
+        <summary><span class="v2-drawer__k">Plot M·b</span><span class="v2-drawer__q">Can a reheated digit change? (App.&nbsp;D)</span></summary>
+        <div class="v2-drawer__body"><div class="v2-plate v2-plate--nested" data-lazy-target></div></div>
+      </details>
+    </div>
+    <div class="v2-card" id="reheat-read" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p class="v2-mirror" data-src=".ve-reheat__cap"></p>
+      <p>Left: the cost of each state m at the inverse temperature β on the slider; the dot is the run. Right: where m can rest at each β, with the two wells solid and the barrier top dashed. Drag across the right panel, or use the slider, to set β; the play button reheats at β&nbsp;=&nbsp;0.7, then cools.</p>
+    </div>
+  </section>
+
+  <!-- 7 · TEST --------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-test" data-chapter="test" data-beta="1.4" data-n="7" data-title="The test" data-takeaway="Predicted 0.199, measured 0.199" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Chapter 7 · <i class="gr">β</i> 1.40</span><span class="v2-steps" data-step="7"></span></p>
+        <h1 class="v2-title">Does the prediction match the network?</h1>
+        <p class="v2-lede">Two numbers computed without the network’s runs multiply to a prediction of c, the share of the model’s preference that the sampler keeps. Then the Hopfield model is run and c is measured.</p>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <div class="v2-platebar">
+      <span class="v2-platebar__fig">Fig. 7</span>
+      <span class="v2-platebar__set">paper Table 1, Fig. 2b · Hopfield model</span>
+      <button class="v2-chip" type="button" popovertarget="test-readcard">Reading the figure</button>
+    </div>
+    <div class="v2-plate" data-test-fig>
+      <div class="v2-chain" aria-live="polite">
+        <div class="v2-rd"><span class="v2-rd__l">Curie–Weiss</span><span class="v2-rd__v">0.120</span><span class="v2-rd__s"><i>c</i><sub>CW</sub><button class="v2-info" type="button" popovertarget="test-ccw" aria-label="Where 0.120 comes from"></button></span></div>
+        <span class="v2-chain__op" aria-hidden="true">×</span>
+        <div class="v2-rd"><span class="v2-rd__l"><span class="vd-wide">Three patterns</span><span class="vd-narrow">3 patterns</span></span><span class="v2-rd__v">1.662</span><span class="v2-rd__s"><i>A</i><sub>3</sub><button class="v2-info" type="button" popovertarget="test-a3" aria-label="Where 1.662 comes from"></button></span></div>
+        <span class="v2-chain__op" aria-hidden="true">=</span>
+        <div class="v2-rd"><span class="v2-rd__l">Predicted</span><span class="v2-rd__v">0.199</span><span class="v2-rd__s"><span class="vd-wide">nothing fitted to runs</span><span class="vd-narrow">nothing fitted to runs</span><button class="v2-info" type="button" popovertarget="test-pred" aria-label="About the prediction"></button></span></div>
+        <div class="v2-rd v2-rd--c v2-chain__meas"><span class="v2-reticle v2-chain__ret"><span class="v2-rd__l">Measured</span><span class="v2-rd__v">0.199</span><span class="v2-rd__s">95%: <span class="nw">0.1908–0.2095</span><button class="v2-info" type="button" popovertarget="test-meas" aria-label="How 0.199 was measured"></button></span></span></div>
+      </div>
+      <p class="v2-clockline">With the one-pattern ratio<button class="v2-info" type="button" popovertarget="test-clock" aria-label="What the one-pattern ratio is"></button> applied, the prediction becomes 0.212, outside the interval (<a href="#test-cav">Caveats</a>).</p>
+      <figure class="v2-vern" data-vernier>
+        <div class="v2-vern__bar">
+          <div class="v2-vern__key"><span><svg width="11" height="9" viewBox="0 0 11 9" aria-hidden="true"><path d="M.7.7h9.6L5.5 8.3z" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>predicted</span><span><svg width="22" height="8" viewBox="0 0 22 8" aria-hidden="true"><path d="M1 4h20M1 1v6M21 1v6" stroke="currentColor"/><circle cx="11" cy="4" r="3" fill="currentColor"/></svg>measured, 95%</span></div>
+          <div class="v2-seg" role="radiogroup" aria-label="Prediction">
+            <button type="button" role="radio" aria-checked="true" data-clock="0">As predicted</button>
+            <button type="button" role="radio" aria-checked="false" data-clock="1">× one-pattern ratio</button>
+          </div>
+        </div>
+        <div data-vrows role="img" aria-label="Predicted against measured c at each setting"></div>
+        <p class="v2-vern__star" data-vstar aria-live="polite"></p>
+      </figure>
+    </div>
+    <p class="v2-result"><span class="v2-result__k">Result 7</span><span class="v2-result__s">Three patterns at N&nbsp;=&nbsp;2,048: predicted 0.199, measured 0.199 [0.1908, 0.2095]. Other settings miss by up to 11% (Table&nbsp;1); p&nbsp;=&nbsp;4 falls inside its interval.</span></p>
+    <div class="v2-drawers">
+      <details class="v2-drawer" id="test-why">
+        <summary><span class="v2-drawer__k">Why</span><span class="v2-drawer__q">How is c measured on the network?</span></summary>
+        <div class="v2-drawer__body">
+          <p>Earlier chapters produced two numbers without the Hopfield runs: c<sub>CW</sub>&nbsp;=&nbsp;0.120, computed for the Curie–Weiss sampler through the same steps as the network runs (a brief cooling, removal of the runs labelled pattern&nbsp;1 positive to leave the filtered start, reheating at <i class="gr">β</i>&nbsp;=&nbsp;0.7, then the final cooling; <a href="#reheat">Where the runs start</a>), and A<sub>3</sub>&nbsp;=&nbsp;1.662 for three patterns. Their product, 0.120&nbsp;×&nbsp;1.662&nbsp;=&nbsp;0.199, is the prediction. The figure sets it against the measurement, at the paper’s setting and at its neighbours, and lets you multiply by the one-pattern ratio to see what it changes.</p>
+          <p>At eight field strengths the sampler’s log-odds are plotted against the model’s; a faithful sampler would put every point on the diagonal. The slope of the line through them is c. At the strongest field, 66.9% of pattern-1 samples are positive against a model reference of 97.26%, so their logits give c&nbsp;=&nbsp;0.70/3.57&nbsp;≈&nbsp;0.20; that reference is estimated from the mean overlap in the positive mode, so it is approximate (Sec.&nbsp;4, App.&nbsp;B). The full figure is in the Plot drawer.</p>
+        </div>
+      </details>
+      <details class="v2-drawer" id="test-cav">
+        <summary><span class="v2-drawer__k">Caveats</span><span class="v2-drawer__q">What the one-pattern ratio changes</span></summary>
+        <div class="v2-drawer__body">
+          <ul>
+            <li>The ratio 1.063 mixes update order with the 1/N against 1/(N−1) interaction strength. On that base the prediction is 0.212, outside the interval, so errors in the approximations may cancel (Sec.&nbsp;5). <a href="#limits-2">Limits&nbsp;2</a> gives the ratio at every N.</li>
+            <li>With the ratio applied, N&nbsp;=&nbsp;1,024 and 4,096 still miss by 18% and 4%; the size trend is not explained (<a href="#limits-3">Limits&nbsp;3</a>).</li>
+            <li>The table’s p&nbsp;=&nbsp;3 row (0.201) is a separate run at one field strength, both signs pooled, twelve pattern sets, with the Curie–Weiss reference; the headline 0.199 is the slope over eight fields and twenty pattern sets with per-set references.</li>
+            <li>The 95% intervals resample pattern sets; they exclude the uncertainty of the model reference and a chosen 1% allowance (Fig.&nbsp;2 caption; App.&nbsp;B).</li>
+          </ul>
+        </div>
+      </details>
+      <details class="v2-drawer v2-drawer--plot" id="test-plot" data-lazy="comparison" data-opts='{"plate":"Fig. 7b"}'>
+        <summary><span class="v2-drawer__k">Plot</span><span class="v2-drawer__q">The paper’s figure: the slope, field by field, and the rows above</span></summary>
+        <div class="v2-drawer__body"><div class="v2-plate v2-plate--nested" data-lazy-target></div></div>
+      </details>
+    </div>
+
+    <div class="v2-card" id="test-readcard" popover>
+      <p class="v2-card__k">Reading the figure</p>
+      <p>The top line multiplies two numbers computed without the network’s runs. Under it, each row is one setting: the triangle is the prediction, the dot and bar the measurement with its 95% interval. “Gap” is measured ÷ predicted − 1, or “inside” when the prediction falls in the interval. The switch multiplies each prediction by the one-pattern ratio r(N); values computed on this page carry an asterisk.</p>
+    </div>
+    <div class="v2-card" id="test-ccw" popover>
+      <p class="v2-card__k">c<sub>CW</sub> = 0.120</p>
+      <dl class="v2-dl"><dt>What</dt><dd>c of the Curie–Weiss sampler, by numerical evolution of the exact CW chain through the filtered start, reheating and the 834-sweep final cooling</dd><dt>Setting</dt><dd>Curie–Weiss, N = 2,048, G = 0.0006125, the paper’s cooling schedule: 10 temperatures, 834 sweeps</dd><dt>Value</dt><dd>0.120 (0.119808 in data/c_cw.json); halving the time step changes it by 2.8×10⁻¹¹</dd><dt>Source</dt><dd>paper Sec. 4, App. A; data/c_cw.json</dd></dl>
+    </div>
+    <div class="v2-card" id="test-a3" popover>
+      <p class="v2-card__k">A<sub>3</sub> = 1.662</p>
+      <dl class="v2-dl"><dt>What</dt><dd>amplification for three stored patterns</dd><dt>Formula</dt><dd>E[max<sub>3</sub>|Z|] / E|Z|, Gaussian statistics only</dd><dt>Source</dt><dd>paper Sec. 4; data/table1.json</dd></dl>
+    </div>
+    <div class="v2-card" id="test-pred" popover>
+      <p class="v2-card__k">Predicted c = 0.199</p>
+      <p>c<sub>CW</sub> × A<sub>3</sub> = 0.120 × 1.662. Neither number comes from the network, so nothing is fitted to the measurement.</p>
+    </div>
+    <div class="v2-card" id="test-meas" popover>
+      <p class="v2-card__k">Measured c = 0.199</p>
+      <dl class="v2-dl"><dt>Network</dt><dd>Hopfield, N = 2,048, p = 3</dd><dt>Runs</dt><dd>twenty pattern sets, 2,000 runs each, at eight field strengths; 11,033–11,801 kept runs per field</dd><dt>Reference</dt><dd>per pattern set, from the mean overlap in the positive mode (approximate)</dd><dt>Estimator</dt><dd>per pattern set, a weighted slope through the origin over the eight points; then the mean over twenty pattern sets, weighted by the number of samples assigned to pattern 1</dd><dt>95% interval</dt><dd>[0.1908, 0.2095], resampling pattern sets; equal pattern-set weights give 0.2101, just above this interval</dd><dt>Source</dt><dd>paper Sec. 4, Fig. 2b, App. B; data/field_grid_points.json</dd></dl>
+    </div>
+    <div class="v2-card" id="test-clock" popover>
+      <p class="v2-card__k">The one-pattern ratio</p>
+      <p>c<sub>CW</sub> comes from the Curie–Weiss chain: random update times (expected sweeps) and interaction strength 1/(N−1). Hopfield sampling uses permutation sweeps (each spin once, in a fresh random order) and 1/N. With one pattern there is no competition, yet Hopfield runs keep r&nbsp;=&nbsp;1.063 times the Curie–Weiss log-odds at N&nbsp;=&nbsp;2,048 (1.065, 1.126, 1.063, 1.020 at N&nbsp;=&nbsp;512 to 4,096): 0.1274 against 0.1198, from 150,000 runs per field sign. Source: paper Sec. 5, App. B; data/sampler_clock.json.</p>
+    </div>
+    <div class="v2-card" id="test-p3" popover>
+      <p class="v2-card__k">Why this row reads 0.201</p>
+      <p>The table’s p&nbsp;=&nbsp;3 row, 0.201 [0.194, 0.210], comes from a separate run at one field strength, both signs pooled (Table 1). The headline 0.199 [0.1908, 0.2095] is the slope over eight field strengths. Their intervals nearly coincide.</p>
+    </div>
+  </section>
+
+  <!-- L · LIMITS ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-limits" data-chapter="limits" data-beta="1.6" data-n="L" data-title="Limits" data-takeaway="Seven limits, with their numbers" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>Limits · <i class="gr">β</i> 1.60</span></p>
+        <h1 class="v2-title">What the paper does not show.</h1>
+        <p class="v2-lede">These are the limits the paper states, each with its numbers.</p>
+      </header>
+      <div class="v2-margin">
+        <aside class="v2-note" data-q="Does this page run the paper's models?">Live figures run smaller models than the paper (for example N&nbsp;=&nbsp;256, not 2,048) to fit a browser; each live figure states its size.</aside>
+      </div>
+    </div>
+    <div class="v2-drawers v2-limits">
+      <details class="v2-drawer" id="limits-1"><summary><span class="v2-drawer__k">1</span><span class="v2-drawer__q">A close match at one setting only.</span></summary>
+        <div class="v2-drawer__body"><p>The paper’s Table&nbsp;1 repeats the test at neighbouring settings, twelve pattern sets each and |G|&nbsp;=&nbsp;0.0006125 at every N (not rescaled). At three patterns and N&nbsp;=&nbsp;2,048 the prediction 0.199 sits inside the measured interval. With one or two patterns the measured c is 6% and 11% above the prediction; it is 7% below at N&nbsp;=&nbsp;1,024 and 6% above at N&nbsp;=&nbsp;4,096. At four patterns the prediction falls inside its interval.</p><p class="v2-seealso"><a href="#test">Chapter 7 · The test →</a></p></div></details>
+      <details class="v2-drawer" id="limits-2"><summary><span class="v2-drawer__k">2</span><span class="v2-drawer__q">The main-setting match may come from cancelling errors.</span></summary>
+        <div class="v2-drawer__body"><p>With one pattern there is no competition, yet the <span data-term="hopfield">network</span> keeps 1.063 times the <span data-term="curieWeiss">Curie–Weiss</span> <span data-term="logOdds">log-odds</span> at N&nbsp;=&nbsp;2,048, and 1.020 to 1.126 times over N&nbsp;=&nbsp;512 to 4,096. The ratio comes from the update order (each spin once per sweep in random order, against random update times) and from the interaction strength (1/N in the network, 1/(N−1) in Curie–Weiss). Multiplying the three-pattern prediction by 1.063 gives 0.212, outside the measured interval, so errors in the approximations may cancel at the main setting.</p><p class="v2-seealso"><a href="#test-cav">Chapter 7 · Caveats →</a></p></div></details>
+      <details class="v2-drawer" id="limits-3"><summary><span class="v2-drawer__k">3</span><span class="v2-drawer__q">The trend with size is unexplained.</span></summary>
+        <div class="v2-drawer__body"><p>Measured c falls about as N<sup>−0.36</sup>; the prediction c<sub>pred</sub> falls as N<sup>−0.46</sup> (two-point slopes, no uncertainties; Eq.&nbsp;4 gives N<sup>−1/2</sup> for a fixed ramp). The two cross near N&nbsp;=&nbsp;2,048, where the schedule was set. Without correction the predictions miss by 7% and 6% (Limit&nbsp;1). Multiplying each by its one-pattern ratio (Limit&nbsp;2) does not close the gap: the corrected predictions are 0.319 at N&nbsp;=&nbsp;1,024 and 0.153 at N&nbsp;=&nbsp;4,096, and measured c is 18% below and 4% above them. Random patterns are correlated at order N<sup>−1/2</sup>, which shifts the β at which overlaps start to grow. At finite N the transition is spread over a β range of comparable size, the critical window, so the shifts need not become negligible relative to this window as N grows. That is an untested explanation.</p><p class="v2-seealso"><a href="#test">Chapter 7 · The size rows →</a></p></div></details>
+      <details class="v2-drawer" id="limits-4"><summary><span class="v2-drawer__k">4</span><span class="v2-drawer__q">The network runs never vary the cooling rate.</span></summary>
+        <div class="v2-drawer__body"><p>The field and the sweeps per temperature are fixed in the pattern and size comparisons, so the network runs do not measure how c depends on the cooling rate in the Hopfield model. The scaling c&nbsp;∝&nbsp;(N²γ)<sup>−1/4</sup> (how c changes with the <span data-term="gamma">cooling rate γ</span>; paper Eq.&nbsp;4) is checked only on Curie–Weiss linear ramps, where the selection formula matches the exact CW chain within 1.81%, with the chain above it in all nine cases (paper Table&nbsp;2).</p><p class="v2-seealso"><a href="#scaling">Chapter 5 · Does slower fix it? →</a></p></div></details>
+      <details class="v2-drawer" id="limits-5"><summary><span class="v2-drawer__k">5</span><span class="v2-drawer__q">The competition prediction rests on approximations.</span></summary>
+        <div class="v2-drawer__body"><p>The factor A<sub>3</sub> (the three-pattern amplification factor from Chapter&nbsp;6) treats the early pattern overlaps as independent Gaussians with a common variance, the field shifting only the mean of overlap&nbsp;1, and assumes the largest overlap decides the label. The prediction also uses the Curie–Weiss equilibrium preference in place of the Hopfield one. A small ratio p/N guarantees neither the equal preferences nor independent overlaps. The Hopfield reference is itself estimated from the mean overlap m̄<sup>1</sup> within the positive mode, and the 95% interval on c excludes its error and the 1% approximation allowance (a fixed margin the paper adds to the reference interval).</p><p class="v2-seealso"><a href="#modes">Chapter 6 · Competing patterns →</a></p></div></details>
+      <details class="v2-drawer" id="limits-6"><summary><span class="v2-drawer__k">6</span><span class="v2-drawer__q">Reheated starts are not shown to equal fresh ones.</span></summary>
+        <div class="v2-drawer__body"><p>The measured runs begin from a filtered start: a brief cooling; removal of the runs already labelled (1,+), whose largest overlap is with stored pattern&nbsp;1 and is positive, under both signs of the field; then 30 sweeps of reheating at β&nbsp;=&nbsp;0.7. For a symmetric start, flipping every spin and the sign of the field would make q<sub>chain</sub>(G)&nbsp;+&nbsp;q<sub>chain</sub>(−G)&nbsp;=&nbsp;1; the removal breaks that argument. Each measured paired-field sum still has an interval containing 1. That does not show reheated runs equal fresh ones. The MNIST deep-Boltzmann-machine illustration (ten seeds of 24 runs) resolves only large effects of the initial state.</p><p class="v2-seealso"><a href="#reheat">Method · Where the runs start →</a></p><p class="v2-seealso"><a href="#reheat-cav">Method · The MNIST illustration →</a></p></div></details>
+      <details class="v2-drawer" id="limits-7"><summary><span class="v2-drawer__k">7</span><span class="v2-drawer__q">The law is for annealed Gibbs sampling.</span></summary>
+        <div class="v2-drawer__body"><p>The selection formula assumes a slow ramp that starts well below β&nbsp;=&nbsp;1 and little switching after the sign is chosen; Nγ&nbsp;≫&nbsp;1 (model size times <span data-term="gamma">cooling rate γ</span> is large) is a sufficient condition. It does not hold for arbitrarily slow cooling at fixed N: long enough sampling at the final temperature recovers the equilibrium proportions, but at N&nbsp;=&nbsp;2,048 the zero-field mean time for a mode switch is about 5&nbsp;×&nbsp;10<sup>7</sup> expected sweeps at β&nbsp;=&nbsp;1.1. Diffusion models also change their distribution gradually, but with an exact score they reverse a given noising process and need not equilibrate at each step (Biroli et al. 2024); extending the calculation to them requires their dynamics and discrete updates. Annealed importance sampling weights the samples of annealed runs to estimate equilibrium averages (Neal 2001); a future equal-cost comparison needs valid weights for the filtered start and an assessment of estimator bias and variance. Applying c to another model needs an equilibrium reference.</p><p class="v2-seealso"><a href="#race-math">Chapter 4 · The formula →</a></p></div></details>
+    </div>
+    <p class="v2-result"><span class="v2-result__k">The limits</span><span class="v2-result__s">The formula matches the exact CW chain within 1.81%, with the chain above it in all nine cases (Table&nbsp;2); away from p&nbsp;=&nbsp;3, N&nbsp;=&nbsp;2,048, the uncorrected network prediction misses by up to 11%.</span></p>
+  </section>
+
+  <!-- REFERENCES ------------------------------------------------------- -->
+  <section class="v2-ch" id="ch-refs" data-chapter="refs" data-beta="off" data-n="" data-title="References" data-takeaway="" hidden>
+    <div class="v2-top">
+      <header class="v2-head">
+        <p class="v2-kick"><span>References</span><span>ten sources</span></p>
+        <h1 class="v2-title">References.</h1>
+      </header>
+      <div class="v2-margin"></div>
+    </div>
+    <ol class="v2-refs">
+      <li><b>This paper.</b> I. Ali, M. H. Khan and S. Ahmad. A Finite-Rate Selection Law for Annealed Gibbs Sampling. DynaFront workshop at NeurIPS 2026, poster.
+        <span class="v2-refs__use">Every number on this page traces to it, to its data files, or to a live simulation labelled as such.</span></li>
+      <li>D. K. Kondepudi and G. W. Nelson. Chiral symmetry breaking in nonequilibrium systems. <i>Physical Review Letters</i> 50(14):1023–1026, 1983.
+        <a href="https://doi.org/10.1103/PhysRevLett.50.1023" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.50.1023</a>
+        <span class="v2-refs__use">The selection formula (<a href="#race">chapter 4</a> and <a href="#scaling">chapter 5</a>).</span></li>
+      <li>D. K. Kondepudi and M.-J. Gao. Passages through the critical point and the process of state selection in symmetry-breaking transitions. <i>Physical Review A</i> 35(1):340–348, 1987.
+        <a href="https://doi.org/10.1103/PhysRevA.35.340" target="_blank" rel="noopener">doi:10.1103/PhysRevA.35.340</a>
+        <span class="v2-refs__use">The selection formula (<a href="#race">chapter 4</a> and <a href="#scaling">chapter 5</a>).</span></li>
+      <li>N. Berglund and B. Gentz. Pathwise description of dynamic pitchfork bifurcations with additive noise. <i>Probability Theory and Related Fields</i> 122:341–388, 2002.
+        <a href="https://doi.org/10.1007/s004400100174" target="_blank" rel="noopener">doi:10.1007/s004400100174</a>
+        <span class="v2-refs__use">Nγ&nbsp;≫&nbsp;1, with γ the cooling rate, is a sufficient condition for the formula’s small-noise assumption (<a href="#limits-7">Limits, item 7</a>).</span></li>
+      <li>J. Ding, E. Lubetzky and Y. Peres. The mixing time evolution of Glauber dynamics for the mean-field Ising model. <i>Communications in Mathematical Physics</i> 289(2):725–764, 2009.
+        <a href="https://doi.org/10.1007/s00220-009-0781-9" target="_blank" rel="noopener">doi:10.1007/s00220-009-0781-9</a>
+        <span class="v2-refs__use">Switching takes longer than settling (<a href="#commit-why">chapter 1</a>).</span></li>
+      <li>D. A. Levin, M. J. Luczak and Y. Peres. Glauber dynamics for the mean-field Ising model: cut-off, critical power law, and metastability. <i>Probability Theory and Related Fields</i> 146(1–2):223–265, 2010.
+        <a href="https://doi.org/10.1007/s00440-008-0189-z" target="_blank" rel="noopener">doi:10.1007/s00440-008-0189-z</a>
+        <span class="v2-refs__use">Switching takes longer than settling, and the exact reduction to N&nbsp;+&nbsp;1 counts (<a href="#commit-why">chapter 1</a>).</span></li>
+      <li>J. J. Hopfield. Neural networks and physical systems with emergent collective computational abilities. <i>PNAS</i> 79(8):2554–2558, 1982.
+        <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank" rel="noopener">doi:10.1073/pnas.79.8.2554</a>
+        <span class="v2-refs__use">The model with stored patterns (<a href="#modes">chapter 6</a>; cited on this page, the paper cites Amit et al.).</span></li>
+      <li>D. J. Amit, H. Gutfreund and H. Sompolinsky. Storing infinite numbers of patterns in a spin-glass model of neural networks. <i>Physical Review Letters</i> 55(14):1530–1533, 1985.
+        <a href="https://doi.org/10.1103/PhysRevLett.55.1530" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.55.1530</a>
+        <span class="v2-refs__use">The Hopfield model at low temperature (<a href="#modes">chapter 6</a>).</span></li>
+      <li>R. M. Neal. Annealed importance sampling. <i>Statistics and Computing</i> 11:125–139, 2001.
+        <a href="https://doi.org/10.1023/A:1008923215028" target="_blank" rel="noopener">doi:10.1023/A:1008923215028</a>
+        <span class="v2-refs__use">Annealed importance sampling weights annealed runs to estimate equilibrium averages (<a href="#limits-7">Limits, item 7</a>).</span></li>
+      <li>G. Biroli, T. Bonnaire, V. de Bortoli and M. Mézard. Dynamical regimes of diffusion models. <i>Nature Communications</i> 15:9957, 2024.
+        <a href="https://doi.org/10.1038/s41467-024-54281-3" target="_blank" rel="noopener">doi:10.1038/s41467-024-54281-3</a>
+        <span class="v2-refs__use">Diffusion models with an exact score need not equilibrate at each step (<a href="#limits-7">Limits, item 7</a>).</span></li>
+    </ol>
+    <p class="v2-foot">Visual edition of the DynaFront 2026 poster paper. Live figures run in your browser; paper figures read the paper’s data files.</p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" defer></script>
+<script src="lib/ui.js"></script>
+<script src="lib/sim.js"></script>
+<script src="components/hero.js" defer></script>
+<script src="components/speciation.js" defer></script>
+<script src="components/slowing.js" defer></script>
+<script src="components/odds.js" defer></script>
+<script src="components/race.js" defer></script>
+<script src="components/scaling.js" defer></script>
+<script src="components/amplify.js" defer></script>
+<script src="components/reheat.js" defer></script>
+<script src="components/comparison.js" defer></script>
+<script src="lib/shell.js" defer></script>
+</body>
+</html>
